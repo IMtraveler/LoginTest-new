@@ -155,19 +155,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
-            public boolean onMarkerClick(Marker marker) {
+            public boolean onMarkerClick(final Marker marker) {
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(MapsActivity.this);
                 View mView = getLayoutInflater().inflate(R.layout.dialog, null);
                 //final EditText mEmail = (EditText) mView.findViewById(R.id.etEmail);
                 //final EditText mPassword = (EditText) mView.findViewById(R.id.etpassword);
                 Button mLogin = (Button) mView.findViewById(R.id.buttona);
                 ProgressBar mProgressBar = (ProgressBar) mView.findViewById(R.id.progressBar2);
-
+                final String pos = marker.getPosition().toString() ;
                 mLogin.setOnClickListener(new View.OnClickListener()  {
                                               @Override
                                               public void onClick(View view){
                                                   Toast.makeText(MapsActivity.this,
-                                                          "HI",
+                                                          pos,
                                                           Toast.LENGTH_SHORT).show();
                                               }
 

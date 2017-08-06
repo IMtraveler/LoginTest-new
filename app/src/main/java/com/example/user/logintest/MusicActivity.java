@@ -59,7 +59,7 @@ public class MusicActivity extends AppCompatActivity {
     public void onPause()
     {
         super.onPause();
-        mp.release(); //����MediaPlayer���O�����Ҿާ@���귽
+        mp.release();
     }
     private class SampleCompletionListener implements MediaPlayer.OnCompletionListener {
 
