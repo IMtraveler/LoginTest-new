@@ -116,12 +116,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.setMyLocationEnabled(true);
         }
 
+        LatLng taipei_1 = new LatLng(25.0327792, 121.5636894);
+        googleMap.addMarker(new MarkerOptions().position(taipei_1)
+                .title("Marker in 台北101"));
+
+
         // add markers
-        myDatabase = new LocationsDatabase(MapsActivity.this);
-        locationArrayList=myDatabase.getLocations();
-        for(int i=0;i<locationArrayList.size();i++) {
-            LatLng test = new LatLng(locationArrayList.get(i).lat, locationArrayList.get(i).lng);
-            Marker perth = mMap.addMarker(new MarkerOptions()
+       myDatabase = new LocationsDatabase(MapsActivity.this);
+       locationArrayList=myDatabase.getLocations();
+       for(int i=0;i<locationArrayList.size();i++) {
+          LatLng test = new LatLng(locationArrayList.get(i).lat, locationArrayList.get(i).lng);
+           Marker perth = mMap.addMarker(new MarkerOptions()
                     .position(test));
         }
     }
@@ -153,6 +158,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(lating));
         //mMap.animateCamera(CameraUpdateFactory.zoomBy(20));
 
+        if (Client != null) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+            LocationServices.FusedLocationApi.requestLocationUpdates(Client, locationRequest, this);
+        }
+
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(final Marker marker) {
@@ -182,20 +201,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
 
-
-        if (Client != null) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return;
-            }
-            LocationServices.FusedLocationApi.requestLocationUpdates(Client, locationRequest, this);
-        }
 
     }
     public void onClick(View v)
