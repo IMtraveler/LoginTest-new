@@ -1,6 +1,7 @@
 package com.example.user.logintest;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -18,6 +19,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,6 +44,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.user.logintest.MySQLConnection.Post;
+import com.squareup.picasso.Picasso ;
 
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
@@ -186,6 +189,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Button mLogin = (Button) mView.findViewById(R.id.buttona);
                 //ProgressBar mProgressBar = (ProgressBar) mView.findViewById(R.id.progressBar2);
                 TextView tv_intro = (TextView)mView.findViewById(R.id.tv_intro);
+                ImageView imageView = (ImageView)mView.findViewById(R.id.imageView);
+                Picasso.with(getBaseContext()).load("http://140.112.107.125:47155/html/uploaded/test1.jpg").into(imageView);
                 final String pos = marker.getPosition().toString() ;
                 String lat = String.valueOf(marker.getPosition().latitude) ;
                 String lng = String.valueOf(marker.getPosition().longitude) ;

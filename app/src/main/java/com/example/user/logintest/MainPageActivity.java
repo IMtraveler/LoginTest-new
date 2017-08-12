@@ -3,6 +3,7 @@ package com.example.user.logintest;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.Toast;
 import android.view.View;
 import android.content.Intent;
 import android.util.Log;
@@ -104,15 +105,19 @@ public class MainPageActivity extends AppCompatActivity  {
 
 
         Button btn_download = (Button)findViewById(R.id.btn_download);
-
+        final Downloads downloads = new Downloads(this);
         btn_download.setOnClickListener(new Button.OnClickListener(){
         @Override
         public void onClick(View v) {
-            downloadManager = (DownloadManager)getSystemService(Context.DOWNLOAD_SERVICE) ;
-            Uri uri = Uri.parse("http://140.112.107.125:47155/html/uploaded/sample.mp4") ;
-            DownloadManager.Request request = new DownloadManager.Request(uri) ;
-            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-            Long reference = downloadManager.enqueue(request) ;
+            //downloadManager = (DownloadManager)getSystemService(Context.DOWNLOAD_SERVICE) ;
+            //Uri uri = Uri.parse("http://140.112.107.125:47155/html/uploaded/sample.mp4") ;
+            //DownloadManager.Request request = new DownloadManager.Request(uri) ;
+            //request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+            //Long reference = downloadManager.enqueue(request) ;
+
+            String imguri = downloads.DownloadImg("http://140.112.107.125:47155/html/uploaded/FB_IMG_1474176968009.jpg");
+            Toast.makeText(MainPageActivity.this, "download success"+imguri, Toast.LENGTH_SHORT).show();
+
 
         }
     });
