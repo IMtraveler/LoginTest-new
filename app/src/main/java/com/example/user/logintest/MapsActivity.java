@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -39,6 +40,8 @@ import java.io.IOException;
 import java.io.InvalidObjectException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.user.logintest.MySQLConnection.Post;
 
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
@@ -181,8 +184,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 //final EditText mEmail = (EditText) mView.findViewById(R.id.etEmail);
                 //final EditText mPassword = (EditText) mView.findViewById(R.id.etpassword);
                 Button mLogin = (Button) mView.findViewById(R.id.buttona);
-                ProgressBar mProgressBar = (ProgressBar) mView.findViewById(R.id.progressBar2);
+                //ProgressBar mProgressBar = (ProgressBar) mView.findViewById(R.id.progressBar2);
+                TextView tv_intro = (TextView)mView.findViewById(R.id.tv_intro);
                 final String pos = marker.getPosition().toString() ;
+                String lat = String.valueOf(marker.getPosition().latitude) ;
+                String lng = String.valueOf(marker.getPosition().longitude) ;
+                final String post = Post(lat, lng);
+                tv_intro.setText(post) ;
                 mLogin.setOnClickListener(new View.OnClickListener()  {
                                               @Override
                                               public void onClick(View view){
