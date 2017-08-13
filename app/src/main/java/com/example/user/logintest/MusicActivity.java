@@ -43,7 +43,8 @@ public class MusicActivity extends AppCompatActivity {
             }
         });
         bt[0].setText("start");
-        bt[1].setText("stop");
+        bt[1].setText("pause");
+        bt[2].setText("stop");
 
         bt[0].setEnabled(true);
         bt[1].setEnabled(false);
@@ -112,13 +113,13 @@ public class MusicActivity extends AppCompatActivity {
                     bt[1].setEnabled(true);
                     bt[2].setEnabled(true);
                     mp.pause();
-                    bt[1].setText("pause");
+                    bt[1].setText("continue");
                 }else{
                     bt[0].setEnabled(false);
                     bt[1].setEnabled(true);
                     bt[2].setEnabled(true);
                     mp.start();
-                    bt[1].setText("stop");
+                    bt[1].setText("pause");
                 }
             }else if(v == bt[2])
             {
