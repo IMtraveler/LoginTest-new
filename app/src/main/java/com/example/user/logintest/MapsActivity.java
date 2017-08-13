@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.Intent ;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.location.LocationListener;
@@ -58,6 +59,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Location lastLocation;
     private Marker currentLocationMarker;
     public  static  final  int REQUEST_LOCATION_CODE = 99;
+    Bundle bundle = new Bundle();
 
     LocationsDatabase myDatabase;
     private ArrayList<Locations> locationArrayList;
@@ -123,9 +125,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.setMyLocationEnabled(true);
         }
 
+        /*
         LatLng taipei_1 = new LatLng(25.0327792, 121.5636894);
         googleMap.addMarker(new MarkerOptions().position(taipei_1)
-                .title("Marker in 台北101"));
+                .title("Marker in 台北101"));*/
 
 
         // add markers
@@ -155,13 +158,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (currentLocationMarker != null) {
             currentLocationMarker.remove();
         }
+        /*
         LatLng lating = new LatLng(location.getLatitude(), location.getLongitude());
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(lating);
         markerOptions.title("Current Location:");
         //markerOptions.snippet("can add snippet right under title");
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-        currentLocationMarker = mMap.addMarker(markerOptions);
+        currentLocationMarker = mMap.addMarker(markerOptions);*/
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(lating));
         //mMap.animateCamera(CameraUpdateFactory.zoomBy(20));
 
@@ -190,18 +194,41 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 //ProgressBar mProgressBar = (ProgressBar) mView.findViewById(R.id.progressBar2);
                 TextView tv_intro = (TextView)mView.findViewById(R.id.tv_intro);
                 ImageView imageView = (ImageView)mView.findViewById(R.id.imageView);
-                Picasso.with(getBaseContext()).load("http://140.112.107.125:47155/html/uploaded/test1.jpg").into(imageView);
-                final String pos = marker.getPosition().toString() ;
+                final String locating = marker.getPosition().toString() ;
                 String lat = String.valueOf(marker.getPosition().latitude) ;
                 String lng = String.valueOf(marker.getPosition().longitude) ;
                 final String post = Post(lat, lng);
                 tv_intro.setText(post) ;
+                int begImg = post.indexOf("imgURL:") ;
+                int begAudio = post.indexOf("audioURL:") ;
+                int endIndex = post.length() ;
+
+                if ((begImg+7) >= (begAudio-5)){
+                    Picasso.with(getBaseContext()).load("http://140.112.107.125:47155/html/uploaded/null.png").into(imageView);
+                }
+                else{
+                    String imgURL = post.substring(begImg+7,begAudio-1);
+                    imgURL = imgURL.replaceAll(" ", "");
+                    Picasso.with(getBaseContext()).load(imgURL).into(imageView);
+                }
+
+                if((begAudio+9) >= (endIndex-5)){
+                    String audioURL = "null" ;
+                    bundle.putString("audioURL", audioURL);
+                }
+                else{
+                    String audioURL = post.substring(begAudio+9,endIndex);
+                    audioURL = audioURL.replaceAll(" ","");
+                    bundle.putString("audioURL", audioURL);
+                }
+
                 mLogin.setOnClickListener(new View.OnClickListener()  {
                                               @Override
                                               public void onClick(View view){
-                                                  Toast.makeText(MapsActivity.this,
-                                                          pos,
-                                                          Toast.LENGTH_SHORT).show();
+                                                  Intent intent = new Intent();
+                                                  intent.setClass(MapsActivity.this, MusicActivity.class);
+                                                  intent.putExtras(bundle);
+                                                  startActivity(intent);
                                               }
 
                                           }

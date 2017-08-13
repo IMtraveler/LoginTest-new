@@ -2,6 +2,7 @@ package com.example.user.logintest;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -19,6 +20,9 @@ public class MusicActivity extends AppCompatActivity {
 
     Button[] bt = new Button[3];
     MediaPlayer mp;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,12 +52,26 @@ public class MusicActivity extends AppCompatActivity {
         for(int i=0;i< bt.length;i++){
             bt[i].setOnClickListener(new SampleClickListener());
         }
+
+
+
+
+
         // setContentView(R.layout.activity_main);
     }
     public void onResume()
     {
         super.onResume();
-        mp = MediaPlayer.create(this, R.raw.music); //���oMediaPlayer���O������
+        //mp = MediaPlayer.create(this, R.raw.music); //���oMediaPlayer���O������
+        //Uri uri = Uri.parse("http://140.112.107.125:47155/html/uploaded/Huaientang.m4a");
+        Bundle extras = getIntent().getExtras();
+        String audiouri = extras.getString("audioURL");
+        Uri uri = Uri.parse("http://140.112.107.125:47155/html/uploaded/noAudio.m4a");
+        if (audiouri.length() > 10){
+            uri = Uri.parse(audiouri);
+        }
+        //Uri uri = Uri.parse(audiouri);
+        mp = MediaPlayer.create(this,uri );
         mp.setOnCompletionListener(new SampleCompletionListener()); //�n�����񧹲���ť��
     }
     public void onPause()

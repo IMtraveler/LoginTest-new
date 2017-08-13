@@ -58,8 +58,8 @@ public class MainPageActivity extends AppCompatActivity  {
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 Intent intent = new Intent();
-                intent.setClass(MainPageActivity.this,MusicActivity.class);
-                startActivity(intent);
+                //intent.setClass(MainPageActivity.this,MusicActivity.class);
+                //startActivity(intent);
                 //MainPageActivity.this.finish();
             }
         });
@@ -115,8 +115,9 @@ public class MainPageActivity extends AppCompatActivity  {
             //request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
             //Long reference = downloadManager.enqueue(request) ;
 
-            String imguri = downloads.DownloadImg("http://140.112.107.125:47155/html/uploaded/FB_IMG_1474176968009.jpg");
-            Toast.makeText(MainPageActivity.this, "download success"+imguri, Toast.LENGTH_SHORT).show();
+            String imguri = downloads.DownloadImg("http://140.112.107.125:47155/html/uploaded/IMG_20170730_151527.jpg");
+            Toast.makeText(MainPageActivity.this, imguri, Toast.LENGTH_SHORT).show();
+            Log.e("",imguri);
 
 
         }

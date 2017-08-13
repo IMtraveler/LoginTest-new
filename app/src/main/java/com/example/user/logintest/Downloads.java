@@ -24,18 +24,25 @@ public class Downloads {
         Uri uri = Uri.parse(imguri);
         DownloadManager.Request request = new DownloadManager.Request(uri);
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        Long downloadImgId = downloadManager.enqueue(request);
+
+        long downloadImgId = downloadManager.enqueue(request);
 
         DownloadManager.Query query = new DownloadManager.Query();
         query.setFilterById(downloadImgId);
         Cursor c = downloadManager.query(query);
+
         if (c.moveToFirst()) {
             int columnIndex = c.getColumnIndex(DownloadManager.COLUMN_STATUS);
-            if (DownloadManager.STATUS_SUCCESSFUL == c.getInt(columnIndex)) {
-                uriString = c.getString(c.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI));
-            }
+            /*if (DownloadManager.STATUS_SUCCESSFUL == c.getInt(columnIndex)) {
+                //uriString = c.getString(c.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI));
+                //uriString = DownloadManager.COLUMN_LOCAL_URI;
+            }*/
         }
-
+        if(downloadImgId == c.getInt(0)){
+            uriString = c.getString(c.getColumnIndex("local_uri"));
+        }
+        //uriString = downloadManager.COLUMN_LOCAL_URI;
+        //c.close();
         return uriString;
 
     }
