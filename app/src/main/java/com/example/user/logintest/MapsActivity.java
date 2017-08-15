@@ -248,7 +248,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     {
         if(v.getId() == R.id.B_search){
             EditText tf_location = (EditText) findViewById(R.id.TF_location);
-            String location = tf_location.getText().toString();
+            String location = tf_location.getText().toString(); //搜尋的字
+
             for(int i =0;i<locationArrayList.size();i++){
                 if(location.equals(locationArrayList.get(i).name.replaceAll("[a-zA-z]+","")) || location.equals(locationArrayList.get(i).name.replaceAll("[^a-zA-z]+",""))){
                     LatLng s_research = new LatLng(locationArrayList.get(i).lat,locationArrayList.get(i).lng);

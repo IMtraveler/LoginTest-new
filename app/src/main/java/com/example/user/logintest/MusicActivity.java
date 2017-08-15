@@ -63,7 +63,7 @@ public class MusicActivity extends AppCompatActivity {
     public void onResume()
     {
         super.onResume();
-        //mp = MediaPlayer.create(this, R.raw.music); //���oMediaPlayer���O������
+        //mp = MediaPlayer.create(this, R.raw.music);
         //Uri uri = Uri.parse("http://140.112.107.125:47155/html/uploaded/Huaientang.m4a");
         Bundle extras = getIntent().getExtras();
         String audiouri = extras.getString("audioURL");
