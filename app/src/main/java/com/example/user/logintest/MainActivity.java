@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.facebook.CallbackManager;
@@ -54,6 +55,43 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        EditText account = (EditText) findViewById(R.id.AccountID); //輸入的帳號
+        EditText password = (EditText) findViewById(R.id.Password); //輸入的密碼
+        Button b_login = (Button) findViewById(R.id.b_login); //登入按鈕
+        Button b_register = (Button) findViewById(R.id.b_register);   //註冊按鈕
+
+
+
+        b_login.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                /*
+                      ##這裡要確認是否有此帳號密碼  XD
+                             */
+                // TODO Auto-generated method stub
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this,MainPageActivity.class);
+                startActivity(intent);
+                MainActivity.this.finish();
+            }
+        });
+
+        b_register.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                //跳到註冊頁面
+                // TODO Auto-generated method stub
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this,RegisterActivity.class);
+                startActivity(intent);
+                MainActivity.this.finish();
+            }
+        });
+
+
+
+
+
         TextView tv_skip = (TextView) findViewById(R.id.tv_skip);
 
         tv_skip.setOnClickListener(new TextView.OnClickListener(){
@@ -72,4 +110,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
+
 }
+
+

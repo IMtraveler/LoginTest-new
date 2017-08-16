@@ -47,13 +47,13 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
         <activity android:name=".MusicActivity" />
         <activity android:name=".UploadActivity" />
-        <activity android:name=".LocationListActivity"></activity>
+        <activity android:name=".LocationListActivity" />
+        <activity android:name=".RegisterActivity"></activity>
     </application>
 
 </manifest>
