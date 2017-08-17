@@ -73,7 +73,7 @@ public class MainPageActivity extends AppCompatActivity  {
                 Intent intent = new Intent();
                 intent.setClass(MainPageActivity.this,MapsActivity.class);
                 startActivity(intent);
-                //MainPageActivity.this.finish();
+                MainPageActivity.this.finish();
             }
         });
 

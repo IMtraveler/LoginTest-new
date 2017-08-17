@@ -23,4 +23,5 @@
     <string name="mysql">MySQL</string>
     <string name="download">下載</string>
     <string name="sqlite">SQLite</string>
+    <string name="attrationName">景點名稱</string>
 </resources>

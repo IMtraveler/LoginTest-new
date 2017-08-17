@@ -53,7 +53,8 @@
         <activity android:name=".MusicActivity" />
         <activity android:name=".UploadActivity" />
         <activity android:name=".LocationListActivity" />
-        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".AttractionsActivity"></activity>
     </application>
 
 </manifest>

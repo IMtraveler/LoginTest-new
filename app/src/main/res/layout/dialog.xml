@@ -4,16 +4,6 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/buttona"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textColor="@android:color/white"
-        android:background="@color/colorAccent"
-        android:text="Button" />
-
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
@@ -21,9 +11,18 @@
         app:srcCompat="@drawable/common_full_open_on_phone" />
 
     <TextView
-        android:id="@+id/tv_intro"
+        android:id="@+id/tv_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="TextView" />
+
+    <Button
+        android:id="@+id/buttona"
+        android:layout_width="98dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorAccent"
+        android:text="Button"
+        android:textColor="@android:color/white" />
 
 </LinearLayout>

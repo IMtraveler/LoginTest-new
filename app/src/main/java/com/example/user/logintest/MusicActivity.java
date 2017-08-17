@@ -7,14 +7,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.os.Bundle;
-import android.app.*;
-import android.view.*;
-import android.view.View;
 import android.widget.*;
-import android.media.*;
-import android.media.MediaPlayer.*;
+
+import com.squareup.picasso.Picasso;
 
 public class MusicActivity extends AppCompatActivity {
 
@@ -29,15 +24,33 @@ public class MusicActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music);
         bt[0] = (Button)findViewById(R.id.button2);
-        bt[1] = (Button)findViewById(R.id.button3);
+        bt[1] = (Button)findViewById(R.id.btn_toAudio);
         bt[2] = (Button)findViewById(R.id.button4);
+
+        // should be guide intro and audio intro
+        /*
+        ImageView imageView2 = (ImageView)findViewById(R.id.imageView2);
+        TextView tv_name2 = (TextView)findViewById(R.id.tv_attrName);
+        TextView tv_intro = (TextView)findViewById(R.id.tv_attrIntro);
+
+        Bundle bundle = getIntent().getExtras();
+        String imgURL = bundle.getString("imgURL");
+        String name = bundle.getString("name") ;
+        String post = bundle.getString("post");
+        Picasso.with(getBaseContext()).load(imgURL).into(imageView2);
+        tv_name2.setText(name);
+        int begIntro = post.indexOf("intro:");
+        int endIntro = post.indexOf("imgURL") ;
+        String intro = post.substring(begIntro+6, endIntro-1);
+        tv_intro.setText(intro);*/
+
         Button buttonback = (Button)findViewById(R.id.button5);
         buttonback.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 Intent intent = new Intent();
-                intent.setClass(MusicActivity.this,MainPageActivity.class);
+                intent.setClass(MusicActivity.this,MapsActivity.class);
                 startActivity(intent);
                 MusicActivity.this.finish();
             }
@@ -68,12 +81,13 @@ public class MusicActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         String audiouri = extras.getString("audioURL");
         Uri uri = Uri.parse("http://140.112.107.125:47155/html/uploaded/noAudio.m4a");
+
         if (audiouri.length() > 10){
             uri = Uri.parse(audiouri);
         }
         //Uri uri = Uri.parse(audiouri);
         mp = MediaPlayer.create(this,uri );
-        mp.setOnCompletionListener(new SampleCompletionListener()); //�n�����񧹲���ť��
+        mp.setOnCompletionListener(new SampleCompletionListener());
     }
     public void onPause()
     {
