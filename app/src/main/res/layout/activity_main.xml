@@ -87,7 +87,6 @@
         android:layout_gravity="center_horizontal"
         android:text="Login" />
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -129,6 +128,16 @@
         android:layout_below="@+id/textView"
         android:layout_gravity="center_horizontal"
         android:layout_centerHorizontal="true"></com.facebook.login.widget.LoginButton>
+
+    <TextView
+        android:id="@+id/data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="38dp"
+        android:text="TextView"
+        android:textSize="14sp" />
 
 
 

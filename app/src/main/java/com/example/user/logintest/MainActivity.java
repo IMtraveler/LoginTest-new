@@ -8,6 +8,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -15,11 +22,21 @@ import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity {
 
     LoginButton loginButton;
     TextView textView;
     CallbackManager callbackManager;
+    private RequestQueue mQueue;
+    private final static String mUrl = "http://140.112.107.125:47155/html/login.php";
+    private StringRequest getRequest;
+    private TextView msg;
+    private EditText account;
+    private EditText password;
+
 
 
     @Override
@@ -55,24 +72,60 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        EditText account = (EditText) findViewById(R.id.AccountID); //輸入的帳號
-        EditText password = (EditText) findViewById(R.id.Password); //輸入的密碼
+
+
         Button b_login = (Button) findViewById(R.id.b_login); //登入按鈕
         Button b_register = (Button) findViewById(R.id.b_register);   //註冊按鈕
-
+        mQueue = Volley.newRequestQueue(this);
 
 
         b_login.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
+                account = (EditText) findViewById(R.id.AccountID); //輸入的帳號
+                password = (EditText) findViewById(R.id.Password); //輸入的密碼
+
+                msg = (TextView) findViewById(R.id.data) ;
+                getRequest = new StringRequest(Request.Method.POST,mUrl,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String s) {
+                                msg.setText(s);
+                            }
+                        },
+                        new Response.ErrorListener() {
+
+                            @Override
+                            public void onErrorResponse(VolleyError volleyError) {
+                                msg.setText(volleyError.getMessage());
+                            }
+                        }){
+                    //攜帶參數
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> map = new HashMap();
+                        map.put("account", account.getText().toString());
+                        map.put("password",password.getText().toString());
+                        return map;
+                    }
+
+                };
+                mQueue.add(getRequest);
+
+                //
                 /*
                       ##這裡要確認是否有此帳號密碼  XD
                              */
-                // TODO Auto-generated method stub
-                Intent intent = new Intent();
-                intent.setClass(MainActivity.this,MainPageActivity.class);
-                startActivity(intent);
-                MainActivity.this.finish();
+                String check = "Connected successfully[{\"accountID\":\""+account.getText().toString()+"\",\"password\":\""+password.getText().toString()+"\"}]";
+                //msg.setText(check);
+             // if(check.equals(msg)){
+                  // TODO Auto-generated method stub
+               //   Intent intent = new Intent();
+               //   intent.setClass(MainActivity.this,MainPageActivity.class);
+               //   startActivity(intent);
+              //    MainActivity.this.finish();
+           //    }
+
             }
         });
 
