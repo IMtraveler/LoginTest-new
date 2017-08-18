@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     LoginButton loginButton;
     TextView textView;
     CallbackManager callbackManager;
-    private RequestQueue mQueue;
+    private RequestQueue mQueue; //初始化 取得volley的request物件, 建議將mQueue設為單一物件全域使用,避免浪費資源
     private final static String mUrl = "http://140.112.107.125:47155/html/login.php";
     private StringRequest getRequest;
     private TextView msg;
@@ -112,12 +112,15 @@ public class MainActivity extends AppCompatActivity {
                 };
                 mQueue.add(getRequest);
 
-                //
-                /*
-                      ##這裡要確認是否有此帳號密碼  XD
-                             */
-                String check = "Connected successfully[{\"accountID\":\""+account.getText().toString()+"\",\"password\":\""+password.getText().toString()+"\"}]";
+
+                //String check = "Connected successfully[{\"accountID\":\""+account.getText().toString()+"\",\"password\":\""+password.getText().toString()+"\"}]";
                 //msg.setText(check);
+                //TextView msg2 = (TextView)findViewById(R.id.data2);
+                //msg2.setText();
+
+                 /*
+                             ##這裡要確認是否有此帳號密碼  XD
+                             */
              // if(check.equals(msg)){
                   // TODO Auto-generated method stub
                //   Intent intent = new Intent();

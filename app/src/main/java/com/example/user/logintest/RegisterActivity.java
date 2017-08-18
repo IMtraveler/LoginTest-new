@@ -1,41 +1,101 @@
 package com.example.user.logintest;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
+
+    private RequestQueue mQueue; //初始化 取得volley的request物件, 建議將mQueue設為單一物件全域使用,避免浪費資源
+    private final static String mUrl = "http://140.112.107.125:47155/html/Register.php";
+    private StringRequest getRequest;
+    private TextView msg3;
+    private EditText newaccount;
+    private EditText newpassword;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        EditText newaccount = (EditText)findViewById(R.id.new_id); //新註冊的帳號
-        EditText newpassword = (EditText)findViewById(R.id.new_password);  //新註冊的密碼
-        /*
-              這裡要跟資料庫核對有沒有一樣帳號的人，如果沒有，將它存到資料庫中
-              如果有，跳出提示，註冊失敗(可能帳號已被註冊)
-            */
-        Button register = (Button)findViewById(R.id.b_toRegister); //註冊按鈕
-        //如果註冊成功，就回到登入頁面
-       register.setOnClickListener(new Button.OnClickListener(){
+        Button b_toregister = (Button) findViewById(R.id.b_toregister);   //註冊按鈕
+        mQueue = Volley.newRequestQueue(this);
+
+
+        b_toregister.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
-                /*
-                               ##這裡要確認是否有此帳號密碼  XD
+               newaccount = (EditText) findViewById(R.id.newAccountID); //輸入的帳號
+               newpassword = (EditText) findViewById(R.id.newPassword); //輸入的密碼
+
+                msg3 = (TextView) findViewById(R.id.data3) ;
+                getRequest = new StringRequest(Request.Method.POST,mUrl,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String s) {
+                                msg3.setText(s);
+                            }
+                        },
+                        new Response.ErrorListener() {
+
+                            @Override
+                            public void onErrorResponse(VolleyError volleyError) {
+                                msg3.setText(volleyError.getMessage());
+                            }
+                        }){
+                    //攜帶參數
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> map = new HashMap();
+                        map.put("account", newaccount.getText().toString());
+                        map.put("password",newpassword.getText().toString());
+                        return map;
+                    }
+
+                };
+                mQueue.add(getRequest);
+
+
+               // String check = "Connected successfully[{\"accountID\":\""+account.getText().toString()+"\",\"password\":\""+password.getText().toString()+"\"}]";
+                //msg.setText(check);
+                //TextView msg2 = (TextView)findViewById(R.id.data2);
+                //msg2.setText();
+
+                 /*
+                             ##這裡要確認是否有此帳號密碼  XD
                              */
+                // if(check.equals(msg)){
                 // TODO Auto-generated method stub
-                Intent intent = new Intent();
-                intent.setClass(RegisterActivity.this,MainActivity.class);
-                startActivity(intent);
-                RegisterActivity.this.finish();
+                //   Intent intent = new Intent();
+                //   intent.setClass(MainActivity.this,MainPageActivity.class);
+                //   startActivity(intent);
+                //    MainActivity.this.finish();
+                //    }
+
             }
         });
 
+
+
+
     }
 
+
 }
+
