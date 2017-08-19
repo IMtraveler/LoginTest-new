@@ -30,7 +30,12 @@ public class AttractionsActivity extends AppCompatActivity {
         String name = bundle.getString("name") ;
         String post = bundle.getString("post");
         String audiouri = bundle.getString("audioURL") ;
+        String lat = bundle.getString("lat");
+        String lng = bundle.getString("lng");
+
         //
+        bundleAudio.putString("lat",lat);
+        bundleAudio.putString("lng",lng);
         bundleAudio.putString("audioURL",audiouri);
         Picasso.with(getBaseContext()).load(imgURL).into(imageView);
         tv_name.setText(name);
@@ -40,7 +45,7 @@ public class AttractionsActivity extends AppCompatActivity {
         tv_intro.setText(intro);
 
 
-        Button btn_toAudio = (Button)findViewById(R.id.btn_toAudio);
+        Button btn_toAudio = (Button)findViewById(R.id.btn_pause);
         btn_toAudio.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {

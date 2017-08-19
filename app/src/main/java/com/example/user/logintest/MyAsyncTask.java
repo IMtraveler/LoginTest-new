@@ -17,6 +17,7 @@ import java.util.concurrent.TimeUnit ;
 
 
 public class MyAsyncTask extends AsyncTask<String, Integer, String>{
+
 private static final OkHttpClient client = new OkHttpClient.Builder()
         .connectTimeout(10, TimeUnit.SECONDS)
         .writeTimeout(10, TimeUnit.SECONDS)

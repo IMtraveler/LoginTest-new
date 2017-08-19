@@ -7,7 +7,7 @@
     tools:context="com.example.user.logintest.AttractionsActivity">
 
     <Button
-        android:id="@+id/btn_toAudio"
+        android:id="@+id/btn_pause"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
@@ -27,8 +27,8 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="25dp"
-        android:layout_toLeftOf="@+id/btn_toAudio"
-        android:layout_toStartOf="@+id/btn_toAudio"
+        android:layout_toLeftOf="@+id/btn_pause"
+        android:layout_toStartOf="@+id/btn_pause"
         android:text="@string/attrationName"
         android:textSize="20sp" />
 
@@ -44,7 +44,7 @@
         android:id="@+id/tv_attrIntro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/btn_toAudio"
+        android:layout_above="@+id/btn_pause"
         android:layout_alignLeft="@+id/button2"
         android:layout_alignStart="@+id/button2"
         android:layout_marginBottom="72dp"

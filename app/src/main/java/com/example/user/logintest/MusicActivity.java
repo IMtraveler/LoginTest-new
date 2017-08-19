@@ -4,18 +4,30 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.*;
+import android.view.View.OnClickListener;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
 
-public class MusicActivity extends AppCompatActivity {
+import java.util.concurrent.ExecutionException;
+
+import layout.SecondAudioFragment;
+import layout.FirstAudioFragment;
+
+public class MusicActivity extends AppCompatActivity implements OnClickListener{
 
     Button[] bt = new Button[3];
     MediaPlayer mp;
-
+    Bundle bundle = new Bundle();
+    //Button btn_toF1 = (Button)findViewById(R.id.btn_preAudio);
+    //Button btn_toF2 = (Button)findViewById(R.id.btn_nextAudio);
+    String[] audioInfo ;
 
 
 
@@ -24,16 +36,22 @@ public class MusicActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music);
         bt[0] = (Button)findViewById(R.id.button2);
-        bt[1] = (Button)findViewById(R.id.btn_toAudio);
+        bt[1] = (Button)findViewById(R.id.btn_pause);
         bt[2] = (Button)findViewById(R.id.button4);
+        TextView tv_audioIntro = (TextView)findViewById(R.id.tv_audioIntro) ;
+        TextView tv_attrName = (TextView)findViewById(R.id.tv_attrName) ;
+        //btn_toF1.setOnClickListener(this);
+        //btn_toF2.setOnClickListener(this);
+        // Fragment fragment = FirstAudioFragment() ;
 
         // should be guide intro and audio intro
         /*
+
         ImageView imageView2 = (ImageView)findViewById(R.id.imageView2);
         TextView tv_name2 = (TextView)findViewById(R.id.tv_attrName);
         TextView tv_intro = (TextView)findViewById(R.id.tv_attrIntro);
 
-        Bundle bundle = getIntent().getExtras();
+        Bundle bundleFromAttr = getIntent().getExtras();
         String imgURL = bundle.getString("imgURL");
         String name = bundle.getString("name") ;
         String post = bundle.getString("post");
@@ -43,18 +61,41 @@ public class MusicActivity extends AppCompatActivity {
         int endIntro = post.indexOf("imgURL") ;
         String intro = post.substring(begIntro+6, endIntro-1);
         tv_intro.setText(intro);*/
+        Bundle bundleFromAttr = getIntent().getExtras();
+        String lat = bundleFromAttr.getString("lat") ;
+        String lng = bundleFromAttr.getString("lng") ;
+        //String lat = "25.017788";
+        //String lng ="121.533171" ;
+        String phpURL = "http://140.112.107.125:47155/html/testAudio.php" ;
+        String post = "testttttt";
+        FragmentManager fm ;
+        fm = getSupportFragmentManager() ;
 
-        Button buttonback = (Button)findViewById(R.id.button5);
-        buttonback.setOnClickListener(new Button.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Intent intent = new Intent();
-                intent.setClass(MusicActivity.this,MapsActivity.class);
-                startActivity(intent);
-                MusicActivity.this.finish();
-            }
-        });
+
+        try {
+            post = new MyAsyncTask().execute(lat, lng, phpURL).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        if(post.length()> 3) {
+            tv_audioIntro.setText(post);
+        }
+        else {
+            post = "no data ; no data ; no data";
+        }
+        audioInfo = post.split(";");
+        //int audioNum = audioInfo.length ;
+
+        sendData(fm);
+        bundle.putString("audioInfo", "testttttttt");
+// set Fragmentclass Arguments
+        SecondAudioFragment secondAF = new SecondAudioFragment();
+        secondAF.setArguments(bundle);
+
+        //tv_attrName.setText(audioInfo.length);
         bt[0].setText("start");
         bt[1].setText("pause");
         bt[2].setText("stop");
@@ -67,12 +108,21 @@ public class MusicActivity extends AppCompatActivity {
             bt[i].setOnClickListener(new SampleClickListener());
         }
 
-
-
-
-
         // setContentView(R.layout.activity_main);
     }
+
+    public void sendData(FragmentManager fm) {
+        //PACK DATA IN A BUNDLE
+        Bundle bundle = new Bundle();
+        bundle.putString("audioInfo", audioInfo[1]);
+        SecondAudioFragment myFragment = new SecondAudioFragment();
+        myFragment.setArguments(bundle);
+        //THEN NOW SHOW OUR FRAGMENT
+        fm.beginTransaction().replace(R.id.fragment_place,myFragment).commit();
+    }
+
+
+
     public void onResume()
     {
         super.onResume();
@@ -94,6 +144,36 @@ public class MusicActivity extends AppCompatActivity {
         super.onPause();
         mp.release();
     }
+
+    @Override
+    public void onClick(View view) {
+        Fragment fragment ;
+
+        if (view == findViewById(R.id.btn_nextAudio)){
+            Bundle SecondAudioBundle = new Bundle();
+            SecondAudioBundle.putString("audioInfo", audioInfo[2]);
+            fragment = new SecondAudioFragment();
+            fragment.setArguments(SecondAudioBundle);
+            FragmentManager fragmentManager = getSupportFragmentManager()  ;
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction() ;
+            fragmentTransaction.replace(R.id.fragment_place, fragment);
+            fragmentTransaction.commit();
+
+        }
+        if (view == findViewById(R.id.btn_preAudio)){
+            Bundle FirstAudioBundle = new Bundle();
+            FirstAudioBundle.putString("audioInfo",audioInfo[1]);
+            fragment = new FirstAudioFragment();
+            FragmentManager fragmentManager = getSupportFragmentManager()  ;
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction() ;
+            fragmentTransaction.replace(R.id.fragment_place, fragment);
+            fragment.setArguments(FirstAudioBundle);
+            fragmentTransaction.commit();
+        }
+
+
+    }
+
     private class SampleCompletionListener implements MediaPlayer.OnCompletionListener {
 
         @Override

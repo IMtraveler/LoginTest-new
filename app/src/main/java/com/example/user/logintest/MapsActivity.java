@@ -217,6 +217,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 String name = post.substring(begName+5, endName-1);
                 tv_intro.setText(name) ;
                 bundle.putString("name", name);
+                bundle.putString("lat", lat);
+                bundle.putString("lng", lng);
                 int begImg = post.indexOf("imgURL:") ;
                 int begAudio = post.indexOf("audioURL:") ;
                 int endIndex = post.length() ;

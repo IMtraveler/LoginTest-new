@@ -24,4 +24,9 @@
     <string name="download">下載</string>
     <string name="sqlite">SQLite</string>
     <string name="attrationName">景點名稱</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="next">next</string>
+    <string name="previous">previous</string>
 </resources>
