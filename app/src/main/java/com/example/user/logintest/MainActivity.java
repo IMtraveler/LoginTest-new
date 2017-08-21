@@ -25,6 +25,8 @@ import com.facebook.login.widget.LoginButton;
 import java.util.HashMap;
 import java.util.Map;
 
+
+
 public class MainActivity extends AppCompatActivity {
 
     LoginButton loginButton;
@@ -36,9 +38,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView msg;
     private EditText account;
     private EditText password;
-    public interface VolleyCallback {
-        void onSuccessResponse(String result);
-    }
+    private String re_String;
+
 
 
 
@@ -93,7 +94,22 @@ public class MainActivity extends AppCompatActivity {
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String s) {
-                                msg.setText(s);
+                                //msg.setText(s.trim());
+
+                                String check = "accountID: "+account.getText().toString()+"\npassword: "+password.getText().toString();
+
+
+                                if(check.trim().equals(s.trim())){
+                                // TODO Auto-generated method stub
+                                   Intent intent = new Intent();
+                                   intent.setClass(MainActivity.this,MainPageActivity.class);
+                                   startActivity(intent);
+                                   MainActivity.this.finish();
+                                }else{
+                                    msg.setText("帳號或密碼錯誤");
+                                }
+
+
                             }
                         },
                         new Response.ErrorListener() {
@@ -112,16 +128,25 @@ public class MainActivity extends AppCompatActivity {
                         return map;
                     }
 
+
+
                 };
                 mQueue.add(getRequest);
+               // String check = "Connected successfully[{\"accountID\":\""+account.getText().toString()+"\",\"password\":\""+password.getText().toString()+"\"}]";
+               // if(check.equals(s)){
+                //    // TODO Auto-generated method stub
+                //    Intent intent = new Intent();
+                //    intent.setClass(MainActivity.this,MainPageActivity.class);
+                //    startActivity(intent);
+                //    MainActivity.this.finish();
+              //  }
 
 
 
 
-                //String check = "Connected successfully[{\"accountID\":\""+account.getText().toString()+"\",\"password\":\""+password.getText().toString()+"\"}]";
-                //msg.setText(check);
-                //TextView msg2 = (TextView)findViewById(R.id.data2);
-                //msg2.setText();
+
+
+
 
                  /*
                              ##這裡要確認是否有此帳號密碼  XD
@@ -171,6 +196,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
+
+
 
 
 
