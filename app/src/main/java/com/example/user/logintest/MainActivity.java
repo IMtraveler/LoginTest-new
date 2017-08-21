@@ -36,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView msg;
     private EditText account;
     private EditText password;
+    public interface VolleyCallback {
+        void onSuccessResponse(String result);
+    }
 
 
 
@@ -113,6 +116,8 @@ public class MainActivity extends AppCompatActivity {
                 mQueue.add(getRequest);
 
 
+
+
                 //String check = "Connected successfully[{\"accountID\":\""+account.getText().toString()+"\",\"password\":\""+password.getText().toString()+"\"}]";
                 //msg.setText(check);
                 //TextView msg2 = (TextView)findViewById(R.id.data2);
@@ -167,6 +172,12 @@ public class MainActivity extends AppCompatActivity {
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
+
+
+
+
 }
+
+
 
 
