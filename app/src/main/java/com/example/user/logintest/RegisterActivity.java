@@ -36,6 +36,9 @@ public class RegisterActivity extends AppCompatActivity {
 
         Button b_toregister = (Button) findViewById(R.id.b_toregister);   //註冊按鈕
         mQueue = Volley.newRequestQueue(this);
+        msg3 = (TextView) findViewById(R.id.data3) ;
+        msg3.setText("歡迎使用註冊系統");
+
 
 
         b_toregister.setOnClickListener(new Button.OnClickListener(){
@@ -44,12 +47,18 @@ public class RegisterActivity extends AppCompatActivity {
                newaccount = (EditText) findViewById(R.id.newAccountID); //輸入的帳號
                newpassword = (EditText) findViewById(R.id.newPassword); //輸入的密碼
 
-                msg3 = (TextView) findViewById(R.id.data3) ;
+
                 getRequest = new StringRequest(Request.Method.POST,mUrl,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String s) {
                                 msg3.setText(s);
+                                if(s.trim().equals("成功註冊")){
+                                    Intent intent = new Intent();
+                                    intent.setClass(RegisterActivity.this,MainActivity.class);
+                                    startActivity(intent);
+                                     RegisterActivity.this.finish();
+                                }
                             }
                         },
                         new Response.ErrorListener() {
