@@ -25,7 +25,8 @@ private static final OkHttpClient client = new OkHttpClient.Builder()
         .build();
 @Override
 protected String doInBackground(String... params) {
-        try {
+        Response response = null;
+
         RequestBody formBody = new FormBody.Builder()
         .add("lat", params[0])
         .add("lng", params[1]).build();
@@ -33,13 +34,16 @@ protected String doInBackground(String... params) {
         Request request = new Request.Builder().url(params[2])
         .post(formBody)
         .build();
-
-        Response response = client.newCall(request).execute();
-final String resStr = response.body().string();
+        try {
+        response = client.newCall(request).execute();
+        final String resStr = response.body().string();
 
         return resStr;
         } catch (Exception e) {
         return e.toString();
+        }finally {
+                response.close();
+                response.body().close();
         }
         }
 @Override

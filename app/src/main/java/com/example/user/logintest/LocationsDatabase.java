@@ -21,7 +21,7 @@ public class LocationsDatabase extends SQLiteAssetHelper {
     private static final String NAME="name";
     private static final String LAT="lat";
     private static final String LNG="lng";
-    private static final String LOCATION_TABLE="locations";
+    private static final String LOCATION_TABLE="tpe_intro";
 
 
     public LocationsDatabase(Context context) {

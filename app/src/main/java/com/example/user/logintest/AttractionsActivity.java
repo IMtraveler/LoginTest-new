@@ -26,25 +26,25 @@ public class AttractionsActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
 
 
-        String imgURL = bundle.getString("imgURL");
-        String name = bundle.getString("name") ;
-        String post = bundle.getString("post");
-        String audiouri = bundle.getString("audioURL") ;
-        String lat = bundle.getString("lat");
-        String lng = bundle.getString("lng");
+            String imgURL = bundle.getString("imgURL");
+            String name = bundle.getString("name");
+            String post = bundle.getString("post");
+            String lat = bundle.getString("lat");
+            String lng = bundle.getString("lng");
 
-        //
         bundleAudio.putString("lat",lat);
         bundleAudio.putString("lng",lng);
-        bundleAudio.putString("audioURL",audiouri);
         Picasso.with(getBaseContext()).load(imgURL).into(imageView);
         tv_name.setText(name);
-        int begIntro = post.indexOf("intro:");
-        int endIntro = post.indexOf("imgURL") ;
-        String intro = post.substring(begIntro+6, endIntro-1);
-        tv_intro.setText(intro);
-
-
+        if(post.length()>10) {
+            int begIntro = post.indexOf("intro:");
+            int endIntro = post.indexOf("image");
+            String intro = post.substring(begIntro + 6, endIntro - 1);
+            tv_intro.setText(intro);
+        }
+        else {
+            tv_intro.setText("no data");
+        }
         Button btn_toAudio = (Button)findViewById(R.id.btn_pause);
         btn_toAudio.setOnClickListener(new Button.OnClickListener(){
             @Override

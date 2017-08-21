@@ -13,8 +13,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.TextView;
+import android.content.Context;
+import android.os.StrictMode;
 
 
+import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 import layout.SecondAudioFragment;
@@ -28,7 +31,7 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
     //Button btn_toF1 = (Button)findViewById(R.id.btn_preAudio);
     //Button btn_toF2 = (Button)findViewById(R.id.btn_nextAudio);
     String[] audioInfo ;
-
+    Uri uri;
 
 
     @Override
@@ -128,13 +131,13 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
         super.onResume();
         //mp = MediaPlayer.create(this, R.raw.music);
         //Uri uri = Uri.parse("http://140.112.107.125:47155/html/uploaded/Huaientang.m4a");
-        Bundle extras = getIntent().getExtras();
-        String audiouri = extras.getString("audioURL");
-        Uri uri = Uri.parse("http://140.112.107.125:47155/html/uploaded/noAudio.m4a");
+        //Bundle extras = getIntent().getExtras();
+        //String audiouri = extras.getString("audioURL");
+        uri = Uri.parse("http://140.112.107.125:47155/html/uploaded/noAudio.m4a");
 
-        if (audiouri.length() > 10){
-            uri = Uri.parse(audiouri);
-        }
+        //if (audiouri.length() > 10){
+        //    uri = Uri.parse(audiouri);
+        //}
         //Uri uri = Uri.parse(audiouri);
         mp = MediaPlayer.create(this,uri );
         mp.setOnCompletionListener(new SampleCompletionListener());
@@ -142,7 +145,7 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
     public void onPause()
     {
         super.onPause();
-        mp.release();
+        mp.reset();
     }
 
     @Override
@@ -159,6 +162,15 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
             fragmentTransaction.replace(R.id.fragment_place, fragment);
             fragmentTransaction.commit();
 
+            mp.reset();
+            uri = Uri.parse("http://140.112.107.125:47155/html/uploaded/test2.m4a");
+            try {
+                mp.setDataSource(this,uri);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            mp.prepareAsync();
+
         }
         if (view == findViewById(R.id.btn_preAudio)){
             Bundle FirstAudioBundle = new Bundle();
@@ -169,6 +181,15 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
             fragmentTransaction.replace(R.id.fragment_place, fragment);
             fragment.setArguments(FirstAudioBundle);
             fragmentTransaction.commit();
+
+            mp.reset();
+            uri = Uri.parse("http://140.112.107.125:47155/html/uploaded/Huaientang.m4a");
+            try {
+                mp.setDataSource(this,uri);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            mp.prepareAsync();
         }
 
 

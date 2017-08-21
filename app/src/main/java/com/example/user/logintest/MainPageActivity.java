@@ -27,18 +27,6 @@ public class MainPageActivity extends AppCompatActivity  {
         findViews();
         setListeners();
 
-        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-                .detectDiskReads()
-                .detectDiskWrites()
-                .detectNetwork()   // or .detectAll() for all detectable problems
-                .penaltyLog()
-                .build());
-        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-                .detectLeakedSqlLiteObjects()
-                .detectLeakedClosableObjects()
-                .penaltyLog()
-                .penaltyDeath()
-                .build());
 
         Button button03 = (Button)findViewById(R.id.Button03);
         button03.setOnClickListener(new Button.OnClickListener(){

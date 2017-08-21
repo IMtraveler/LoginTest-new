@@ -201,7 +201,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 String lng = String.valueOf(marker.getPosition().longitude) ;
                 String phpURL = "http://140.112.107.125:47155/html/test.php" ;
                 //final String post = Post(lat, lng);
-
+                bundle.putString("lat", lat);
+                bundle.putString("lng", lng);
                 String post = "";
                 try {
                     post = new MyAsyncTask().execute(lat, lng, phpURL).get();
@@ -210,30 +211,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 }
-
                 bundle.putString("post", post);
-                int begName = post.indexOf("name:");
-                int endName = post.indexOf("address:") ;
-                String name = post.substring(begName+5, endName-1);
-                tv_intro.setText(name) ;
-                bundle.putString("name", name);
-                bundle.putString("lat", lat);
-                bundle.putString("lng", lng);
-                int begImg = post.indexOf("imgURL:") ;
-                int begAudio = post.indexOf("audioURL:") ;
-                int endIndex = post.length() ;
 
-                if ((begImg+7) >= (begAudio-5)){
-                    Picasso.with(getBaseContext()).load("http://140.112.107.125:47155/html/uploaded/null.png").into(imageView);
-                    bundle.putString("imgURL","http://140.112.107.125:47155/html/uploaded/null.png" );
+                if (post.length() > 10) {
+                    int begName = post.indexOf("name:");
+                    int endName = post.indexOf("altHead_name");
+                    String name = post.substring(begName + 5, endName - 1);
+                    tv_intro.setText(name);
+                    bundle.putString("name", name);
+                    int begImg = post.indexOf("image");
+                    int endIndex = post.length();
+
+                    if ((begImg + 6) >= endIndex - 5) {
+                        Picasso.with(getBaseContext()).load("http://140.112.107.125:47155/html/uploaded/null.png").into(imageView);
+                        bundle.putString("imgURL", "http://140.112.107.125:47155/html/uploaded/null.png");
+                    } else {
+                        String imgURL = "http:" + post.substring(begImg + 6, endIndex);
+                        imgURL = imgURL.replaceAll(" ", "");
+                        Picasso.with(getBaseContext()).load(imgURL).into(imageView);
+                        bundle.putString("imgURL", imgURL);
+                    }
                 }
                 else{
-                    String imgURL = post.substring(begImg+7,begAudio-1);
-                    imgURL = imgURL.replaceAll(" ", "");
-                    Picasso.with(getBaseContext()).load(imgURL).into(imageView);
-                    bundle.putString("imgURL", imgURL);
+                    bundle.putString("imgURL","http://140.112.107.125:47155/html/uploaded/null.png");
+                    tv_intro.setText("no data");
+                    bundle.putString("name", "no data");
                 }
-
+/*
                 if((begAudio+9) >= (endIndex-5)){
                     String audioURL = "null" ;
                     bundle.putString("audioURL", audioURL);
@@ -243,7 +247,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     audioURL = audioURL.replaceAll(" ","");
                     bundle.putString("audioURL", audioURL);
                 }
-
+*/
                 mLogin.setOnClickListener(new View.OnClickListener()  {
                                               @Override
                                               public void onClick(View view){
