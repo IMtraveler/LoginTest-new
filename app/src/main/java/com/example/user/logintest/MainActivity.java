@@ -38,7 +38,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView msg;
     private EditText account;
     private EditText password;
-    private String re_String;
+    private String UserId;
+    private final static String rUrl = "http://140.112.107.125:47155/html/Facebook.php";
+
 
 
 
@@ -47,22 +49,52 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         //performClick() 實現自動點擊
         //accessToken之後或許還會用到 先存起來
-        // accessToken = loginResult.getAccessToken();
+        //accessToken = loginResult.getAccessToken();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         loginButton = (LoginButton)findViewById(R.id.fb_login_bn);
         textView = (TextView)findViewById(R.id.textView);
         textView.setText("Facebook登入");
         callbackManager = CallbackManager.Factory.create();
+        msg = (TextView) findViewById(R.id.data) ;
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Intent intent = new Intent();
-                intent.setClass(MainActivity.this,CheckpersonActivity.class);
-                startActivity(intent);
-                MainActivity.this.finish();
-               // String UserId = loginResult.getAccessToken().getUserId() 這個是那個用戶的id 但是似乎無法放這裡
-               // String token = loginResult.getAccessToken().getToken();  這個是那個用戶的token(還要查查是啥，但是應該是相關基本資料吧?
+
+                /*Fackbook ID------------------------------------------------------------------------*/
+                UserId = loginResult.getAccessToken().getUserId();
+                //  msg.setText(UserId);
+                /*--------------------------------------------------------------------------------------*/
+                // String token = loginResult.getAccessToken().getToken();  這個是那個用戶的token(還要查查是啥，但是應該是相關基本資料吧?
+                getRequest = new StringRequest(Request.Method.POST,rUrl,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String s) {
+                                msg.setText(s);
+                                Intent intent = new Intent();
+                                intent.setClass(MainActivity.this,MainPageActivity.class);
+                                startActivity(intent);
+                                MainActivity.this.finish();
+                            }
+                        },
+                        new Response.ErrorListener() {
+
+                            @Override
+                            public void onErrorResponse(VolleyError volleyError) {
+                                msg.setText(volleyError.getMessage());
+                            }
+                        }){
+                    //攜帶參數
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> map = new HashMap();
+                        map.put("account", UserId);
+                        map.put("password","Fb_pwd");
+                        return map;
+                    }
+
+                };
+                mQueue.add(getRequest);
             }
 
             @Override
@@ -89,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                 account = (EditText) findViewById(R.id.AccountID); //輸入的帳號
                 password = (EditText) findViewById(R.id.Password); //輸入的密碼
 
-                msg = (TextView) findViewById(R.id.data) ;
+
                 getRequest = new StringRequest(Request.Method.POST,mUrl,
                         new Response.Listener<String>() {
                             @Override
@@ -100,11 +132,11 @@ public class MainActivity extends AppCompatActivity {
 
 
                                 if(check.trim().equals(s.trim())){
-                                // TODO Auto-generated method stub
-                                   Intent intent = new Intent();
-                                   intent.setClass(MainActivity.this,MainPageActivity.class);
-                                   startActivity(intent);
-                                   MainActivity.this.finish();
+                                    // TODO Auto-generated method stub
+                                    Intent intent = new Intent();
+                                    intent.setClass(MainActivity.this,MainPageActivity.class);
+                                    startActivity(intent);
+                                    MainActivity.this.finish();
                                 }else{
                                     msg.setText("帳號或密碼錯誤");
                                 }
@@ -132,14 +164,14 @@ public class MainActivity extends AppCompatActivity {
 
                 };
                 mQueue.add(getRequest);
-               // String check = "Connected successfully[{\"accountID\":\""+account.getText().toString()+"\",\"password\":\""+password.getText().toString()+"\"}]";
-               // if(check.equals(s)){
+                // String check = "Connected successfully[{\"accountID\":\""+account.getText().toString()+"\",\"password\":\""+password.getText().toString()+"\"}]";
+                // if(check.equals(s)){
                 //    // TODO Auto-generated method stub
                 //    Intent intent = new Intent();
                 //    intent.setClass(MainActivity.this,MainPageActivity.class);
                 //    startActivity(intent);
                 //    MainActivity.this.finish();
-              //  }
+                //  }
 
 
 
@@ -151,13 +183,13 @@ public class MainActivity extends AppCompatActivity {
                  /*
                              ##這裡要確認是否有此帳號密碼  XD
                              */
-             // if(check.equals(msg)){
-                  // TODO Auto-generated method stub
-               //   Intent intent = new Intent();
-               //   intent.setClass(MainActivity.this,MainPageActivity.class);
-               //   startActivity(intent);
-              //    MainActivity.this.finish();
-           //    }
+                // if(check.equals(msg)){
+                // TODO Auto-generated method stub
+                //   Intent intent = new Intent();
+                //   intent.setClass(MainActivity.this,MainPageActivity.class);
+                //   startActivity(intent);
+                //    MainActivity.this.finish();
+                //    }
 
             }
         });
@@ -204,7 +236,3 @@ public class MainActivity extends AppCompatActivity {
 
 
 }
-
-
-
-
