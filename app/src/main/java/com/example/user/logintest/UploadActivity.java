@@ -12,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
+import android.widget.TextView;
+import android.content.DialogInterface;
 
 import com.nbsp.materialfilepicker.MaterialFilePicker;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
@@ -29,6 +31,7 @@ import okhttp3.Response;
 public class UploadActivity extends AppCompatActivity {
 
     private Button uploadbutton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +62,10 @@ public class UploadActivity extends AppCompatActivity {
 
             }
         });
+
     }
+
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -78,10 +84,24 @@ public class UploadActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
         if(requestCode == 10 && resultCode == RESULT_OK){
 
+
+            File f  = new File(data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH));
+            String file_path = f.getAbsolutePath();
+            String filename = file_path.substring(file_path.lastIndexOf("/")+1);
+
             progress = new ProgressDialog(UploadActivity.this);
-            progress.setTitle("Uploading");
-            progress.setMessage("Please wait...");
+            progress.setTitle("上傳中");
+            progress.setMessage(filename);
+
+            progress.setButton(DialogInterface.BUTTON_POSITIVE, "確認", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
             progress.show();
+
+
 
             Thread t = new Thread(new Runnable() {
                 @Override
@@ -113,7 +133,7 @@ public class UploadActivity extends AppCompatActivity {
                             throw new IOException("Error : "+response);
                         }
 
-                        progress.dismiss();
+                        //progress.dismiss();
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -128,6 +148,7 @@ public class UploadActivity extends AppCompatActivity {
 
         }
     }
+
 
     private String getMimeType(String path) {
 
