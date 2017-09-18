@@ -17,20 +17,18 @@
         android:layout_alignBaseline="@+id/btn_pause"
         android:layout_alignBottom="@+id/btn_pause"
         android:layout_toLeftOf="@+id/btn_pause"
-        android:layout_toStartOf="@+id/btn_pause"
-        android:layout_marginRight="19dp"
-        android:layout_marginEnd="19dp" />
+        android:layout_toStartOf="@+id/btn_pause" />
 
     <Button
         android:id="@+id/btn_pause"
         style="@style/Widget.AppCompat.Button.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="42dp"
         tools:ignore="MissingConstraints,RelativeOverlap"
         tools:layout_editor_absoluteX="148dp"
-        tools:layout_editor_absoluteY="12dp" />
+        tools:layout_editor_absoluteY="12dp"
+        android:layout_below="@+id/tv_attrName"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/button4"
@@ -40,12 +38,9 @@
         tools:ignore="HardcodedText,MissingConstraints"
         tools:layout_editor_absoluteX="277dp"
         tools:layout_editor_absoluteY="12dp"
-        android:layout_alignBaseline="@+id/btn_pause"
-        android:layout_alignBottom="@+id/btn_pause"
+        android:layout_below="@+id/tv_attrName"
         android:layout_toRightOf="@+id/btn_pause"
-        android:layout_toEndOf="@+id/btn_pause"
-        android:layout_marginLeft="23dp"
-        android:layout_marginStart="23dp" />
+        android:layout_toEndOf="@+id/btn_pause" />
 
     <TextView
         android:id="@+id/tv_attrName"
@@ -57,7 +52,6 @@
         android:layout_marginTop="25dp"
         android:layout_toLeftOf="@+id/btn_pause"
         android:layout_toStartOf="@+id/btn_pause"
-        android:text="@string/attrationName"
         android:textSize="20sp" />
 
     <ImageView
@@ -93,20 +87,20 @@
         android:id="@+id/btn_nextAudio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/button4"
-        android:layout_toEndOf="@+id/button4"
-        android:layout_toRightOf="@+id/button4"
         android:onClick="onClick"
-        android:text="@string/next" />
+        android:text="@string/next"
+        android:layout_below="@+id/imageView2"
+        android:layout_toRightOf="@+id/button4"
+        android:layout_toEndOf="@+id/button4" />
 
     <Button
         android:id="@+id/btn_preAudio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/button2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:onClick="onClick"
-        android:text="last" />
+        android:text="last"
+        android:layout_below="@+id/tv_attrName"
+        android:layout_toLeftOf="@+id/button2"
+        android:layout_toStartOf="@+id/button2" />
 
 </RelativeLayout>

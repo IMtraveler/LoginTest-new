@@ -203,6 +203,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 //final String post = Post(lat, lng);
                 bundle.putString("lat", lat);
                 bundle.putString("lng", lng);
+
                 String post = "";
                 try {
                     post = new MyAsyncTask().execute(lat, lng, phpURL).get();

@@ -17,7 +17,11 @@ import android.content.Context;
 import android.os.StrictMode;
 
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.LatLng;
+
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import layout.SecondAudioFragment;
@@ -32,10 +36,15 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
     //Button btn_toF2 = (Button)findViewById(R.id.btn_nextAudio);
     String[] audioInfo ;
     Uri uri;
+    String lat;
+    String lng;
+    LocationsDatabase myDatabase;
+    private ArrayList<Locations> locationArrayList;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music);
         bt[0] = (Button)findViewById(R.id.button2);
@@ -43,6 +52,9 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
         bt[2] = (Button)findViewById(R.id.button4);
         TextView tv_audioIntro = (TextView)findViewById(R.id.tv_audioIntro) ;
         TextView tv_attrName = (TextView)findViewById(R.id.tv_attrName) ;
+
+
+
         //btn_toF1.setOnClickListener(this);
         //btn_toF2.setOnClickListener(this);
         // Fragment fragment = FirstAudioFragment() ;
@@ -64,9 +76,12 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
         int endIntro = post.indexOf("imgURL") ;
         String intro = post.substring(begIntro+6, endIntro-1);
         tv_intro.setText(intro);*/
+
         Bundle bundleFromAttr = getIntent().getExtras();
         String lat = bundleFromAttr.getString("lat") ;
         String lng = bundleFromAttr.getString("lng") ;
+        TextView attrName = (TextView)findViewById(R.id.tv_attrName);
+        attrName.setText("這裡要用當地景點名稱   ");
         //String lat = "25.017788";
         //String lng ="121.533171" ;
         String phpURL = "http://140.112.107.125:47155/html/testAudio.php" ;
@@ -153,6 +168,9 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
         Fragment fragment ;
 
         if (view == findViewById(R.id.btn_nextAudio)){
+            bt[0].setEnabled(true);
+            bt[1].setEnabled(true);
+            bt[2].setEnabled(true);
             Bundle SecondAudioBundle = new Bundle();
             SecondAudioBundle.putString("audioInfo", audioInfo[2]);
             fragment = new SecondAudioFragment();
@@ -173,6 +191,9 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
 
         }
         if (view == findViewById(R.id.btn_preAudio)){
+            bt[0].setEnabled(true);
+            bt[1].setEnabled(true);
+            bt[2].setEnabled(true);
             Bundle FirstAudioBundle = new Bundle();
             FirstAudioBundle.putString("audioInfo",audioInfo[1]);
             fragment = new FirstAudioFragment();
