@@ -34,6 +34,7 @@ public class AttractionsActivity extends AppCompatActivity {
 
         bundleAudio.putString("lat",lat);
         bundleAudio.putString("lng",lng);
+        bundleAudio.putString("name",name);
         Picasso.with(getBaseContext()).load(imgURL).into(imageView);
         tv_name.setText(name);
         if(post.length()>10) {

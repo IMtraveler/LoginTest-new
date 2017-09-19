@@ -204,6 +204,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 bundle.putString("lat", lat);
                 bundle.putString("lng", lng);
 
+
                 String post = "";
                 try {
                     post = new MyAsyncTask().execute(lat, lng, phpURL).get();
@@ -238,6 +239,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     tv_intro.setText("no data");
                     bundle.putString("name", "no data");
                 }
+
 /*
                 if((begAudio+9) >= (endIndex-5)){
                     String audioURL = "null" ;

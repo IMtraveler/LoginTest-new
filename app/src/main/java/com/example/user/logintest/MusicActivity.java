@@ -44,7 +44,6 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music);
         bt[0] = (Button)findViewById(R.id.button2);
@@ -80,8 +79,9 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
         Bundle bundleFromAttr = getIntent().getExtras();
         String lat = bundleFromAttr.getString("lat") ;
         String lng = bundleFromAttr.getString("lng") ;
+        String name = bundleFromAttr.getString("name");
         TextView attrName = (TextView)findViewById(R.id.tv_attrName);
-        attrName.setText("這裡要用當地景點名稱   ");
+        attrName.setText(name);
         //String lat = "25.017788";
         //String lng ="121.533171" ;
         String phpURL = "http://140.112.107.125:47155/html/testAudio.php" ;
