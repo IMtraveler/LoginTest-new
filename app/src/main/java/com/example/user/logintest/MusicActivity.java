@@ -30,6 +30,9 @@ import layout.FirstAudioFragment;
 public class MusicActivity extends AppCompatActivity implements OnClickListener{
 
     Button[] bt = new Button[3];
+    Button nextbn;
+    Button prebn;
+
     MediaPlayer mp;
     Bundle bundle = new Bundle();
     //Button btn_toF1 = (Button)findViewById(R.id.btn_preAudio);
@@ -57,6 +60,8 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
         bt[0] = (Button)findViewById(R.id.button2);
         bt[1] = (Button)findViewById(R.id.btn_pause);
         bt[2] = (Button)findViewById(R.id.button4);
+        nextbn = (Button)findViewById( R.id.btn_nextAudio);
+        prebn  = (Button)findViewById( R.id.btn_preAudio);
         TextView tv_audioIntro = (TextView)findViewById(R.id.tv_audioIntro) ;
 
 
@@ -246,6 +251,8 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
             if(num>0){
                 num--;
             }
+            mp.pause();
+            mp.seekTo(0);
             attrName.setText(AudioName[num]);
             bt[0].setEnabled(true);
             bt[1].setEnabled(true);
@@ -292,6 +299,7 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
                 bt[0].setEnabled(false);
                 bt[1].setEnabled(true);
                 bt[2].setEnabled(false);
+
                 try
                 {
                     mp.prepare();
