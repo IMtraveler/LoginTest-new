@@ -14,6 +14,7 @@ import com.squareup.picasso.Picasso;
 public class AttractionsActivity extends AppCompatActivity {
 
     Bundle bundleAudio = new Bundle();
+    Bundle bundleUpload = new Bundle();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,11 @@ public class AttractionsActivity extends AppCompatActivity {
         else {
             tv_intro.setText("no data");
         }
-        Button btn_toAudio = (Button)findViewById(R.id.btn_pause);
+
+        bundleUpload.putString("lat",lat);
+        bundleUpload.putString("lng",lng);
+        bundleUpload.putString("name",name);
+        Button btn_toAudio = (Button)findViewById(R.id.btn_toAudio);
         btn_toAudio.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -54,6 +59,20 @@ public class AttractionsActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.setClass(AttractionsActivity.this,MusicActivity.class);
                 intent.putExtras(bundleAudio);
+                startActivity(intent);
+                AttractionsActivity.this.finish();
+
+            }
+        });
+
+        Button btn_upload = (Button)findViewById(R.id.btn_upload);
+        btn_upload.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                Intent intent = new Intent();
+                intent.setClass(AttractionsActivity.this,UploadActivity.class);
+                intent.putExtras(bundleUpload);
                 startActivity(intent);
                 AttractionsActivity.this.finish();
 

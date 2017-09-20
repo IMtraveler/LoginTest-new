@@ -36,6 +36,10 @@ public class UploadActivity extends AppCompatActivity {
     private EditText type ;
     private EditText intro ;
     private String filename;
+    private String lat ;
+    private String lng ;
+    private String name ;
+    private TextView attrName ;
 
 
     @Override
@@ -46,6 +50,7 @@ public class UploadActivity extends AppCompatActivity {
         uploadbutton = (Button)findViewById(R.id.btn_file) ;
         type = (EditText)findViewById(R.id.et_type);
         intro = (EditText)findViewById(R.id.et_intro);
+        attrName = (TextView)findViewById(R.id.tv_attrName);
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             if(ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
@@ -53,6 +58,12 @@ public class UploadActivity extends AppCompatActivity {
                 return;
             }
         }
+
+        Bundle bundleAttr = getIntent().getExtras();
+        lat = bundleAttr.getString("lat") ;
+        lng = bundleAttr.getString("lng") ;
+        name = bundleAttr.getString("name");
+        attrName.setText(name);
 
         enable_button();
     }
@@ -106,7 +117,7 @@ public class UploadActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
                     Intent intent = new Intent();
-                    intent.setClass(UploadActivity.this,MainPageActivity.class);
+                    intent.setClass(UploadActivity.this,MapsActivity.class);
                     startActivity(intent);
                 }
             });
@@ -151,6 +162,8 @@ public class UploadActivity extends AppCompatActivity {
 
                     try{
                         RequestBody formBody = new FormBody.Builder()
+                                .add("lat",lat)
+                                .add("lng", lng)
                                 .add("filename", filename)
                                 .add("intro", intro.getText().toString())
                                 .add("type", type.getText().toString()).build();
