@@ -159,6 +159,8 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
         }
 
         namelist.setText(AudioName[0]+" "+AudioURL[0]);
+        TextView attrName = (TextView)findViewById(R.id.tv_attrName);
+        attrName.setText(AudioName[0]);
 
 
 
