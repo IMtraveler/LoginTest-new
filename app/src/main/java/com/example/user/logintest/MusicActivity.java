@@ -58,7 +58,7 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
         bt[1] = (Button)findViewById(R.id.btn_pause);
         bt[2] = (Button)findViewById(R.id.button4);
         TextView tv_audioIntro = (TextView)findViewById(R.id.tv_audioIntro) ;
-        TextView tv_attrName = (TextView)findViewById(R.id.tv_attrName) ;
+
 
 
 
@@ -88,8 +88,6 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
         String lat = bundleFromAttr.getString("lat") ;
         String lng = bundleFromAttr.getString("lng") ;
         String name = bundleFromAttr.getString("name");
-        TextView attrName = (TextView)findViewById(R.id.tv_attrName);
-        attrName.setText(name);
         //String lat = "25.017788";
         //String lng ="121.533171" ;
         String phpURL = "http://140.112.107.125:47155/html/testAudio.php" ;
@@ -206,12 +204,14 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
     public void onClick(View view) {
         Fragment fragment ;
         String audiourl="http://140.112.107.125:47155/html/uploaded/noAudio.m4a";
-
+        TextView attrName = (TextView)findViewById(R.id.tv_attrName);
 
         if (view == findViewById(R.id.btn_nextAudio)){
             if(num<4){
                 num++;
             }
+
+            attrName.setText(AudioName[num]);
 
             //TextView namelist = (TextView)findViewById(R.id.namelist) ;
             //namelist.setText(AudioName.length);
@@ -244,7 +244,7 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
             if(num>0){
                 num--;
             }
-
+            attrName.setText(AudioName[num]);
             bt[0].setEnabled(true);
             bt[1].setEnabled(true);
             bt[2].setEnabled(true);
