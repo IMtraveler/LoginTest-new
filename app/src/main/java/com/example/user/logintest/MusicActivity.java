@@ -191,7 +191,7 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
         //Uri uri = Uri.parse("http://140.112.107.125:47155/html/uploaded/Huaientang.m4a");
         //Bundle extras = getIntent().getExtras();
         //String audiouri = extras.getString("audioURL");
-        String audiourl = AudioURL[0].trim();
+        String audiourl = AudioURL[num].trim();
         uri = Uri.parse(audiourl);
 
         //if (audiouri.length() > 10){
@@ -296,6 +296,7 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
         public void onClick(View v) {
             if(v == bt[0])
             {
+                mp.seekTo(0);
                 bt[0].setEnabled(false);
                 bt[1].setEnabled(true);
                 bt[2].setEnabled(false);
