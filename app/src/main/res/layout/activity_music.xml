@@ -54,12 +54,7 @@
         android:layout_toStartOf="@+id/btn_pause"
         android:textSize="20sp" />
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_attrName"
-        app:srcCompat="@color/cardview_light_background" />
+
 
     <fragment
         android:name="layout.FirstAudioFragment"
@@ -67,10 +62,10 @@
         android:layout_width="match_parent"
         android:layout_height="320dp"
         tools:layout="@layout/fragment_first_audio"
-        android:layout_alignParentBottom="true"
+        android:layout_marginTop="46dp"
+        android:layout_below="@+id/button2"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="48dp" />
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/tv_audioIntro"
@@ -80,7 +75,7 @@
         android:layout_alignTop="@+id/fragment_place"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="66dp" />
+        android:layout_marginTop="124dp" />
 
     <Button
         android:id="@+id/btn_nextAudio"
@@ -88,7 +83,7 @@
         android:layout_height="wrap_content"
         android:onClick="onClick"
         android:text="@string/next"
-        android:layout_below="@+id/imageView2"
+        android:layout_below="@+id/tv_attrName"
         android:layout_toRightOf="@+id/button4"
         android:layout_toEndOf="@+id/button4" />
 
@@ -101,5 +96,14 @@
         android:layout_below="@+id/tv_attrName"
         android:layout_toLeftOf="@+id/button2"
         android:layout_toStartOf="@+id/button2" />
+
+    <TextView
+        android:id="@+id/namelist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_alignBottom="@+id/fragment_place"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
