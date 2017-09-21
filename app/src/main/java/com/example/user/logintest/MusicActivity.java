@@ -1,5 +1,6 @@
 package com.example.user.logintest;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import layout.SecondAudioFragment;
@@ -31,29 +33,18 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
     String[] audioInfo ;
     Uri uri;
     String post = "Audio File";
-    int beginURLpos[] = new int[5];
-    int beginNamepos[] = new int[5];
-    int endURLpos[] = new int[5];
-    int endNamepos[] = new int[5];
-    int bu=0;
-    int eu=0;
-    int bn=0;
-    int en=0;
-    String[] AudioName = new String[5];
-    String[] AudioURL = new String[5];
+    ArrayList<Integer> beginURLpos = new ArrayList<>();
+    ArrayList<Integer> beginNamepos = new ArrayList<>();
+    ArrayList<Integer> endURLpos = new ArrayList<>();
+    ArrayList<Integer> endNamepos = new ArrayList<>();
+    ArrayList<String> AudioName = new ArrayList<>();
+    ArrayList<String> AudioURL = new ArrayList<>();
     int num=0;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        for(int i =0;i<5;i++){
-            beginURLpos[i]=0;
-            beginNamepos[i]=0;
-            endURLpos[i]=0;
-            endNamepos[i]=0;
-            AudioName[i]="No Audio File";
-            AudioURL[i]="http://140.112.107.125:47155/html/uploaded/noAudio.m4a";
-        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music);
         bt[0] = (Button)findViewById(R.id.button2);
@@ -114,38 +105,30 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
        if( post.trim().length()>8){
             for(int i=0;i<post.length()-8;i++) {
                 if (post.substring(i, i + 8).equals("audioURL")) {
-                    beginURLpos[bu] = i + 9; //紀錄URL初始位置
-                    bu++;
+                    beginURLpos.add(i+9); //紀錄URL初始位置
                 }
             }
             for(int i=0;i<post.length()-5;i++) {
                 if(post.substring(i,i+5).equals("intro")){
-                    beginNamepos[bn]=i+6; //紀錄Name初始位置
-                    bn++;
-                    endURLpos[eu]=i-1; //紀錄URL末端位置
-                    eu++;
+                    beginNamepos.add(i+6); //紀錄Name初始位置
+                    endURLpos.add(i-1); //紀錄URL末端位置
                 }
                 if(post.substring(i,i+5).equals("guide")){
-                    endNamepos[en]=i-1; //紀錄Name末端位置
-                    en++;
+                    endNamepos.add(i-1); //紀錄Name末端位置
                 }
             }
         }
 
 
-        for(int i =0;i<beginNamepos.length;i++){
-            if(endNamepos[i]!=0 && endURLpos[i]!=0){
-                AudioName[i]=post.substring(beginNamepos[i],endNamepos[i]+1);
-                AudioURL[i]=post.substring(beginURLpos[i],endURLpos[i]+1);
-            }
-
+        for(int i =0;i<beginNamepos.size();i++){
+                AudioName.add(post.substring(beginNamepos.get(i),endNamepos.get(i)+1));
+                AudioURL.add(post.substring(beginURLpos.get(i),endURLpos.get(i)+1));
         }
 
 
-
-        namelist.setText(AudioName[0]+" "+AudioURL[0]);
+        namelist.setText(AudioName.get(0)+" "+AudioURL.get(0));
         TextView attrName = (TextView)findViewById(R.id.tv_attrName);
-        attrName.setText(AudioName[0]);
+        attrName.setText(AudioName.get(0));
 
 
 
@@ -167,7 +150,7 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
     public void onResume()
     {
         super.onResume();
-        String audiourl = AudioURL[num].trim();
+        String audiourl = AudioURL.get(num).trim();
         uri = Uri.parse(audiourl);
         mp = MediaPlayer.create(this,uri );
         mp.setOnCompletionListener(new SampleCompletionListener());
@@ -185,11 +168,11 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
         TextView attrName = (TextView)findViewById(R.id.tv_attrName);
 
         if (view == findViewById(R.id.btn_nextAudio)){
-            if(num<4){
+            if(num<AudioName.size()-1){
                 num++;
             }
 
-            attrName.setText(AudioName[num]);
+            attrName.setText(AudioName.get(num));
 
             //TextView namelist = (TextView)findViewById(R.id.namelist) ;
             //namelist.setText(AudioName.length);
@@ -208,7 +191,7 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
             mp.pause();
             mp.seekTo(0);
             mp.reset();
-            audiourl= AudioURL[num].trim();
+            audiourl= AudioURL.get(num).trim();
 
             uri = Uri.parse(audiourl);
             try {
@@ -226,7 +209,7 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
             mp.pause();
             mp.seekTo(0);
             mp.reset();
-            attrName.setText(AudioName[num]);
+            attrName.setText(AudioName.get(num));
             bt[0].setEnabled(true);
             bt[1].setEnabled(true);
             bt[2].setEnabled(true);
@@ -240,7 +223,7 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
             fragmentTransaction.commit();
 
 
-            audiourl= AudioURL[num].trim();
+            audiourl= AudioURL.get(num).trim();
             uri = Uri.parse(audiourl);
             try {
                 mp.setDataSource(this,uri);
