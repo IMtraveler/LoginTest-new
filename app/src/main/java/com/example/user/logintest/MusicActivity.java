@@ -27,11 +27,10 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
 
     MediaPlayer mp;
     Bundle bundle = new Bundle();
-    //Button btn_toF1 = (Button)findViewById(R.id.btn_preAudio);
-    //Button btn_toF2 = (Button)findViewById(R.id.btn_nextAudio);
+
     String[] audioInfo ;
     Uri uri;
-    String post = "Audio Information";
+    String post = "Audio File";
     int beginURLpos[] = new int[5];
     int beginNamepos[] = new int[5];
     int endURLpos[] = new int[5];
@@ -47,6 +46,14 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        for(int i =0;i<5;i++){
+            beginURLpos[i]=0;
+            beginNamepos[i]=0;
+            endURLpos[i]=0;
+            endNamepos[i]=0;
+            AudioName[i]="No Audio File";
+            AudioURL[i]="http://140.112.107.125:47155/html/uploaded/noAudio.m4a";
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music);
         bt[0] = (Button)findViewById(R.id.button2);
@@ -56,37 +63,11 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
         prebn  = (Button)findViewById( R.id.btn_preAudio);
         TextView tv_audioIntro = (TextView)findViewById(R.id.tv_audioIntro) ;
 
-
-
-
-        //btn_toF1.setOnClickListener(this);
-        //btn_toF2.setOnClickListener(this);
-        // Fragment fragment = FirstAudioFragment() ;
-
-        // should be guide intro and audio intro
-        /*
-
-        ImageView imageView2 = (ImageView)findViewById(R.id.imageView2);
-        TextView tv_name2 = (TextView)findViewById(R.id.tv_attrName);
-        TextView tv_intro = (TextView)findViewById(R.id.tv_attrIntro);
-
-        Bundle bundleFromAttr = getIntent().getExtras();
-        String imgURL = bundle.getString("imgURL");
-        String name = bundle.getString("name") ;
-        String post = bundle.getString("post");
-        Picasso.with(getBaseContext()).load(imgURL).into(imageView2);
-        tv_name2.setText(name);
-        int begIntro = post.indexOf("intro:");
-        int endIntro = post.indexOf("imgURL") ;
-        String intro = post.substring(begIntro+6, endIntro-1);
-        tv_intro.setText(intro);*/
-
         Bundle bundleFromAttr = getIntent().getExtras();
         String lat = bundleFromAttr.getString("lat") ;
         String lng = bundleFromAttr.getString("lng") ;
         String name = bundleFromAttr.getString("name");
-        //String lat = "25.017788";
-        //String lng ="121.533171" ;
+
         String phpURL = "http://140.112.107.125:47155/html/testAudio.php" ;
 
         FragmentManager fm ;
@@ -105,10 +86,9 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
             tv_audioIntro.setText(post);
         }
         else {
-            post = "no data ; no data ; no data";
+            post = "No data";
         }
         audioInfo = post.split(";");
-        //int audioNum = audioInfo.length ;
 
         sendData(fm);
         bundle.putString("audioInfo", "test???");
@@ -131,29 +111,37 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
 
 
         TextView namelist = (TextView)findViewById(R.id.namelist) ;
-        for(int i=0;i<post.length()-8;i++) {
-            if (post.substring(i, i + 8).equals("audioURL")) {
-                beginURLpos[bu] = i + 9; //紀錄URL初始位置
-                bu++;
+       if( post.trim().length()>8){
+            for(int i=0;i<post.length()-8;i++) {
+                if (post.substring(i, i + 8).equals("audioURL")) {
+                    beginURLpos[bu] = i + 9; //紀錄URL初始位置
+                    bu++;
+                }
             }
-        }
-        for(int i=0;i<post.length()-5;i++) {
-            if(post.substring(i,i+5).equals("intro")){
-                beginNamepos[bn]=i+6; //紀錄Name初始位置
-                bn++;
-                endURLpos[eu]=i-1; //紀錄URL末端位置
-               eu++;
-            }
-            if(post.substring(i,i+5).equals("guide")){
-                endNamepos[en]=i-1; //紀錄Name末端位置
-                en++;
+            for(int i=0;i<post.length()-5;i++) {
+                if(post.substring(i,i+5).equals("intro")){
+                    beginNamepos[bn]=i+6; //紀錄Name初始位置
+                    bn++;
+                    endURLpos[eu]=i-1; //紀錄URL末端位置
+                    eu++;
+                }
+                if(post.substring(i,i+5).equals("guide")){
+                    endNamepos[en]=i-1; //紀錄Name末端位置
+                    en++;
+                }
             }
         }
 
+
         for(int i =0;i<beginNamepos.length;i++){
-           AudioName[i]=post.substring(beginNamepos[i],endNamepos[i]+1);
-           AudioURL[i]=post.substring(beginURLpos[i],endURLpos[i]+1);
+            if(endNamepos[i]!=0 && endURLpos[i]!=0){
+                AudioName[i]=post.substring(beginNamepos[i],endNamepos[i]+1);
+                AudioURL[i]=post.substring(beginURLpos[i],endURLpos[i]+1);
+            }
+
         }
+
+
 
         namelist.setText(AudioName[0]+" "+AudioURL[0]);
         TextView attrName = (TextView)findViewById(R.id.tv_attrName);
@@ -179,17 +167,8 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
     public void onResume()
     {
         super.onResume();
-        //mp = MediaPlayer.create(this, R.raw.music);
-        //Uri uri = Uri.parse("http://140.112.107.125:47155/html/uploaded/Huaientang.m4a");
-        //Bundle extras = getIntent().getExtras();
-        //String audiouri = extras.getString("audioURL");
         String audiourl = AudioURL[num].trim();
         uri = Uri.parse(audiourl);
-
-        //if (audiouri.length() > 10){
-        //    uri = Uri.parse(audiouri);
-        //}
-        //Uri uri = Uri.parse(audiouri);
         mp = MediaPlayer.create(this,uri );
         mp.setOnCompletionListener(new SampleCompletionListener());
     }
@@ -202,7 +181,7 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
     @Override
     public void onClick(View view) {
         Fragment fragment ;
-        String audiourl="http://140.112.107.125:47155/html/uploaded/noAudio.m4a";
+        String audiourl;
         TextView attrName = (TextView)findViewById(R.id.tv_attrName);
 
         if (view == findViewById(R.id.btn_nextAudio)){
@@ -226,8 +205,9 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
             fragmentTransaction.replace(R.id.fragment_place, fragment);
             fragmentTransaction.commit();
 
+            mp.pause();
+            mp.seekTo(0);
             mp.reset();
-
             audiourl= AudioURL[num].trim();
 
             uri = Uri.parse(audiourl);
@@ -245,6 +225,7 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
             }
             mp.pause();
             mp.seekTo(0);
+            mp.reset();
             attrName.setText(AudioName[num]);
             bt[0].setEnabled(true);
             bt[1].setEnabled(true);
@@ -258,7 +239,7 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
             fragment.setArguments(FirstAudioBundle);
             fragmentTransaction.commit();
 
-            mp.reset();
+
             audiourl= AudioURL[num].trim();
             uri = Uri.parse(audiourl);
             try {
@@ -288,10 +269,9 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
         public void onClick(View v) {
             if(v == bt[0])
             {
-                mp.seekTo(0);
                 bt[0].setEnabled(false);
                 bt[1].setEnabled(true);
-                bt[2].setEnabled(false);
+                bt[2].setEnabled(true);
 
                 try
                 {
