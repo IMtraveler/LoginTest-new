@@ -33,4 +33,13 @@
     <string name="type">類別</string>
     <string name="audioIntro">音檔簡介</string>
     <string name="uploadAudio">上傳音檔</string>
+    <string name="我的最愛">我的最愛</string>
+    <string name="我購買的音檔">我所購買的音檔</string>
+    <string name="音檔種類">音檔種類</string>
+    <string name="設定">設定</string>
+    <string name="帳戶">帳戶</string>
+    <string name="瀏覽模式">瀏覽模式</string>
+    <string name="條列式">條列式</string>
+    <string name="地圖">地圖</string>
+    <string name="離開">離開</string>
 </resources>
