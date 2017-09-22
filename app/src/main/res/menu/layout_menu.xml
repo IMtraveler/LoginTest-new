@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/我的最愛"
+        android:enabled="true"
+        android:title="@string/我的最愛"
+        android:visible="true" />
+    <item
+        android:id="@+id/我購買的音檔"
+        android:checkable="false"
+        android:enabled="true"
+        android:title="@string/我購買的音檔"
+        android:visible="true" />
+    <item
+        android:id="@+id/音檔種類"
+        android:enabled="true"
+        android:title="@string/音檔種類"
+        android:visible="true" />
+    <item
+        android:id="@+id/設定"
+        android:title="@string/設定"
+        android:visible="true" >
+        <!-- "file" submenu -->
+        <menu>
+            <item android:id="@+id/帳戶"
+                android:title="@string/帳戶" />
+            <item android:id="@+id/瀏覽模式"
+                android:title="@string/瀏覽模式" >
+                <menu>
+                    <item android:id="@+id/條列式"
+                        android:title="@string/條列式" />
+                    <item android:id="@+id/地圖"
+                        android:title="@string/地圖" />
+                </menu>
+            </item>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/離開"
+        android:enabled="true"
+        android:title="@string/離開" />
+</menu>

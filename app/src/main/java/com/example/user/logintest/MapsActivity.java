@@ -52,7 +52,7 @@ import static com.example.user.logintest.MySQLConnection.Post;
 import com.squareup.picasso.Picasso ;
 
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
@@ -360,10 +360,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
-/*    @Override
+ @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        getMenuInflater().inflate(R.menu.menu,menu);
+        getMenuInflater().inflate(R.menu.layout_menu,menu);
         return super.onCreateOptionsMenu(menu);
     }
     @Override
@@ -397,5 +397,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }*/
+    }
 }
