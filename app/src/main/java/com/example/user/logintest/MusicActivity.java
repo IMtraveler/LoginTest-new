@@ -2,9 +2,11 @@ package com.example.user.logintest;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.view.View.OnClickListener;
@@ -12,6 +14,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.io.IOException;
@@ -23,11 +26,13 @@ import layout.FirstAudioFragment;
 
 public class MusicActivity extends AppCompatActivity implements OnClickListener{
 
+
     Button[] bt = new Button[3];
     Button nextbn;
     Button prebn;
+    Button btn3 ;
 
-    MediaPlayer mp;
+    MediaPlayer mp = new MediaPlayer() ;
     Bundle bundle = new Bundle();
 
     String[] audioInfo ;
@@ -45,6 +50,7 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music);
         bt[0] = (Button)findViewById(R.id.button2);
@@ -52,7 +58,8 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
         bt[2] = (Button)findViewById(R.id.button4);
         nextbn = (Button)findViewById( R.id.btn_nextAudio);
         prebn  = (Button)findViewById( R.id.btn_preAudio);
-        TextView tv_audioIntro = (TextView)findViewById(R.id.tv_audioIntro) ;
+        btn3 = (Button)findViewById( R.id.button3);
+        //TextView tv_audioIntro = (TextView)findViewById(R.id.tv_audioIntro) ;
 
         Bundle bundleFromAttr = getIntent().getExtras();
         String lat = bundleFromAttr.getString("lat") ;
@@ -61,8 +68,10 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
 
         String phpURL = "http://140.112.107.125:47155/html/testAudio.php" ;
 
-        FragmentManager fm ;
-        fm = getSupportFragmentManager() ;
+        mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
+        //FragmentManager fm ;
+        //fm = getSupportFragmentManager() ;
 
 
         try {
@@ -74,34 +83,36 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
         }
 
         if(post.length()> 3) {
-            tv_audioIntro.setText(post);
+           // tv_audioIntro.setText(post);
         }
         else {
             post = "No data";
         }
         audioInfo = post.split(";");
 
-        sendData(fm);
+        //sendData(fm);
         bundle.putString("audioInfo", "test???");
 // set Fragmentclass Arguments
+        /*
         SecondAudioFragment secondAF = new SecondAudioFragment();
         secondAF.setArguments(bundle);
+        */
 
-        //tv_attrName.setText(audioInfo.length);
+
         bt[0].setText("start");
         bt[1].setText("pause");
         bt[2].setText("stop");
 
-        bt[0].setEnabled(true);
+        bt[0].setEnabled(false);
         bt[1].setEnabled(false);
         bt[2].setEnabled(false);
 
-        for(int i=0;i< bt.length;i++){
-            bt[i].setOnClickListener(new SampleClickListener());
-        }
+        //for(int i=0;i< bt.length;i++){
+         //   bt[i].setOnClickListener(new SampleClickListener());
+        //}
 
 
-        TextView namelist = (TextView)findViewById(R.id.namelist) ;
+        //TextView namelist = (TextView)findViewById(R.id.namelist) ;
        if( post.trim().length()>8){
             for(int i=0;i<post.length()-8;i++) {
                 if (post.substring(i, i + 8).equals("audioURL")) {
@@ -126,15 +137,18 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
         }
 
 
-        namelist.setText(AudioName.get(0)+" "+AudioURL.get(0));
+        //namelist.setText(AudioName.get(0)+" "+AudioURL.get(0));
         TextView attrName = (TextView)findViewById(R.id.tv_attrName);
         attrName.setText(AudioName.get(0));
 
-
+        for(int i=0;i< bt.length;i++){
+            bt[i].setOnClickListener(new SampleClickListener());
+        }
 
         // setContentView(R.layout.activity_main);
     }
 
+    /*
     public void sendData(FragmentManager fm) {
         //PACK DATA IN A BUNDLE
         Bundle bundle = new Bundle();
@@ -143,16 +157,26 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
         myFragment.setArguments(bundle);
         //THEN NOW SHOW OUR FRAGMENT
         fm.beginTransaction().replace(R.id.fragment_place,myFragment).commit();
-    }
+    }*/
 
 
 
     public void onResume()
     {
         super.onResume();
-        String audiourl = AudioURL.get(num).trim();
-        uri = Uri.parse(audiourl);
-        mp = MediaPlayer.create(this,uri );
+
+
+       /* try {
+            mp.setDataSource(audiourl);
+            mp.prepare();
+            //mp.start();
+        } catch (IllegalArgumentException e) {
+            Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
+            Log.e("here's url", audiourl);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+*/
         mp.setOnCompletionListener(new SampleCompletionListener());
     }
     public void onPause()
@@ -161,24 +185,42 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
         mp.reset();
     }
 
+
     @Override
     public void onClick(View view) {
-        Fragment fragment ;
-        String audiourl;
-        TextView attrName = (TextView)findViewById(R.id.tv_attrName);
+        Fragment fragment;
+        String audiourl ;
+        TextView attrName = (TextView) findViewById(R.id.tv_attrName);
 
-        if (view == findViewById(R.id.btn_nextAudio)){
-            if(num<AudioName.size()-1){
-                num++;
-            }
 
+        if (view == findViewById(R.id.btn_nextAudio)) {
+            audiourl = AudioURL.get(num).trim();
             attrName.setText(AudioName.get(num));
-
-            //TextView namelist = (TextView)findViewById(R.id.namelist) ;
-            //namelist.setText(AudioName.length);
-            bt[0].setEnabled(true);
+            if (mp.isPlaying()){
+                mp.stop();
+            }
+            try {
+                mp.reset();
+                mp.setDataSource(audiourl);
+                mp.prepare();
+                //mp.start();
+            } catch (IllegalArgumentException e) {
+                Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
+                Log.e("here's url", audiourl);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            mp.start();
+            bt[0].setEnabled(false);
             bt[1].setEnabled(true);
             bt[2].setEnabled(true);
+            nextbn.setEnabled(false);
+            prebn.setEnabled(true);
+            btn3.setEnabled(true);
+
+
+        } /*
+            /*
             Bundle SecondAudioBundle = new Bundle();
             SecondAudioBundle.putString("audioInfo", audioInfo[2]);
             fragment = new SecondAudioFragment();
@@ -187,6 +229,7 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction() ;
             fragmentTransaction.replace(R.id.fragment_place, fragment);
             fragmentTransaction.commit();
+
 
             mp.pause();
             mp.seekTo(0);
@@ -201,18 +244,63 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
             }
             mp.prepareAsync();
 
+        } */
+
+
+       if (view == findViewById(R.id.btn_preAudio)) {
+           audiourl = AudioURL.get(1).trim();
+           attrName.setText(AudioName.get(1));
+           if (mp.isPlaying()){
+               mp.stop();
+           }
+           try {
+               mp.reset();
+               mp.setDataSource(audiourl);
+               mp.prepare();
+               //mp.start();
+           } catch (IllegalArgumentException e) {
+               Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
+               Log.e("here's url", audiourl);
+           } catch (IOException e) {
+               e.printStackTrace();
+           }
+           mp.start();
+           bt[0].setEnabled(false);
+           bt[1].setEnabled(true);
+           bt[2].setEnabled(true);
+           prebn.setEnabled(false);
+           btn3.setEnabled(true);
+           nextbn.setEnabled(true);
+
         }
-        if (view == findViewById(R.id.btn_preAudio)){
-            if(num>0){
-                num--;
+
+        if (view == findViewById(R.id.button3)) {
+            audiourl = AudioURL.get(2).trim();
+            attrName.setText(AudioName.get(2));
+            if (mp.isPlaying()){
+                mp.stop();
             }
-            mp.pause();
-            mp.seekTo(0);
-            mp.reset();
-            attrName.setText(AudioName.get(num));
-            bt[0].setEnabled(true);
+            try {
+                mp.reset();
+                mp.setDataSource(audiourl);
+                mp.prepare();
+                //mp.start();
+            } catch (IllegalArgumentException e) {
+                Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
+                Log.e("here's url", audiourl);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            mp.start();
+            bt[0].setEnabled(false);
             bt[1].setEnabled(true);
             bt[2].setEnabled(true);
+            prebn.setEnabled(false);
+            btn3.setEnabled(true);
+            nextbn.setEnabled(true);
+
+        }
+        /*
             Bundle FirstAudioBundle = new Bundle();
             FirstAudioBundle.putString("audioInfo",audioInfo[1]);
             fragment = new FirstAudioFragment();
@@ -230,11 +318,13 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            mp.prepareAsync();
+            mp.prepareAsync();*/
+
+
+
         }
 
 
-    }
 
     private class SampleCompletionListener implements MediaPlayer.OnCompletionListener {
 
@@ -245,6 +335,7 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
             bt[2].setEnabled(false);
         }
     }
+
     private class SampleClickListener implements View.OnClickListener
     {
 
@@ -260,8 +351,9 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
                 {
                     mp.prepare();
                 } catch (Exception e) {
-                    mp.start();
+                    e.printStackTrace();
                 }
+                mp.start();
             }else if(v == bt[1])
             {
                 if(mp.isPlaying())
@@ -286,8 +378,12 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
                 mp.pause();
                 mp.seekTo(0);
                 bt[0].setText("start");
+                btn3.setEnabled(true);
+                prebn.setEnabled(true);
+                nextbn.setEnabled(true);
 
             }
         }
     }
 }
+
