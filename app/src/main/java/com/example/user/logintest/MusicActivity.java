@@ -137,11 +137,14 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
                 }
             }
         }
-
-
-        for(int i =0;i<beginNamepos.size();i++){
+        if(beginNamepos.size()==0){
+            AudioName.add("No Audio");
+            AudioURL.add("http://140.112.107.125:47155/html/uploaded/noAudio.m4a");
+        }else{
+            for(int i =0;i<beginNamepos.size();i++){
                 AudioName.add(post.substring(beginNamepos.get(i),endNamepos.get(i)+1));
                 AudioURL.add(post.substring(beginURLpos.get(i),endURLpos.get(i)+1));
+            }
         }
 
 
@@ -149,7 +152,8 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
             bt[i].setOnClickListener(new SampleClickListener());
         }
 
-
+        
+      
         MyArrayAdapter.clear();
         if (!(AudioName.isEmpty())) {
             for (int i = 0; i < 3; i++) {
