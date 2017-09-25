@@ -13,9 +13,10 @@ import android.view.View.OnClickListener;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.widget.ArrayAdapter;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,6 +32,9 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
     Button nextbn;
     Button prebn;
     Button btn3 ;
+    ListView audioList;
+    ArrayAdapter<String> MyArrayAdapter;
+
 
     MediaPlayer mp = new MediaPlayer() ;
     Bundle bundle = new Bundle();
@@ -69,6 +73,10 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
         String phpURL = "http://140.112.107.125:47155/html/testAudio.php" ;
 
         mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
+        MyArrayAdapter = new ArrayAdapter<>(this, R.layout.list_item, R.id.tv_list);
+        audioList = (ListView)findViewById(R.id.list_audio);
+        audioList.setAdapter(MyArrayAdapter);
 
         //FragmentManager fm ;
         //fm = getSupportFragmentManager() ;
@@ -140,16 +148,27 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
         }
 
 
-
-        //namelist.setText(AudioName.get(0)+" "+AudioURL.get(0));
-        TextView attrName = (TextView)findViewById(R.id.tv_attrName);
-        attrName.setText(AudioName.get(0));
-
         for(int i=0;i< bt.length;i++){
             bt[i].setOnClickListener(new SampleClickListener());
         }
 
-        // setContentView(R.layout.activity_main);
+        
+      
+        MyArrayAdapter.clear();
+        if (!(AudioName.isEmpty())) {
+            for (int i = 0; i < 3; i++) {
+                MyArrayAdapter.add(AudioName.get(i));
+            }
+            TextView attrName = (TextView)findViewById(R.id.tv_attrName);
+            attrName.setText(AudioName.get(0));
+        }
+        else {
+            for (int i = 0; i < 10; i++) {
+                MyArrayAdapter.add("testtttt");
+            }
+        }
+        MyArrayAdapter.notifyDataSetChanged();
+
     }
 
     /*
@@ -304,6 +323,7 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
             nextbn.setEnabled(true);
 
         }
+
         /*
             Bundle FirstAudioBundle = new Bundle();
             FirstAudioBundle.putString("audioInfo",audioInfo[1]);
