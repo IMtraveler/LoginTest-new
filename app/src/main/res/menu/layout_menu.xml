@@ -6,10 +6,10 @@
         android:title="@string/我的最愛"
         android:visible="true" />
     <item
-        android:id="@+id/我購買的音檔"
+        android:id="@+id/我上傳的音檔"
         android:checkable="false"
         android:enabled="true"
-        android:title="@string/我購買的音檔"
+        android:title="我上傳的音檔"
         android:visible="true" />
     <item
         android:id="@+id/音檔種類"

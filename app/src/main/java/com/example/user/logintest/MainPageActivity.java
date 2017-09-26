@@ -26,7 +26,9 @@ public class MainPageActivity extends AppCompatActivity  {
         setContentView(R.layout.main_page);
         findViews();
         setListeners();
-
+        //取的intent中的bundle物件
+        Bundle bundleID =this.getIntent().getExtras();
+        final String userID = bundleID.getString("AccountID");
 
         Button button03 = (Button)findViewById(R.id.Button03);
         button03.setOnClickListener(new Button.OnClickListener(){
@@ -60,6 +62,11 @@ public class MainPageActivity extends AppCompatActivity  {
                 // TODO Auto-generated method stub
                 Intent intent = new Intent();
                 intent.setClass(MainPageActivity.this,MapsActivity.class);
+                //儲存帳號
+                Bundle bundle = new Bundle();
+                bundle.putString("AccountID",userID);
+                //將Bundle物件assign給intent
+                intent.putExtras(bundle);
                 startActivity(intent);
                 MainPageActivity.this.finish();
             }
