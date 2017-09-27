@@ -21,7 +21,8 @@ import android.widget.ArrayAdapter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
-
+import java.util.HashMap;
+import java.util.List;
 import layout.SecondAudioFragment;
 import layout.FirstAudioFragment;
 
@@ -33,7 +34,8 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
     Button prebn;
     Button btn3 ;
     ListView audioList;
-    ArrayAdapter<String> MyArrayAdapter;
+    ArrayAdapter MyArrayAdapter;
+
 
 
     MediaPlayer mp = new MediaPlayer() ;
@@ -74,10 +76,6 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
 
         mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
-        MyArrayAdapter = new ArrayAdapter<>(this, R.layout.list_item, R.id.tv_list);
-        audioList = (ListView)findViewById(R.id.list_audio);
-        audioList.setAdapter(MyArrayAdapter);
-
         //FragmentManager fm ;
         //fm = getSupportFragmentManager() ;
 
@@ -89,6 +87,7 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+
 
         if(post.length()> 3) {
            // tv_audioIntro.setText(post);
@@ -147,28 +146,44 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
             }
         }
 
+        TextView attrName = (TextView)findViewById(R.id.tv_attrName);
+        attrName.setText(AudioName.get(0));
 
         for(int i=0;i< bt.length;i++){
             bt[i].setOnClickListener(new SampleClickListener());
         }
 
-        
-      
+
+        audioList = (ListView)findViewById(R.id.list_audio);
+        MyArrayAdapter = new ArrayAdapter<>(this, R.layout.list_item, R.id.tv_list);
+        audioList.setAdapter(MyArrayAdapter);
+
+
         MyArrayAdapter.clear();
-        if (!(AudioName.isEmpty())) {
-            for (int i = 0; i < 3; i++) {
-                MyArrayAdapter.add(AudioName.get(i));
-            }
-            TextView attrName = (TextView)findViewById(R.id.tv_attrName);
-            attrName.setText(AudioName.get(0));
+        for (int i = 0; i < AudioName.size(); i++) {
+            MyArrayAdapter.add(AudioName.get(i));
         }
-        else {
-            for (int i = 0; i < 10; i++) {
-                MyArrayAdapter.add("testtttt");
-            }
-        }
+
         MyArrayAdapter.notifyDataSetChanged();
 
+/*
+        List<HashMap<String , String>> audiolist = new ArrayList<>();
+        for(int i = 0 ; i < AudioName.size() ; i++){
+            HashMap<String , String> hashMap = new HashMap<>();
+            hashMap.put("title" , AudioName.get(i));
+            hashMap.put("text" , "guide_name");
+            //把title , text存入HashMap之中
+            audiolist.add(hashMap);
+            //把HashMap存入list之中
+        }
+
+        MyArrayAdapter = new ArrayAdapter<>(
+                this,
+                audiolist,
+                R.layout.list_item_2,
+                new String[]{"title" , "text"},
+                new int[] {R.id.list_audioName,R.id.list_guide});
+        */
     }
 
     /*

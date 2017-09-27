@@ -369,6 +369,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
+        //取的intent中的bundle物件
+        Bundle bundleID =this.getIntent().getExtras();
+
+        String UserID = bundleID.getString("AccountID");
         switch (item.getItemId())
         {
             case R.id.我的最愛:
@@ -377,7 +381,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 intent.setClass(MapsActivity.this,FavoriteActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.我購買的音檔:
+            case R.id.我上傳的音檔:
+                //跳到上傳音檔頁，顯示上傳的音檔名字
+                // TODO Auto-generated method stub
+                Intent intent = new Intent();
+                intent.setClass(MapsActivity.this,MyuploadMusic.class);
+                 //儲存帳號
+                Bundle bundle = new Bundle();
+                bundle.putString("AccountID",UserID);
+                //將Bundle物件assign給intent
+                intent.putExtras(bundle);
+                startActivity(intent);
+                //顯示按鈕的名字
                 Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
                 break;
             case R.id.音檔種類:

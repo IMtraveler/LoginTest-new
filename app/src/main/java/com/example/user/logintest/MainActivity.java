@@ -3,6 +3,7 @@ package com.example.user.logintest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -70,9 +71,20 @@ public class MainActivity extends AppCompatActivity {
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String s) {
-                                msg.setText(s);
+
+
+
+
+
                                 Intent intent = new Intent();
+                                msg.setText(s);
                                 intent.setClass(MainActivity.this,MainPageActivity.class);
+                                //儲存帳號
+                                Bundle bundle = new Bundle();
+                                bundle.putString("AccountID",UserId );
+                                //將Bundle物件assign給intent
+                                intent.putExtras(bundle);
+                                //跳到首頁
                                 startActivity(intent);
                                 MainActivity.this.finish();
                             }
@@ -114,13 +126,13 @@ public class MainActivity extends AppCompatActivity {
         Button b_register = (Button) findViewById(R.id.b_register);   //註冊按鈕
         mQueue = Volley.newRequestQueue(this);
 
+        account = (EditText) findViewById(R.id.AccountID); //輸入的帳號
+        password = (EditText) findViewById(R.id.Password); //輸入的密碼
+        password.setTransformationMethod(PasswordTransformationMethod.getInstance());  //隱藏密碼
 
         b_login.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
-                account = (EditText) findViewById(R.id.AccountID); //輸入的帳號
-                password = (EditText) findViewById(R.id.Password); //輸入的密碼
-
 
                 getRequest = new StringRequest(Request.Method.POST,mUrl,
                         new Response.Listener<String>() {
@@ -132,9 +144,21 @@ public class MainActivity extends AppCompatActivity {
 
 
                                 if(check.trim().equals(s.trim())){
+
+
+                                    //intent.setClass(MainActivity.this, MyuploadMusic.class);
+
+
                                     // TODO Auto-generated method stub
                                     Intent intent = new Intent();
                                     intent.setClass(MainActivity.this,MainPageActivity.class);
+                                    //儲存帳號
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("AccountID",account.getText().toString() );
+                                    //將Bundle物件assign給intent
+                                    intent.putExtras(bundle);
+                                    //Intent intent2 = new Intent();
+                                    //intent2.setClass(MainActivity.this,MainPageActivity.class);
                                     startActivity(intent);
                                     MainActivity.this.finish();
                                 }else{
