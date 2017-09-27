@@ -7,13 +7,9 @@
     tools:context="com.example.user.logintest.MyuploadMusic">
 
     <TextView
-        android:id="@+id/AccountID"
-        android:layout_width="200dp"
+        android:id="@+id/audiolist"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-
-
-        android:textColor="@android:color/holo_blue_dark"
-        android:textSize="20sp" />
+        android:layout_weight="1" />
 
 </android.support.constraint.ConstraintLayout>
