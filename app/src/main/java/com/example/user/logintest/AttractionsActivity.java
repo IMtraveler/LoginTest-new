@@ -1,12 +1,15 @@
 package com.example.user.logintest;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -15,12 +18,12 @@ public class AttractionsActivity extends AppCompatActivity {
 
     Bundle bundleAudio = new Bundle();
     Bundle bundleUpload = new Bundle();
-
+    private SQLiteHelper helper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attractions);
-
+        helper =SQLiteHelper.getInstance(this);
         ImageView imageView = (ImageView)findViewById(R.id.iv_attr);
         TextView tv_name = (TextView)findViewById(R.id.tv_attrName);
         TextView tv_intro = (TextView)findViewById(R.id.tv_attrIntro);
@@ -28,7 +31,7 @@ public class AttractionsActivity extends AppCompatActivity {
 
 
             String imgURL = bundle.getString("imgURL");
-            String name = bundle.getString("name");
+            final String name = bundle.getString("name");
             String post = bundle.getString("post");
             String lat = bundle.getString("lat");
             String lng = bundle.getString("lng");
@@ -78,7 +81,18 @@ public class AttractionsActivity extends AppCompatActivity {
 
             }
         });
-
+        Button Like = (Button)findViewById(R.id.imageView3);
+        Like.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                ContentValues values = new ContentValues();
+                values.put("name",name);
+                //values.put("lat", lat);
+                //values.put("lng", lng);
+                long id = helper.getWritableDatabase().insert("attr", null, values);
+                Log.d("ADD", id+"");
+                Toast.makeText(getApplicationContext(), "已設為最愛", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 }

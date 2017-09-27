@@ -42,4 +42,6 @@
     <string name="條列式">條列式</string>
     <string name="地圖">地圖</string>
     <string name="離開">離開</string>
+    <string name="設為最愛">設為最愛</string>
+    <string name="title_activity_favorite">FavoriteActivity</string>
 </resources>

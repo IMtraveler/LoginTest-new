@@ -373,7 +373,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         {
             case R.id.我的最愛:
                 //放入點擊後的結果
-                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent();
+                intent.setClass(MapsActivity.this,FavoriteActivity.class);
+                startActivity(intent);
                 break;
             case R.id.我購買的音檔:
                 Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();

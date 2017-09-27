@@ -54,7 +54,11 @@
         <activity android:name=".UploadActivity" />
         <activity android:name=".LocationListActivity" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".AttractionsActivity"></activity>
+        <activity android:name=".AttractionsActivity" />
+        <activity
+            android:name=".FavoriteActivity"
+            android:label="@string/title_activity_favorite"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
