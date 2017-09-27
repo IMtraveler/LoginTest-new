@@ -5,5 +5,6 @@
     android:layout_height="match_parent"
     android:lineSpacingExtra="18sp"
     android:textSize="18sp"
-    android:layout_margin="5sp"
+    android:padding="10sp"
     android:textAppearance="?android:attr/textAppearanceMedium" />
+
