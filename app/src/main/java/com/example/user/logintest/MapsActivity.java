@@ -375,7 +375,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 //放入點擊後的結果
                 Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.我購買的音檔:
+            case R.id.我上傳的音檔:
                 Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
                 break;
             case R.id.音檔種類:
