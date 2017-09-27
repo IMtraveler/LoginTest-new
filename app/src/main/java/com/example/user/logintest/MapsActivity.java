@@ -384,14 +384,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             case R.id.我上傳的音檔:
                 //跳到上傳音檔頁，顯示上傳的音檔名字
                 // TODO Auto-generated method stub
-                Intent intent = new Intent();
-                intent.setClass(MapsActivity.this,MyuploadMusic.class);
+                Intent intent2 = new Intent();
+                intent2.setClass(MapsActivity.this,MyuploadMusic.class);
                  //儲存帳號
                 Bundle bundle = new Bundle();
                 bundle.putString("AccountID",UserID);
                 //將Bundle物件assign給intent
-                intent.putExtras(bundle);
-                startActivity(intent);
+                intent2.putExtras(bundle);
+                startActivity(intent2);
                 //顯示按鈕的名字
                 Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
                 break;
