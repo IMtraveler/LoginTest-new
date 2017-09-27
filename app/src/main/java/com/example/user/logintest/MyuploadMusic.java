@@ -24,12 +24,16 @@ public class MyuploadMusic extends AppCompatActivity {
 
         try {
             post = new MyMusicAsyncTask().execute(account, phpURL).get();
+            if(post.trim().equals("")){
+                post="你沒有上傳的音檔";
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
         audiolist.setText(post);
+
 
     }
 }
