@@ -35,7 +35,8 @@ public class FavoriteActivity extends AppCompatActivity {
         }
 
         // Show all data
-        showMessage("Data",buffer.toString());
+        showMessage("我最愛的景點",buffer.toString());
+
     }
     public void showMessage(String title,String Message){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
