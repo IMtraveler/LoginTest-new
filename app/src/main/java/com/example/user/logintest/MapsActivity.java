@@ -62,6 +62,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private LocationRequest locationRequest;
     private Location lastLocation;
     private Marker currentLocationMarker;
+    double latitude,longitude;
     public  static  final  int REQUEST_LOCATION_CODE = 99;
     Bundle bundle = new Bundle();
 
@@ -129,7 +130,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             mMap.setMyLocationEnabled(true);
         }
         //初始位置設在公館附近
-        mMap.moveCamera( CameraUpdateFactory.newLatLngZoom(new LatLng(25.0138626,121.5353781) , 14.0f) );
+        GPSTrackerActivity gps;
+        gps = new GPSTrackerActivity(this);
+        if(gps.canGetLocation()){
+            latitude = gps.getLatitude();
+            longitude = gps.getLongitude();
+            //Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+            mMap.moveCamera( CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude) , 14.0f) );
+        }else{
+            Toast.makeText(this,"error",Toast.LENGTH_SHORT).show();
+        }
         /*
         LatLng taipei_1 = new LatLng(25.0327792, 121.5636894);
         googleMap.addMarker(new MarkerOptions().position(taipei_1)
