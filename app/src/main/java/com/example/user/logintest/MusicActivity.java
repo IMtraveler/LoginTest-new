@@ -7,6 +7,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.view.View.OnClickListener;
@@ -423,6 +425,60 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
 
             }
         }
+    }
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.layout_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        //取的intent中的bundle物件
+        Bundle bundleID =this.getIntent().getExtras();
+
+        String UserID = bundleID.getString("AccountID");
+        switch (item.getItemId())
+        {
+            case R.id.我的最愛:
+                //放入點擊後的結果
+                Intent intent = new Intent();
+                intent.setClass(MusicActivity.this,FavoriteActivity.class);
+                startActivity(intent);
+                break;
+            /*case R.id.我上傳的音檔:
+                //跳到上傳音檔頁，顯示上傳的音檔名字
+                // TODO Auto-generated method stub
+                Intent intent2 = new Intent();
+                intent2.setClass(MusicActivity.this,MyuploadMusic.class);
+                //儲存帳號
+                Bundle bundle = new Bundle();
+                bundle.putString("AccountID",UserID);
+                //將Bundle物件assign給intent
+                intent2.putExtras(bundle);
+                startActivity(intent2);
+                //顯示按鈕的名字
+                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                break;
+            */     case R.id.音檔種類:
+                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.帳戶:
+                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.條列式:
+                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.地圖:
+                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.離開:
+                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
 
