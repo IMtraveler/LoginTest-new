@@ -64,7 +64,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Marker currentLocationMarker;
     public  static  final  int REQUEST_LOCATION_CODE = 99;
     Bundle bundle = new Bundle();
-
+    double latitude,longitude;
     LocationsDatabase myDatabase;
     private ArrayList<Locations> locationArrayList;
 
@@ -129,7 +129,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             mMap.setMyLocationEnabled(true);
         }
         //初始位置設在公館附近
-        mMap.moveCamera( CameraUpdateFactory.newLatLngZoom(new LatLng(25.0138626,121.5353781) , 14.0f) );
+        GPSTrackerActivity gps;
+        gps = new GPSTrackerActivity(this);
+        if(gps.canGetLocation()){
+            latitude = gps.getLatitude();
+            longitude = gps.getLongitude();
+            //Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+            mMap.moveCamera( CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude) , 14.0f) );
+        }else{
+            Toast.makeText(this,"error",Toast.LENGTH_SHORT).show();
+        }
         /*
         LatLng taipei_1 = new LatLng(25.0327792, 121.5636894);
         googleMap.addMarker(new MarkerOptions().position(taipei_1)
@@ -137,11 +146,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
         // add markers
-       myDatabase = new LocationsDatabase(MapsActivity.this);
-       locationArrayList=myDatabase.getLocations();
-       for(int i=0;i<locationArrayList.size();i++) {
-          LatLng test = new LatLng(locationArrayList.get(i).lat, locationArrayList.get(i).lng);
-           Marker perth = mMap.addMarker(new MarkerOptions()
+        myDatabase = new LocationsDatabase(MapsActivity.this);
+        locationArrayList=myDatabase.getLocations();
+        for(int i=0;i<locationArrayList.size();i++) {
+            LatLng test = new LatLng(locationArrayList.get(i).lat, locationArrayList.get(i).lng);
+            Marker perth = mMap.addMarker(new MarkerOptions()
                     .position(test));
         }
     }
@@ -360,7 +369,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
- @Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
         getMenuInflater().inflate(R.menu.layout_menu,menu);
@@ -386,7 +395,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 // TODO Auto-generated method stub
                 Intent intent2 = new Intent();
                 intent2.setClass(MapsActivity.this,MyuploadMusic.class);
-                 //儲存帳號
+                //儲存帳號
                 Bundle bundle = new Bundle();
                 bundle.putString("AccountID",UserID);
                 //將Bundle物件assign給intent
