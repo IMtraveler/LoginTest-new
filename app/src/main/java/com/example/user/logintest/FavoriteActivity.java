@@ -24,14 +24,17 @@ public class FavoriteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_favorite);
         SQLiteHelper helper =SQLiteHelper.getInstance(this);
         Cursor res = helper.getAllData();
+        ListView listview = (ListView) findViewById(R.id.listview);
         if(res.getCount() == 0) {
-            // show message
-            //showMessage("Error","Nothing found");
+            String [] err={"沒有最愛的景點"};
+            ArrayAdapter err_adapter = new ArrayAdapter(this,
+                    android.R.layout.simple_list_item_1,
+                    err);
+            listview.setAdapter(err_adapter);
             return;
         }
-
  //       StringBuffer buffer = new StringBuffer();
-        ListView listview = (ListView) findViewById(R.id.listview);
+        //ListView listview = (ListView) findViewById(R.id.listview);
         //ListView 要顯示的內容
         int j = res.getCount();
         String[] str= new String [j];
