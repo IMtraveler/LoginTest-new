@@ -1,11 +1,15 @@
 package com.example.user.logintest;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -39,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView msg;
     private EditText account;
     private EditText password;
+    private CheckBox  login_check1;
     private String UserId;
     private final static String rUrl = "http://140.112.107.125:47155/html/Facebook.php";
 
@@ -48,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         //performClick() 實現自動點擊
         //accessToken之後或許還會用到 先存起來
         //accessToken = loginResult.getAccessToken();
@@ -58,6 +64,11 @@ public class MainActivity extends AppCompatActivity {
         textView.setText("Facebook登入");
         callbackManager = CallbackManager.Factory.create();
         msg = (TextView) findViewById(R.id.data) ;
+        //SharedPreferences將name 和 pass 記錄起來 每次進去軟體時 開始從中讀取資料 放入login_name，login_password中
+        SharedPreferences remdname=getPreferences(Activity.MODE_PRIVATE);
+        String name_str=remdname.getString("name", "");
+        String pass_str=remdname.getString("pass", "");
+
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -128,11 +139,45 @@ public class MainActivity extends AppCompatActivity {
 
         account = (EditText) findViewById(R.id.AccountID); //輸入的帳號
         password = (EditText) findViewById(R.id.Password); //輸入的密碼
+        login_check1=(CheckBox) findViewById(R.id.login_check1);
         password.setTransformationMethod(PasswordTransformationMethod.getInstance());  //隱藏密碼
+        account.setText(name_str);
+        password.setText(pass_str);
+        login_check1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                {
+                    SharedPreferences remdname=getPreferences(Activity.MODE_PRIVATE);
+                    SharedPreferences.Editor edit=remdname.edit();
+                    edit.putString("name", account.getText().toString());
+                    edit.putString("pass", password.getText().toString());
+                    edit.commit();
+                }
+                if(!isChecked)
+                {
+
+                    SharedPreferences remdname=getPreferences(Activity.MODE_PRIVATE);
+                    SharedPreferences.Editor edit=remdname.edit();
+                    edit.putString("name", "");
+                    edit.putString("pass", "");
+                    edit.commit();
+                }
+            }
+        });
 
         b_login.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
+                if(login_check1.isChecked())//檢測使用者名密碼
+                {
+                    SharedPreferences remdname=getPreferences(Activity.MODE_PRIVATE);
+                    SharedPreferences.Editor edit=remdname.edit();
+                    edit.putString("name", account.getText().toString());
+                    edit.putString("pass", password.getText().toString());
+                    edit.commit();
+                }
 
                 getRequest = new StringRequest(Request.Method.POST,mUrl,
                         new Response.Listener<String>() {
