@@ -276,22 +276,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
-
-
-        TextView tv_skip = (TextView) findViewById(R.id.tv_skip);
-
-        tv_skip.setOnClickListener(new TextView.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Intent intent = new Intent();
-                intent.setClass(MainActivity.this,MainPageActivity.class);
-                startActivity(intent);
-                MainActivity.this.finish();
-            }
-        });
-
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
