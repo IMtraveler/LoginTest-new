@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,7 +29,9 @@ import java.util.List;
 import layout.SecondAudioFragment;
 import layout.FirstAudioFragment;
 
-public class MusicActivity extends AppCompatActivity implements OnClickListener{
+import static android.widget.AdapterView.*;
+
+public class MusicActivity extends AppCompatActivity{
 
 
     Button[] bt = new Button[3];
@@ -37,7 +40,7 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
     Button btn3 ;
     ListView audioList;
     ArrayAdapter MyArrayAdapter;
-
+    TextView attrName ;
 
 
     MediaPlayer mp = new MediaPlayer() ;
@@ -64,9 +67,7 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
         bt[0] = (Button)findViewById(R.id.button2);
         bt[1] = (Button)findViewById(R.id.btn_pause);
         bt[2] = (Button)findViewById(R.id.button4);
-        nextbn = (Button)findViewById( R.id.btn_nextAudio);
-        prebn  = (Button)findViewById( R.id.btn_preAudio);
-        btn3 = (Button)findViewById( R.id.button3);
+        attrName = (TextView)findViewById(R.id.tv_attrName);
         //TextView tv_audioIntro = (TextView)findViewById(R.id.tv_audioIntro) ;
 
         Bundle bundleFromAttr = getIntent().getExtras();
@@ -116,12 +117,6 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
         bt[1].setEnabled(false);
         bt[2].setEnabled(false);
 
-        //for(int i=0;i< bt.length;i++){
-         //   bt[i].setOnClickListener(new SampleClickListener());
-        //}
-
-
-        //TextView namelist = (TextView)findViewById(R.id.namelist) ;
        if( post.trim().length()>8){
             for(int i=0;i<post.length()-8;i++) {
                 if (post.substring(i, i + 8).equals("audioURL")) {
@@ -148,7 +143,7 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
             }
         }
 
-        TextView attrName = (TextView)findViewById(R.id.tv_attrName);
+
         attrName.setText(AudioName.get(0));
 
         for(int i=0;i< bt.length;i++){
@@ -158,6 +153,7 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
 
         audioList = (ListView)findViewById(R.id.list_audio);
         MyArrayAdapter = new ArrayAdapter<>(this, R.layout.list_item, R.id.tv_list);
+        //MyArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_2, R.id.text1);
         audioList.setAdapter(MyArrayAdapter);
 
 
@@ -165,8 +161,21 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
         for (int i = 0; i < AudioName.size(); i++) {
             MyArrayAdapter.add(AudioName.get(i));
         }
-
         MyArrayAdapter.notifyDataSetChanged();
+        audioList.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id ){
+                ListView listView = (ListView) parent;
+                Toast.makeText(
+                        MusicActivity.this,
+                        "ID：" + id + listView.getItemAtPosition(position).toString(),
+                        Toast.LENGTH_LONG).show();
+                        playAudio(id);
+                bt[1].setText("pause");
+
+            }
+
+        });
 
 /*
         List<HashMap<String , String>> audiolist = new ArrayList<>();
@@ -225,12 +234,36 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
         mp.reset();
     }
 
+    public void playAudio(long audioID){
+        int id = (int) audioID;
+        String audiourl = AudioURL.get(id).trim();
+        attrName.setText(AudioName.get(id));
+        if (mp.isPlaying()){
+            mp.stop();
+        }
+        try {
+            mp.reset();
+            mp.setDataSource(audiourl);
+            mp.prepare();
+            //mp.start();
+        } catch (IllegalArgumentException e) {
+            Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
+            Log.e("here's url", audiourl);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        mp.start();
+        bt[0].setEnabled(false);
+        bt[1].setEnabled(true);
+        bt[2].setEnabled(true);
+    }
 
+
+    /*
     @Override
     public void onClick(View view) {
         Fragment fragment;
         String audiourl ;
-        TextView attrName = (TextView) findViewById(R.id.tv_attrName);
 
 
         if (view == findViewById(R.id.btn_nextAudio)) {
@@ -286,7 +319,7 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
 
         } */
 
-
+/*
        if (view == findViewById(R.id.btn_preAudio)) {
            audiourl = AudioURL.get(1).trim();
            attrName.setText(AudioName.get(1));
@@ -339,7 +372,7 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
             btn3.setEnabled(true);
             nextbn.setEnabled(true);
 
-        }
+        } /
 
         /*
             Bundle FirstAudioBundle = new Bundle();
@@ -363,7 +396,7 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
 
 
 
-        }
+       // }
 
 
 
@@ -419,9 +452,6 @@ public class MusicActivity extends AppCompatActivity implements OnClickListener{
                 mp.pause();
                 mp.seekTo(0);
                 bt[0].setText("start");
-                btn3.setEnabled(true);
-                prebn.setEnabled(true);
-                nextbn.setEnabled(true);
 
             }
         }
