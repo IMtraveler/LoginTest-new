@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+
         //performClick() 實現自動點擊
         //accessToken之後或許還會用到 先存起來
         //accessToken = loginResult.getAccessToken();
@@ -95,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
                                 bundle.putString("AccountID",UserId );
                                 //將Bundle物件assign給intent
                                 intent.putExtras(bundle);
+                                XclSingleton.getInstance().put("AccountID",UserId);
                                 //跳到首頁
                                 startActivity(intent);
                                 MainActivity.this.finish();
@@ -204,6 +206,7 @@ public class MainActivity extends AppCompatActivity {
                                     intent.putExtras(bundle);
                                     //Intent intent2 = new Intent();
                                     //intent2.setClass(MainActivity.this,MainPageActivity.class);
+                                    XclSingleton.getInstance().put("AccountID",account.getText().toString());
                                     startActivity(intent);
                                     MainActivity.this.finish();
                                 }else{

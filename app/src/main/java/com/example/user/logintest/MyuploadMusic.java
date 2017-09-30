@@ -21,10 +21,8 @@ public class MyuploadMusic extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myupload_music);
-        //取的intent中的bundle物件
-        Bundle bundleID =this.getIntent().getExtras();
 
-        String account = bundleID.getString("AccountID");
+        String account = XclSingleton.getInstance().get("AccountID").toString();
         //ID:帳號
         //連接php，將相關的音檔載下來
         String phpURL = "http://140.112.107.125:47155/html/myMusic.php" ;
