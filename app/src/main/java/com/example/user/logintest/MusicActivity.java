@@ -16,6 +16,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ArrayAdapter;
@@ -35,12 +36,11 @@ public class MusicActivity extends AppCompatActivity{
 
 
     Button[] bt = new Button[3];
-    Button nextbn;
-    Button prebn;
-    Button btn3 ;
-    ListView audioList;
+    ListView audioListView;
     ArrayAdapter MyArrayAdapter;
     TextView attrName ;
+    TextView audioIntro;
+    private SimpleAdapter MySimpleAdapter ;
 
 
     MediaPlayer mp = new MediaPlayer() ;
@@ -55,6 +55,8 @@ public class MusicActivity extends AppCompatActivity{
     ArrayList<Integer> endNamepos = new ArrayList<>();
     ArrayList<String> AudioName = new ArrayList<>();
     ArrayList<String> AudioURL = new ArrayList<>();
+    ArrayList<String> GuideName = new ArrayList<>();
+    ArrayList<String> AudioIntro = new ArrayList<>();
     int num=0;
 
 
@@ -68,6 +70,7 @@ public class MusicActivity extends AppCompatActivity{
         bt[1] = (Button)findViewById(R.id.btn_pause);
         bt[2] = (Button)findViewById(R.id.button4);
         attrName = (TextView)findViewById(R.id.tv_attrName);
+        audioIntro = (TextView)findViewById(R.id.tv_audioIntro);
         //TextView tv_audioIntro = (TextView)findViewById(R.id.tv_audioIntro) ;
 
         Bundle bundleFromAttr = getIntent().getExtras();
@@ -93,7 +96,7 @@ public class MusicActivity extends AppCompatActivity{
 
 
         if(post.length()> 3) {
-           // tv_audioIntro.setText(post);
+            Log.e("testtt", post);
         }
         else {
             post = "No data";
@@ -101,7 +104,7 @@ public class MusicActivity extends AppCompatActivity{
         audioInfo = post.split(";");
 
         //sendData(fm);
-        bundle.putString("audioInfo", "test???");
+        //bundle.putString("audioInfo", "test???");
 // set Fragmentclass Arguments
         /*
         SecondAudioFragment secondAF = new SecondAudioFragment();
@@ -117,6 +120,7 @@ public class MusicActivity extends AppCompatActivity{
         bt[1].setEnabled(false);
         bt[2].setEnabled(false);
 
+/*
        if( post.trim().length()>8){
             for(int i=0;i<post.length()-8;i++) {
                 if (post.substring(i, i + 8).equals("audioURL")) {
@@ -128,20 +132,37 @@ public class MusicActivity extends AppCompatActivity{
                     beginNamepos.add(i+6); //紀錄Name初始位置
                     endURLpos.add(i-1); //紀錄URL末端位置
                 }
-                if(post.substring(i,i+5).equals("guide")){
+                if(post.substring(i,i+5).equals("account")){
                     endNamepos.add(i-1); //紀錄Name末端位置
                 }
             }
+        } */
+
+        for (int i = 0 ; i < audioInfo.length ;i++)
+        {
+        try {
+            AudioName.add(audioInfo[i].substring(audioInfo[i].indexOf("audioName:") + 11, audioInfo[i].indexOf("audioURL:")));
+            AudioURL.add(audioInfo[i].substring(audioInfo[i].indexOf("audioURL:") + 10, audioInfo[i].indexOf("intro:")));
+            AudioIntro.add(audioInfo[i].substring(audioInfo[i].indexOf("intro:")+7, audioInfo[i].indexOf("account:")));
+            GuideName.add(audioInfo[i].substring(audioInfo[i].indexOf("account:")+9, audioInfo[i].length()));
+        }catch (Exception e){
+            Log.e("error", e.toString());
+            Log.e("what", audioInfo[i]);
         }
-        if(beginNamepos.size()==0){
+
+        }
+
+        if(AudioName.size() == 0){
             AudioName.add("No Audio");
             AudioURL.add("http://140.112.107.125:47155/html/uploaded/noAudio.m4a");
-        }else{
+        }
+        /*else{
             for(int i =0;i<beginNamepos.size();i++){
                 AudioName.add(post.substring(beginNamepos.get(i),endNamepos.get(i)+1));
                 AudioURL.add(post.substring(beginURLpos.get(i),endURLpos.get(i)+1));
+
             }
-        }
+        }*/
 
 
         attrName.setText(AudioName.get(0));
@@ -151,10 +172,11 @@ public class MusicActivity extends AppCompatActivity{
         }
 
 
-        audioList = (ListView)findViewById(R.id.list_audio);
+        audioListView = (ListView)findViewById(R.id.list_audio);
+        /*
         MyArrayAdapter = new ArrayAdapter<>(this, R.layout.list_item, R.id.tv_list);
         //MyArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_2, R.id.text1);
-        audioList.setAdapter(MyArrayAdapter);
+        audioListView.setAdapter(MyArrayAdapter);
 
 
         MyArrayAdapter.clear();
@@ -162,7 +184,26 @@ public class MusicActivity extends AppCompatActivity{
             MyArrayAdapter.add(AudioName.get(i));
         }
         MyArrayAdapter.notifyDataSetChanged();
-        audioList.setOnItemClickListener(new OnItemClickListener() {
+        */
+
+
+        List<HashMap<String , String>> audiolist = new ArrayList<>();
+        for(int i = 0 ; i < AudioName.size() ; i++){
+            HashMap<String , String> hashMap = new HashMap<>();
+            hashMap.put("audioName" , AudioName.get(i));
+            hashMap.put("guide" , GuideName.get(i));
+            //把title , text存入HashMap之中
+            audiolist.add(hashMap);
+            //把HashMap存入list之中
+        }
+
+        MySimpleAdapter = new SimpleAdapter(this, audiolist,
+                R.layout.list_item_2,
+                new String[] { "audioName", "guide"},
+                new int[] {	R.id.list_audioName,R.id.list_guide});
+        audioListView.setAdapter(MySimpleAdapter);
+
+        audioListView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id ){
                 ListView listView = (ListView) parent;
@@ -170,32 +211,14 @@ public class MusicActivity extends AppCompatActivity{
                         MusicActivity.this,
                         "ID：" + id + listView.getItemAtPosition(position).toString(),
                         Toast.LENGTH_LONG).show();
-                        playAudio(id);
+                playAudio(id);
                 bt[1].setText("pause");
 
             }
 
         });
-
-/*
-        List<HashMap<String , String>> audiolist = new ArrayList<>();
-        for(int i = 0 ; i < AudioName.size() ; i++){
-            HashMap<String , String> hashMap = new HashMap<>();
-            hashMap.put("title" , AudioName.get(i));
-            hashMap.put("text" , "guide_name");
-            //把title , text存入HashMap之中
-            audiolist.add(hashMap);
-            //把HashMap存入list之中
-        }
-
-        MyArrayAdapter = new ArrayAdapter<>(
-                this,
-                audiolist,
-                R.layout.list_item_2,
-                new String[]{"title" , "text"},
-                new int[] {R.id.list_audioName,R.id.list_guide});
-        */
     }
+
 
     /*
     public void sendData(FragmentManager fm) {
@@ -238,6 +261,8 @@ public class MusicActivity extends AppCompatActivity{
         int id = (int) audioID;
         String audiourl = AudioURL.get(id).trim();
         attrName.setText(AudioName.get(id));
+        audioIntro.setText(AudioIntro.get(id));
+
         if (mp.isPlaying()){
             mp.stop();
         }
@@ -257,147 +282,6 @@ public class MusicActivity extends AppCompatActivity{
         bt[1].setEnabled(true);
         bt[2].setEnabled(true);
     }
-
-
-    /*
-    @Override
-    public void onClick(View view) {
-        Fragment fragment;
-        String audiourl ;
-
-
-        if (view == findViewById(R.id.btn_nextAudio)) {
-            audiourl = AudioURL.get(num).trim();
-            attrName.setText(AudioName.get(num));
-            if (mp.isPlaying()){
-                mp.stop();
-            }
-            try {
-                mp.reset();
-                mp.setDataSource(audiourl);
-                mp.prepare();
-                //mp.start();
-            } catch (IllegalArgumentException e) {
-                Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
-                Log.e("here's url", audiourl);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            mp.start();
-            bt[0].setEnabled(false);
-            bt[1].setEnabled(true);
-            bt[2].setEnabled(true);
-            nextbn.setEnabled(false);
-            prebn.setEnabled(true);
-            btn3.setEnabled(true);
-
-
-        } /*
-            /*
-            Bundle SecondAudioBundle = new Bundle();
-            SecondAudioBundle.putString("audioInfo", audioInfo[2]);
-            fragment = new SecondAudioFragment();
-            fragment.setArguments(SecondAudioBundle);
-            FragmentManager fragmentManager = getSupportFragmentManager()  ;
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction() ;
-            fragmentTransaction.replace(R.id.fragment_place, fragment);
-            fragmentTransaction.commit();
-
-
-            mp.pause();
-            mp.seekTo(0);
-            mp.reset();
-            audiourl= AudioURL.get(num).trim();
-
-            uri = Uri.parse(audiourl);
-            try {
-                mp.setDataSource(this,uri);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            mp.prepareAsync();
-
-        } */
-
-/*
-       if (view == findViewById(R.id.btn_preAudio)) {
-           audiourl = AudioURL.get(1).trim();
-           attrName.setText(AudioName.get(1));
-           if (mp.isPlaying()){
-               mp.stop();
-           }
-           try {
-               mp.reset();
-               mp.setDataSource(audiourl);
-               mp.prepare();
-               //mp.start();
-           } catch (IllegalArgumentException e) {
-               Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
-               Log.e("here's url", audiourl);
-           } catch (IOException e) {
-               e.printStackTrace();
-           }
-           mp.start();
-           bt[0].setEnabled(false);
-           bt[1].setEnabled(true);
-           bt[2].setEnabled(true);
-           prebn.setEnabled(false);
-           btn3.setEnabled(true);
-           nextbn.setEnabled(true);
-
-        }
-
-        if (view == findViewById(R.id.button3)) {
-            audiourl = AudioURL.get(2).trim();
-            attrName.setText(AudioName.get(2));
-            if (mp.isPlaying()){
-                mp.stop();
-            }
-            try {
-                mp.reset();
-                mp.setDataSource(audiourl);
-                mp.prepare();
-                //mp.start();
-            } catch (IllegalArgumentException e) {
-                Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
-                Log.e("here's url", audiourl);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            mp.start();
-            bt[0].setEnabled(false);
-            bt[1].setEnabled(true);
-            bt[2].setEnabled(true);
-            prebn.setEnabled(false);
-            btn3.setEnabled(true);
-            nextbn.setEnabled(true);
-
-        } /
-
-        /*
-            Bundle FirstAudioBundle = new Bundle();
-            FirstAudioBundle.putString("audioInfo",audioInfo[1]);
-            fragment = new FirstAudioFragment();
-            FragmentManager fragmentManager = getSupportFragmentManager()  ;
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction() ;
-            fragmentTransaction.replace(R.id.fragment_place, fragment);
-            fragment.setArguments(FirstAudioBundle);
-            fragmentTransaction.commit();
-
-
-            audiourl= AudioURL.get(num).trim();
-            uri = Uri.parse(audiourl);
-            try {
-                mp.setDataSource(this,uri);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            mp.prepareAsync();*/
-
-
-
-       // }
-
 
 
     private class SampleCompletionListener implements MediaPlayer.OnCompletionListener {
@@ -456,6 +340,9 @@ public class MusicActivity extends AppCompatActivity{
             }
         }
     }
+
+
+
     public boolean onCreateOptionsMenu(Menu menu)
     {
         getMenuInflater().inflate(R.menu.layout_menu,menu);
