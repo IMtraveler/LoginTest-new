@@ -16,6 +16,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ArrayAdapter;
@@ -35,12 +36,10 @@ public class MusicActivity extends AppCompatActivity{
 
 
     Button[] bt = new Button[3];
-    Button nextbn;
-    Button prebn;
-    Button btn3 ;
-    ListView audioList;
+    ListView audioListView;
     ArrayAdapter MyArrayAdapter;
     TextView attrName ;
+    private SimpleAdapter MySimpleAdapter ;
 
 
     MediaPlayer mp = new MediaPlayer() ;
@@ -55,6 +54,7 @@ public class MusicActivity extends AppCompatActivity{
     ArrayList<Integer> endNamepos = new ArrayList<>();
     ArrayList<String> AudioName = new ArrayList<>();
     ArrayList<String> AudioURL = new ArrayList<>();
+    ArrayList<String> GuideName = new ArrayList<>();
     int num=0;
 
 
@@ -140,6 +140,7 @@ public class MusicActivity extends AppCompatActivity{
             for(int i =0;i<beginNamepos.size();i++){
                 AudioName.add(post.substring(beginNamepos.get(i),endNamepos.get(i)+1));
                 AudioURL.add(post.substring(beginURLpos.get(i),endURLpos.get(i)+1));
+
             }
         }
 
@@ -151,10 +152,11 @@ public class MusicActivity extends AppCompatActivity{
         }
 
 
-        audioList = (ListView)findViewById(R.id.list_audio);
+        audioListView = (ListView)findViewById(R.id.list_audio);
+        /*
         MyArrayAdapter = new ArrayAdapter<>(this, R.layout.list_item, R.id.tv_list);
         //MyArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_2, R.id.text1);
-        audioList.setAdapter(MyArrayAdapter);
+        audioListView.setAdapter(MyArrayAdapter);
 
 
         MyArrayAdapter.clear();
@@ -162,7 +164,26 @@ public class MusicActivity extends AppCompatActivity{
             MyArrayAdapter.add(AudioName.get(i));
         }
         MyArrayAdapter.notifyDataSetChanged();
-        audioList.setOnItemClickListener(new OnItemClickListener() {
+        */
+
+
+        List<HashMap<String , String>> audiolist = new ArrayList<>();
+        for(int i = 0 ; i < AudioName.size() ; i++){
+            HashMap<String , String> hashMap = new HashMap<>();
+            hashMap.put("audioName" , AudioName.get(i));
+            hashMap.put("guide" , "guide_name");
+            //把title , text存入HashMap之中
+            audiolist.add(hashMap);
+            //把HashMap存入list之中
+        }
+
+        MySimpleAdapter = new SimpleAdapter(this, audiolist,
+                R.layout.list_item_2,
+                new String[] { "audioName", "guide"},
+                new int[] {	R.id.list_audioName,R.id.list_guide});
+        audioListView.setAdapter(MySimpleAdapter);
+
+        audioListView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id ){
                 ListView listView = (ListView) parent;
@@ -170,32 +191,14 @@ public class MusicActivity extends AppCompatActivity{
                         MusicActivity.this,
                         "ID：" + id + listView.getItemAtPosition(position).toString(),
                         Toast.LENGTH_LONG).show();
-                        playAudio(id);
+                playAudio(id);
                 bt[1].setText("pause");
 
             }
 
         });
-
-/*
-        List<HashMap<String , String>> audiolist = new ArrayList<>();
-        for(int i = 0 ; i < AudioName.size() ; i++){
-            HashMap<String , String> hashMap = new HashMap<>();
-            hashMap.put("title" , AudioName.get(i));
-            hashMap.put("text" , "guide_name");
-            //把title , text存入HashMap之中
-            audiolist.add(hashMap);
-            //把HashMap存入list之中
-        }
-
-        MyArrayAdapter = new ArrayAdapter<>(
-                this,
-                audiolist,
-                R.layout.list_item_2,
-                new String[]{"title" , "text"},
-                new int[] {R.id.list_audioName,R.id.list_guide});
-        */
     }
+
 
     /*
     public void sendData(FragmentManager fm) {
@@ -456,6 +459,9 @@ public class MusicActivity extends AppCompatActivity{
             }
         }
     }
+
+
+
     public boolean onCreateOptionsMenu(Menu menu)
     {
         getMenuInflater().inflate(R.menu.layout_menu,menu);

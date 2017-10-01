@@ -7,8 +7,10 @@
         android:id="@+id/list_audioName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        android:layout_marginTop="6dp"
+        android:padding="@dimen/cardview_default_radius"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/list_guide"
@@ -17,8 +19,11 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/list_audioName"
+        android:layout_marginLeft="8dp"
+        android:padding="@dimen/cardview_default_radius"
         android:textAppearance="?attr/textAppearanceListItem"
-        />
+        android:textColor="?attr/colorControlNormal"
+        android:textSize="12sp" />
 
 
 </RelativeLayout>
