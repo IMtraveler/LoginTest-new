@@ -96,12 +96,30 @@ public class MusicActivity extends AppCompatActivity{
 
 
         if(post.length()> 3) {
-            Log.e("testtt", post);
+            audioInfo = post.split(";");
+            for (int i = 0 ; i < audioInfo.length ;i++)
+            {
+                try {
+                    AudioName.add(audioInfo[i].substring(audioInfo[i].indexOf("audioName:") + 11, audioInfo[i].indexOf("audioURL:")));
+                    AudioURL.add(audioInfo[i].substring(audioInfo[i].indexOf("audioURL:") + 10, audioInfo[i].indexOf("intro:")));
+                    AudioIntro.add(audioInfo[i].substring(audioInfo[i].indexOf("intro:")+7, audioInfo[i].indexOf("account:")));
+                    GuideName.add(audioInfo[i].substring(audioInfo[i].indexOf("account:")+9, audioInfo[i].length()));
+                }catch (Exception e){
+                    Log.e("error", e.toString());
+                    Log.e("what", audioInfo[i]);
+                }
+
+            }
+
         }
         else {
             post = "No data";
+            AudioName.add("No Audio");
+            AudioURL.add("http://140.112.107.125:47155/html/uploaded/noAudio.m4a");
+            AudioIntro.add("null");
+            GuideName.add("null");
         }
-        audioInfo = post.split(";");
+
 
         //sendData(fm);
         //bundle.putString("audioInfo", "test???");
@@ -138,31 +156,6 @@ public class MusicActivity extends AppCompatActivity{
             }
         } */
 
-        for (int i = 0 ; i < audioInfo.length ;i++)
-        {
-        try {
-            AudioName.add(audioInfo[i].substring(audioInfo[i].indexOf("audioName:") + 11, audioInfo[i].indexOf("audioURL:")));
-            AudioURL.add(audioInfo[i].substring(audioInfo[i].indexOf("audioURL:") + 10, audioInfo[i].indexOf("intro:")));
-            AudioIntro.add(audioInfo[i].substring(audioInfo[i].indexOf("intro:")+7, audioInfo[i].indexOf("account:")));
-            GuideName.add(audioInfo[i].substring(audioInfo[i].indexOf("account:")+9, audioInfo[i].length()));
-        }catch (Exception e){
-            Log.e("error", e.toString());
-            Log.e("what", audioInfo[i]);
-        }
-
-        }
-
-        if(AudioName.size() == 0){
-            AudioName.add("No Audio");
-            AudioURL.add("http://140.112.107.125:47155/html/uploaded/noAudio.m4a");
-        }
-        /*else{
-            for(int i =0;i<beginNamepos.size();i++){
-                AudioName.add(post.substring(beginNamepos.get(i),endNamepos.get(i)+1));
-                AudioURL.add(post.substring(beginURLpos.get(i),endURLpos.get(i)+1));
-
-            }
-        }*/
 
 
         attrName.setText(AudioName.get(0));
