@@ -20,6 +20,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -69,11 +71,29 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     LocationsDatabase myDatabase;
     private ArrayList<Locations> locationArrayList;
 
+    private String[] locations ;
+    private ArrayAdapter<String> adapter;
+    private AutoCompleteTextView tf_location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        myDatabase = new LocationsDatabase(MapsActivity.this);
+        locationArrayList=myDatabase.getLocations();
+
+        locations = new String[locationArrayList.size()];
+        //所有景點的list
+        for (int i =0;i<locationArrayList.size();i++){
+            locations[i]=locationArrayList.get(i).name;
+        }
+
+        adapter = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,locations);
+        tf_location = (AutoCompleteTextView) findViewById(R.id.TF_location);
+        tf_location.setThreshold(1);
+        tf_location.setAdapter(adapter);
+
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
         }

@@ -9,17 +9,12 @@
         android:layout_height="wrap_content"
         tools:context="com.example.user.logintest.MapsActivity" />
 
-
-
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/TF_location"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:ems="10"
-        android:inputType="textPersonName" />
+        android:hint="Input some data..."
+        />
 
     <Button
         android:id="@+id/B_search"
