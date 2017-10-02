@@ -363,7 +363,7 @@ public class MusicActivity extends AppCompatActivity{
                 intent.setClass(MusicActivity.this,FavoriteActivity.class);
                 startActivity(intent);
                 break;
-            /*case R.id.我上傳的音檔:
+            case R.id.我上傳的音檔:
                 //跳到上傳音檔頁，顯示上傳的音檔名字
                 // TODO Auto-generated method stub
                 Intent intent2 = new Intent();
@@ -377,7 +377,7 @@ public class MusicActivity extends AppCompatActivity{
                 //顯示按鈕的名字
                 Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
                 break;
-            */     case R.id.音檔種類:
+            case R.id.音檔種類:
                 Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
                 break;
             case R.id.帳戶:
