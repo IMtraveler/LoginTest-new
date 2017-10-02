@@ -40,8 +40,8 @@ public class MyuploadMusic extends AppCompatActivity {
         final String[] AudioList = post.split(";");
         final String[] NameList = new String[AudioList.length-1];
         for(int i=0;i<AudioList.length-1;i++){
-            if(AudioList[i].lastIndexOf("intro:")>=0){
-                NameList[i]=AudioList[i].substring(AudioList[i].indexOf("intro:")+6);
+            if(AudioList[i].lastIndexOf("audioName:")>=0){
+                NameList[i]=AudioList[i].substring(AudioList[i].indexOf("audioName:")+11);
             }
         }
         listView = (ListView)findViewById(R.id.list_view);
