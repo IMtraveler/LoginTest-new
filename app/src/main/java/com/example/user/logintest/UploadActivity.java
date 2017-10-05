@@ -42,6 +42,7 @@ public class UploadActivity extends AppCompatActivity {
     private String lat ;
     private String lng ;
     private String name ;
+    private EditText audioname ;
     private TextView attrName ;
 
 
@@ -53,6 +54,7 @@ public class UploadActivity extends AppCompatActivity {
         uploadbutton = (Button)findViewById(R.id.btn_file) ;
         type = (EditText)findViewById(R.id.et_type);
         intro = (EditText)findViewById(R.id.et_intro);
+        audioname = (EditText)findViewById(R.id.et_audioName);
         attrName = (TextView)findViewById(R.id.tv_attrName);
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
@@ -168,6 +170,7 @@ public class UploadActivity extends AppCompatActivity {
                                 .add("lat",lat)
                                 .add("lng", lng)
                                 .add("filename", filename)
+                                .add("audioname",audioname.getText().toString())
                                 .add("intro", intro.getText().toString())
                                 .add("type", type.getText().toString()).build();
 
