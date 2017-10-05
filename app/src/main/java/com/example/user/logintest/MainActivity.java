@@ -29,6 +29,7 @@ import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import android.support.v7.app.AlertDialog;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -135,6 +136,34 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCancel() {
                 textView.setText("Login Cancelled");
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+                View mView = getLayoutInflater().inflate(R.layout.login_dialog, null);
+                Button changeUser = (Button) mView.findViewById(R.id.changeUser);
+                Button cancel = (Button) mView.findViewById(R.id.cancel);
+                changeUser.setOnClickListener(new View.OnClickListener()  {
+                                              @Override
+                                              public void onClick(View view){
+                                                  LoginManager.getInstance().logOut();
+                                                  loginButton.performClick();
+
+                                              }
+
+                                          }
+                );
+                cancel.setOnClickListener(new View.OnClickListener()  {
+                                                  @Override
+                                                  public void onClick(View view){
+                                                      Intent intent = new Intent();
+                                                      intent.setClass(MainActivity.this, MainActivity.class);
+                                                      startActivity(intent);
+
+                                                  }
+
+                                              }
+                );
+                mBuilder.setView(mView);
+                AlertDialog dialog = mBuilder.create();
+                dialog.show();
             }
 
             @Override

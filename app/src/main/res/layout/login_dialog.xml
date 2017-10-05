@@ -1,6 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</LinearLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:text="請問需要切換使用者嗎"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@android:color/holo_blue_dark"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/changeUser"
+        android:layout_width="98dp"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:text="切換使用者"
+        android:textColor="@android:color/white"
+        android:layout_marginLeft="86dp"
+        android:layout_marginStart="86dp"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/cancel"
+        android:layout_width="98dp"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:text="取消"
+        android:textColor="@android:color/white"
+        android:layout_below="@+id/textView"
+        android:layout_toRightOf="@+id/changeUser"
+        android:layout_toEndOf="@+id/changeUser"
+        android:layout_marginLeft="14dp"
+        android:layout_marginStart="14dp" />
+
+</RelativeLayout>
