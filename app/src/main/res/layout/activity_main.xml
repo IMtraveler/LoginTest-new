@@ -123,13 +123,16 @@
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="20sp" />
 
-    <com.facebook.login.widget.LoginButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+
+    <Button
         android:id="@+id/fb_login_bn"
+        android:layout_width="100sp"
+        android:layout_height="30sp"
         android:layout_below="@+id/textView"
         android:layout_gravity="center_horizontal"
-        android:layout_centerHorizontal="true"></com.facebook.login.widget.LoginButton>
+        android:background="@color/com_facebook_messenger_blue"
+        android:text="Facebook登入"
+        android:textSize="@dimen/com_facebook_likeview_text_size"/>
 
     <TextView
         android:id="@+id/data"

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -20,13 +21,16 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,7 +38,7 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    LoginButton loginButton;
+    Button loginButton;
     TextView textView;
     CallbackManager callbackManager;
     private RequestQueue mQueue; //初始化 取得volley的request物件, 建議將mQueue設為單一物件全域使用,避免浪費資源
@@ -43,10 +47,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView msg;
     private EditText account;
     private EditText password;
-    private CheckBox  login_check1;
+    private CheckBox  login_check1,fb_login_check;
     private String UserId;
     private final static String rUrl = "http://140.112.107.125:47155/html/Facebook.php";
-
+    private AccessToken accessToken;
 
 
 
@@ -54,13 +58,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-
         //performClick() 實現自動點擊
         //accessToken之後或許還會用到 先存起來
         //accessToken = loginResult.getAccessToken();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        loginButton = (LoginButton)findViewById(R.id.fb_login_bn);
+        //找到button (fb_login)
+        loginButton = (Button)findViewById(R.id.fb_login_bn);
         textView = (TextView)findViewById(R.id.textView);
         textView.setText("Facebook登入");
         callbackManager = CallbackManager.Factory.create();
@@ -70,12 +74,22 @@ public class MainActivity extends AppCompatActivity {
         String name_str=remdname.getString("name", "");
         String pass_str=remdname.getString("pass", "");
 
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+        loginButton.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                LoginManager.getInstance().logInWithReadPermissions(MainActivity.this, Arrays.asList("public_profile", "user_friends"));
+            }
+        });
+
+
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
 
                 /*Fackbook ID------------------------------------------------------------------------*/
                 UserId = loginResult.getAccessToken().getUserId();
+                accessToken = loginResult.getAccessToken();
+                Log.d("FB","access token got");
                 //  msg.setText(UserId);
                 /*--------------------------------------------------------------------------------------*/
                 // String token = loginResult.getAccessToken().getToken();  這個是那個用戶的token(還要查查是啥，但是應該是相關基本資料吧?
@@ -83,10 +97,6 @@ public class MainActivity extends AppCompatActivity {
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String s) {
-
-
-
-
 
                                 Intent intent = new Intent();
                                 msg.setText(s);
