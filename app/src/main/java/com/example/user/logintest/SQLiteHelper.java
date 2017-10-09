@@ -11,6 +11,7 @@ import android.content.Context;
 
 public class SQLiteHelper extends SQLiteOpenHelper{
     private static SQLiteHelper instance = null;
+
     //public SQLiteHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
     //   super(context, name, factory, version);}
 

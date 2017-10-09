@@ -30,6 +30,45 @@ public class LocationsDatabase extends SQLiteAssetHelper {
         setForcedUpgrade(DATABASE_VERSION);
     }
 
+    public ArrayList<Locations> getsearch(String s){
+        String input = s;
+
+        SQLiteDatabase db=getReadableDatabase();
+        String name = LocationsDatabase.NAME;
+        //欲查詢的欄位
+        String[] columns={LocationsDatabase.ID,name,LocationsDatabase.LAT,LocationsDatabase.LNG};
+
+        String selection = "name LIKE ?";
+        //SelectionArgs 以相同順序的元素職替換?因為?可能代表多個所以為字串陣列
+        String[] selectionArgs = {"%"+input+"%"};
+        //需要傳遞多個參數，每個參數都代表SQL查詢語法的一部分，null代表略過該部分語法
+
+//        String[] selectionArgs={categoryId+"",subjectId+"",yearId+""};
+        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+        qb.setTables(LOCATION_TABLE);
+
+        Cursor cursor = qb.query(db, columns,selection,selectionArgs,null,null,null);
+
+        //Cursor cursor = qb.query(db, columns,null,null,null,null,null);
+        // /Cursor cursor=db.query(LocationsDatabase.LOCATION_TABLE, columns, null, null, null, null, null);
+//        Cursor cursor=db.query(MyDatabase.TABLE_NAME, columns, null,null, null, null, null);
+        ArrayList<Locations> questionsArrayList=new ArrayList<>();
+
+        while(cursor.moveToNext()){
+            Locations questions=new Locations();
+           // questions.id=cursor.getInt(cursor.getColumnIndex(LocationsDatabase.ID));
+            questions.name=cursor.getString(cursor.getColumnIndex(LocationsDatabase.NAME));
+           // questions.lat=cursor.getDouble(cursor.getColumnIndex(LocationsDatabase.LAT));
+            // questions.lng=cursor.getDouble(cursor.getColumnIndex(LocationsDatabase.LNG));
+            questionsArrayList.add(questions);
+        }
+        db.close();
+        cursor.close();
+
+        return questionsArrayList;
+
+    }
+
     public ArrayList<Locations> getLocations(){
 
         SQLiteDatabase db=getReadableDatabase();

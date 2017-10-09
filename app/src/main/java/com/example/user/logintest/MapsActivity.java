@@ -3,6 +3,7 @@ package com.example.user.logintest;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -29,6 +30,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.content.Intent ;
+
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.location.LocationListener;
@@ -69,7 +71,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     Bundle bundle = new Bundle();
 
     LocationsDatabase myDatabase;
+
     private ArrayList<Locations> locationArrayList;
+    private ArrayList<Locations> searchArrayList;
 
     private String[] locations ;
     private ArrayAdapter<String> adapter;
@@ -80,16 +84,20 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         myDatabase = new LocationsDatabase(MapsActivity.this);
-        locationArrayList=myDatabase.getLocations();
+        tf_location = (AutoCompleteTextView) findViewById(R.id.TF_location);
+        String input = tf_location.getText().toString();
+        searchArrayList=myDatabase.getsearch(input);
 
-        locations = new String[locationArrayList.size()];
+
+
+        locations = new String[searchArrayList.size()];
         //所有景點的list
-        for (int i =0;i<locationArrayList.size();i++){
-            locations[i]=locationArrayList.get(i).name;
+        for (int i =0;i<searchArrayList.size();i++){
+            locations[i]=searchArrayList.get(i).name;
         }
 
         adapter = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,locations);
-        tf_location = (AutoCompleteTextView) findViewById(R.id.TF_location);
+
         tf_location.setThreshold(1);
         tf_location.setAdapter(adapter);
 
