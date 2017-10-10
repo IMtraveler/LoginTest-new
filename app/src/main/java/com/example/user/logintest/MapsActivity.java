@@ -89,6 +89,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         myDatabase = new LocationsDatabase(MapsActivity.this);
+        locationArrayList=myDatabase.getLocations();
         tf_location = (AutoCompleteTextView) findViewById(R.id.TF_location);
         //searchArrayList=myDatabase.getsearch("故");
        /* tf_location.addTextChangedListener(new  TextWatcher() {
@@ -116,14 +117,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });*/
         //searchArrayList=myDatabase.getsearch(input);
-        //locations = new String[searchArrayList.size()];
+        locations = new String[locationArrayList.size()];
         //所有景點的list
-       // for (int i =0;i<searchArrayList.size();i++){
-      //      locations[i]=searchArrayList.get(i).name;
-       // }
-       // adapter = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,locations);
-      //  tf_location.setThreshold(1);
-      //  tf_location.setAdapter(adapter);
+        for (int i =0;i<locationArrayList.size();i++){
+            locations[i]=locationArrayList.get(i).name;
+        }
+        adapter = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,locations);
+        tf_location.setThreshold(1);
+        tf_location.setAdapter(adapter);
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
