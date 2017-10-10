@@ -349,14 +349,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 LatLng s_research = new LatLng(searchArrayList.get(0).lat,searchArrayList.get(0).lng);
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(s_research));
                 mMap.animateCamera(CameraUpdateFactory.zoomBy(10));
-            }else{
+            }else if(searchArrayList.size()==0) {
+                Toast.makeText(getApplicationContext(),"搜尋不到相關的景點", Toast.LENGTH_SHORT).show();
+            }else {
                 final AlertDialog.Builder sBuilder = new AlertDialog.Builder(MapsActivity.this);
                 View sView = getLayoutInflater().inflate(R.layout.search_dialog, null);
                 ListView listView = (ListView)sView.findViewById(R.id.seachList);
+
                 final String[] NameList = new String[searchArrayList.size()];
                 for(int i=0 ;i<searchArrayList.size();i++){
                     NameList[i]=searchArrayList.get(i).name;
                 }
+
                 ArrayAdapter listAdapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,NameList);
                 listView.setAdapter(listAdapter);
                 sBuilder.setView(sView);
@@ -373,11 +377,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         mMap.moveCamera(CameraUpdateFactory.newLatLng(s_research));
                         mMap.animateCamera(CameraUpdateFactory.zoomBy(10));
 
-                        //dialog.dismiss();
-                        //Toast.makeText(getApplicationContext(), "你上傳的音檔名稱是:  " + NameList[position], Toast.LENGTH_SHORT).show();
                     }
                 });
             }
+
 
            /* for(int i =0;i<searchArrayList.size();i++){
                 if(location.equals(searchArrayList.get(i).name.replaceAll("[a-zA-z]+","")) || location.equals(searchArrayList.get(i).name.replaceAll("[^a-zA-z]+",""))){
