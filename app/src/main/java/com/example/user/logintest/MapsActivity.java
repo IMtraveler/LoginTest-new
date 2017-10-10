@@ -17,15 +17,19 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -78,6 +82,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private String[] locations ;
     private ArrayAdapter<String> adapter;
     private AutoCompleteTextView tf_location;
+    String input=" ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,21 +90,40 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         setContentView(R.layout.activity_maps);
         myDatabase = new LocationsDatabase(MapsActivity.this);
         tf_location = (AutoCompleteTextView) findViewById(R.id.TF_location);
-        String input = tf_location.getText().toString();
-        searchArrayList=myDatabase.getsearch(input);
+        //searchArrayList=myDatabase.getsearch("故");
+       /* tf_location.addTextChangedListener(new  TextWatcher() {
 
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+                System.out.println("beforeTextChanged");
+                // TODO Auto-generated method stub
+            }
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+                // TODO Auto-generated method stub
+                System.out.println("onTextChanged");
+                //tf_location.setText(tf_location.getText());
+                input = tf_location.getText().toString();
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                // TODO Auto-generated method stub
+                System.out.println("afterTextChanged");
 
-        locations = new String[searchArrayList.size()];
+            }
+        });*/
+        //searchArrayList=myDatabase.getsearch(input);
+        //locations = new String[searchArrayList.size()];
         //所有景點的list
-        for (int i =0;i<searchArrayList.size();i++){
-            locations[i]=searchArrayList.get(i).name;
-        }
-
-        adapter = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,locations);
-
-        tf_location.setThreshold(1);
-        tf_location.setAdapter(adapter);
+       // for (int i =0;i<searchArrayList.size();i++){
+      //      locations[i]=searchArrayList.get(i).name;
+       // }
+       // adapter = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,locations);
+      //  tf_location.setThreshold(1);
+      //  tf_location.setAdapter(adapter);
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -112,7 +136,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
     }
-
 
 
     @Override
@@ -320,14 +343,48 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         if(v.getId() == R.id.B_search){
             EditText tf_location = (EditText) findViewById(R.id.TF_location);
             String location = tf_location.getText().toString(); //搜尋的字
+            searchArrayList=myDatabase.getsearch(location);
+            if(searchArrayList.size()==1){
+                LatLng s_research = new LatLng(searchArrayList.get(0).lat,searchArrayList.get(0).lng);
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(s_research));
+                mMap.animateCamera(CameraUpdateFactory.zoomBy(10));
+            }else{
+                final AlertDialog.Builder sBuilder = new AlertDialog.Builder(MapsActivity.this);
+                View sView = getLayoutInflater().inflate(R.layout.search_dialog, null);
+                ListView listView = (ListView)sView.findViewById(R.id.seachList);
+                final String[] NameList = new String[searchArrayList.size()];
+                for(int i=0 ;i<searchArrayList.size();i++){
+                    NameList[i]=searchArrayList.get(i).name;
+                }
+                ArrayAdapter listAdapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,NameList);
+                listView.setAdapter(listAdapter);
+                sBuilder.setView(sView);
+                final AlertDialog dialog = sBuilder.create();
+                dialog.show();
 
-            for(int i =0;i<locationArrayList.size();i++){
-                if(location.equals(locationArrayList.get(i).name.replaceAll("[a-zA-z]+","")) || location.equals(locationArrayList.get(i).name.replaceAll("[^a-zA-z]+",""))){
-                    LatLng s_research = new LatLng(locationArrayList.get(i).lat,locationArrayList.get(i).lng);
+
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        dialog.cancel();
+                        //這裡應該要顯示點下去應該要出現的頁面
+                        LatLng s_research = new LatLng(searchArrayList.get(position).lat,searchArrayList.get(position).lng);
+                        mMap.moveCamera(CameraUpdateFactory.newLatLng(s_research));
+                        mMap.animateCamera(CameraUpdateFactory.zoomBy(10));
+
+                        //dialog.dismiss();
+                        //Toast.makeText(getApplicationContext(), "你上傳的音檔名稱是:  " + NameList[position], Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+           /* for(int i =0;i<searchArrayList.size();i++){
+                if(location.equals(searchArrayList.get(i).name.replaceAll("[a-zA-z]+","")) || location.equals(searchArrayList.get(i).name.replaceAll("[^a-zA-z]+",""))){
+                    LatLng s_research = new LatLng(searchArrayList.get(i).lat,searchArrayList.get(i).lng);
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(s_research));
                     mMap.animateCamera(CameraUpdateFactory.zoomBy(10));
                 }
-            }
+            }*/
         }
 
         /*if(v.getId() == R.id.B_search)

@@ -31,7 +31,6 @@ public class LocationsDatabase extends SQLiteAssetHelper {
     }
 
     public ArrayList<Locations> getsearch(String s){
-        String input = s;
 
         SQLiteDatabase db=getReadableDatabase();
         String name = LocationsDatabase.NAME;
@@ -40,7 +39,7 @@ public class LocationsDatabase extends SQLiteAssetHelper {
 
         String selection = "name LIKE ?";
         //SelectionArgs 以相同順序的元素職替換?因為?可能代表多個所以為字串陣列
-        String[] selectionArgs = {"%"+input+"%"};
+        String[] selectionArgs = {"%"+s+"%"};
         //需要傳遞多個參數，每個參數都代表SQL查詢語法的一部分，null代表略過該部分語法
 
 //        String[] selectionArgs={categoryId+"",subjectId+"",yearId+""};
@@ -56,10 +55,10 @@ public class LocationsDatabase extends SQLiteAssetHelper {
 
         while(cursor.moveToNext()){
             Locations questions=new Locations();
-           // questions.id=cursor.getInt(cursor.getColumnIndex(LocationsDatabase.ID));
+            questions.id=cursor.getInt(cursor.getColumnIndex(LocationsDatabase.ID));
             questions.name=cursor.getString(cursor.getColumnIndex(LocationsDatabase.NAME));
-           // questions.lat=cursor.getDouble(cursor.getColumnIndex(LocationsDatabase.LAT));
-            // questions.lng=cursor.getDouble(cursor.getColumnIndex(LocationsDatabase.LNG));
+            questions.lat=cursor.getDouble(cursor.getColumnIndex(LocationsDatabase.LAT));
+            questions.lng=cursor.getDouble(cursor.getColumnIndex(LocationsDatabase.LNG));
             questionsArrayList.add(questions);
         }
         db.close();
