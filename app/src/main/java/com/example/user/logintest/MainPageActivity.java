@@ -74,16 +74,6 @@ public class MainPageActivity extends AppCompatActivity  {
 
         Button btn_toUpload = (Button)findViewById(R.id.btn_toUpload);
 
-        btn_toUpload.setOnClickListener(new Button.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Intent intent = new Intent();
-                intent.setClass(MainPageActivity.this,UploadActivity.class);
-                startActivity(intent);
-                //MainPageActivity.this.finish();
-            }
-        });
 
         Button btn_toLocation = (Button)findViewById(R.id.btn_toLocation);
 
