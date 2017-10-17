@@ -141,7 +141,7 @@ public class UploadActivity extends AppCompatActivity {
 
     ProgressDialog progress;
     Thread uploadThread ;
-
+    Thread dbThread ;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
         if(requestCode == 10 && resultCode == RESULT_OK) {
@@ -185,7 +185,7 @@ public class UploadActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         uploadThread.start();
-
+                        dbThread.start();
                         //Intent intent = new Intent();
                         //intent.setClass(UploadActivity.this, MapsActivity.class);
                         //startActivity(intent);
@@ -221,7 +221,7 @@ public class UploadActivity extends AppCompatActivity {
                         String content_type = getMimeType(f.getPath());
 
                         String file_path = f.getAbsolutePath();
-                        OkHttpClient client = new OkHttpClient();
+                        OkHttpClient client_file = new OkHttpClient();
                         RequestBody file_body = RequestBody.create(MediaType.parse(content_type), f);
 
                         try {
@@ -237,7 +237,7 @@ public class UploadActivity extends AppCompatActivity {
                                     .build();
 
 
-                            Response response = client.newCall(request).execute();
+                            Response response = client_file.newCall(request).execute();
 
 
                             if (!response.isSuccessful()) {
@@ -251,8 +251,7 @@ public class UploadActivity extends AppCompatActivity {
                                 dialog_fail.show();
                                 Looper.loop();
 
-                            }
-                            else{
+                            } else {
                                 Log.e("msg", "success ");
                                 Looper.prepare();
                                 AlertDialog.Builder builder_success;
@@ -270,32 +269,40 @@ public class UploadActivity extends AppCompatActivity {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-
-                        try {
-                            RequestBody formBody = new FormBody.Builder()
-                                    .add("lat", lat)
-                                    .add("lng", lng)
-                                    .add("filename", filename)
-                                    .add("audioname", audioname.getText().toString())
-                                    .add("intro", intro.getText().toString())
-                                    .add("type", type.getText().toString()).build();
-
-                            Request request = new Request.Builder().url("http://140.112.107.125:47155/html/uploadAudio.php")
-                                    .post(formBody)
-                                    .build();
-
-                            Response response2 = client.newCall(request).execute();
-                            //final String resStr = response.body().string();
-                            if (!response2.isSuccessful()) {
-                                throw new IOException("Error : " + response2);
-                            }
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
                         }
+                    });
 
-                    }
-                });
+
+                    dbThread = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            OkHttpClient client = new OkHttpClient();
+                            try {
+                                Log.e("sending", "to server");
+                                RequestBody formBody = new FormBody.Builder()
+                                        .add("lat", lat)
+                                        .add("lng", lng)
+                                        .add("filename", filename)
+                                        .add("audioname", audioname.getText().toString())
+                                        .add("intro", intro.getText().toString())
+                                        .add("type", type.getText().toString()).build();
+
+                                Request request = new Request.Builder().url("http://140.112.107.125:47155/html/uploadAudio.php")
+                                        .post(formBody)
+                                        .build();
+
+                                Response response2 = client.newCall(request).execute();
+                                //final String resStr = response.body().string();
+                                if (!response2.isSuccessful()) {
+                                    throw new IOException("Error : " + response2);
+                                }
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+
 
             }
         }
