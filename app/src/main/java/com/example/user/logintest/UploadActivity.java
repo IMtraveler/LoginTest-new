@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import android.content.DialogInterface;
 import android.widget.Toast;
 import android.util.Log;
+import android.os.Handler;
 
 import com.nbsp.materialfilepicker.MaterialFilePicker;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
@@ -158,8 +160,8 @@ public class UploadActivity extends AppCompatActivity {
                         .setTitle("請重新選擇檔案");
                 builder.setPositiveButton("確認", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Intent backintent = new Intent();
-                        backintent.setClass(UploadActivity.this, UploadActivity.class);
+                       // Intent backintent = new Intent();
+                        //backintent.setClass(UploadActivity.this, UploadActivity.class);
                     }
                 });
                 AlertDialog dialog = builder.create();
@@ -183,10 +185,10 @@ public class UploadActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         uploadThread.start();
-                        dialog.dismiss();
-                        Intent intent = new Intent();
-                        intent.setClass(UploadActivity.this, MapsActivity.class);
-                        startActivity(intent);
+
+                        //Intent intent = new Intent();
+                        //intent.setClass(UploadActivity.this, MapsActivity.class);
+                        //startActivity(intent);
                     }
                 });
                 progress.show();
@@ -206,6 +208,10 @@ public class UploadActivity extends AppCompatActivity {
                     }
 
                 }.start();
+
+
+
+
 
                 uploadThread = new Thread(new Runnable() {
                     @Override
@@ -233,9 +239,31 @@ public class UploadActivity extends AppCompatActivity {
 
                             Response response = client.newCall(request).execute();
 
+
                             if (!response.isSuccessful()) {
-                                throw new IOException("Error : " + response);
+                                Log.e("msg", "fail ");
+                                Looper.prepare();
+                                AlertDialog.Builder builder_fail;
+                                builder_fail = new AlertDialog.Builder(UploadActivity.this);
+                                builder_fail.setMessage("請重新上傳")
+                                        .setTitle("上傳失敗");
+                                final AlertDialog dialog_fail = builder_fail.create();
+                                dialog_fail.show();
+                                Looper.loop();
+
                             }
+                            else{
+                                Log.e("msg", "success ");
+                                Looper.prepare();
+                                AlertDialog.Builder builder_success;
+                                builder_success = new AlertDialog.Builder(UploadActivity.this);
+                                builder_success.setMessage("請到上傳音檔頁查看")
+                                        .setTitle("上傳成功");
+                                final AlertDialog dialog_success = builder_success.create();
+                                dialog_success.show();
+                                Looper.loop();
+                            }
+
                             //progress.dismiss();
 
 
