@@ -25,5 +25,17 @@
         android:textColor="?attr/colorControlNormal"
         android:textSize="12sp" />
 
+    <TextView
+        android:id="@+id/clicks"
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBaseline="@+id/list_audioName"
+        android:layout_alignBottom="@+id/list_audioName"
+        android:layout_alignLeft="@+id/list_guide"
+        android:layout_alignStart="@+id/list_guide"
+        android:layout_marginLeft="309dp"
+        android:layout_marginStart="309dp" />
+
 
 </RelativeLayout>
