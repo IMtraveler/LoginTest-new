@@ -27,8 +27,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.HashMap;
 import java.util.List;
-import layout.SecondAudioFragment;
-import layout.FirstAudioFragment;
+import java.util.Collections;
 
 import static android.widget.AdapterView.*;
 
@@ -40,6 +39,7 @@ public class MusicActivity extends AppCompatActivity{
     ArrayAdapter MyArrayAdapter;
     TextView attrName ;
     TextView audioIntro;
+    TextView audioDuration;
     private SimpleAdapter MySimpleAdapter ;
 
 
@@ -71,6 +71,7 @@ public class MusicActivity extends AppCompatActivity{
         bt[2] = (Button)findViewById(R.id.button4);
         attrName = (TextView)findViewById(R.id.tv_attrName);
         audioIntro = (TextView)findViewById(R.id.tv_audioIntro);
+        audioDuration = (TextView)findViewById(R.id.tv_duration);
         //TextView tv_audioIntro = (TextView)findViewById(R.id.tv_audioIntro) ;
 
         Bundle bundleFromAttr = getIntent().getExtras();
@@ -166,18 +167,10 @@ public class MusicActivity extends AppCompatActivity{
 
 
         audioListView = (ListView)findViewById(R.id.list_audio);
-        /*
-        MyArrayAdapter = new ArrayAdapter<>(this, R.layout.list_item, R.id.tv_list);
-        //MyArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_2, R.id.text1);
-        audioListView.setAdapter(MyArrayAdapter);
 
+        // array for count click for each id
+        final ArrayList<Integer> count = new ArrayList<Integer>(Collections.nCopies(AudioName.size(), 0));
 
-        MyArrayAdapter.clear();
-        for (int i = 0; i < AudioName.size(); i++) {
-            MyArrayAdapter.add(AudioName.get(i));
-        }
-        MyArrayAdapter.notifyDataSetChanged();
-        */
 
 
         List<HashMap<String , String>> audiolist = new ArrayList<>();
@@ -203,11 +196,15 @@ public class MusicActivity extends AppCompatActivity{
                 ListView listView = (ListView) parent;
                 Toast.makeText(
                         MusicActivity.this,
-                        "ID：" + id + listView.getItemAtPosition(position).toString(),
+                        "ID：" + id + listView.getItemAtPosition(position).toString() + "click:" + count.get(position),
                         Toast.LENGTH_LONG).show();
                 playAudio(id);
                 bt[1].setText("pause");
-
+                try {
+                    count.add(position, count.get(position) + 1);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
         });
@@ -264,6 +261,8 @@ public class MusicActivity extends AppCompatActivity{
             mp.reset();
             mp.setDataSource(audiourl);
             mp.prepare();
+            int duration = mp.getDuration();
+            audioDuration.setText(milliSecondsToTimer(duration));
             //mp.start();
         } catch (IllegalArgumentException e) {
             Toast.makeText(getApplicationContext(), "You might not set the URI correctly!", Toast.LENGTH_LONG).show();
@@ -277,6 +276,26 @@ public class MusicActivity extends AppCompatActivity{
         bt[2].setEnabled(true);
     }
 
+    public static String milliSecondsToTimer(int milliseconds) {
+        String finalTimerString = "";
+        String secondsString = "";
+
+        //Convert total duration into time
+        int minutes =  (milliseconds) / (1000 * 60);
+        int seconds = (milliseconds % (1000 * 60) / 1000);
+        // Add hours if there
+        // Pre appending 0 to seconds if it is one digit
+        if (seconds < 10) {
+            secondsString = "0" + seconds;
+        } else {
+            secondsString = "" + seconds;
+        }
+
+        finalTimerString = finalTimerString + minutes + ":" + secondsString;
+
+        // return timer string
+        return finalTimerString;
+    }
 
     private class SampleCompletionListener implements MediaPlayer.OnCompletionListener {
 
