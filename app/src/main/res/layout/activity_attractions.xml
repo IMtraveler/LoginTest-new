@@ -8,74 +8,157 @@
 
     <Button
         android:id="@+id/btn_toAudio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:text="@string/button"
-        tools:ignore="MissingConstraints,RelativeOverlap"
-        tools:layout_editor_absoluteX="148dp"
-        tools:layout_editor_absoluteY="12dp"
+        android:layout_width="190dp"
+        android:layout_height="40dp"
+        android:text="探索音檔"
         android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/imageView3"
-        android:layout_toStartOf="@+id/imageView3"
-        android:layout_marginRight="35dp"
-        android:layout_marginEnd="35dp" />
-
-    <TextView
-        android:id="@+id/tv_attrName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="25dp"
-        android:layout_toLeftOf="@+id/btn_toAudio"
-        android:layout_toStartOf="@+id/btn_toAudio"
-        android:text="@string/attrationName"
-        android:textSize="20sp" />
-    <Button
-        android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/設為最愛"
-        tools:ignore="MissingConstraints,RelativeOverlap"
-        tools:layout_editor_absoluteX="148dp"
-        tools:layout_editor_absoluteY="12dp"
-        android:layout_marginRight="11dp"
-        android:layout_marginEnd="11dp"
-        android:layout_below="@+id/tv_attrIntro"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:textSize="18sp"
+        android:background="@drawable/mybutton"
+        android:textColor="@android:color/white"
+        android:layout_toRightOf="@+id/btn_upload"
+        android:layout_toEndOf="@+id/btn_upload" />
 
     <ImageView
         android:id="@+id/iv_attr"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/tv_attrIntro"
+        android:layout_width="fill_parent"
+        android:layout_height="120dp"
+        app:srcCompat="@drawable/common_full_open_on_phone"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/blackblock2"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:background="#80000000"
+        android:layout_alignBottom="@+id/iv_attr"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/tv_attrName"
+        android:layout_width="190dp"
+        android:layout_height="25dp"
+        android:text="TextView"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:layout_marginTop="11dp"
+        android:layout_alignTop="@+id/blackblock2"
+        android:layout_alignLeft="@+id/iv_attr2"
+        android:layout_alignStart="@+id/iv_attr2"
+        />
+
+    <Button
+        android:id="@+id/imageView3"
+        android:text="Fv"
+        tools:ignore="MissingConstraints,RelativeOverlap"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        tools:layout_editor_absoluteX="148dp"
+        tools:layout_editor_absoluteY="12dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+
+    <TextView
+        android:id="@+id/tv_attrtype"
+        android:layout_width="150dp"
+        android:layout_height="13dp"
+        android:text="景點類別"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
         android:layout_below="@+id/tv_attrName"
-        app:srcCompat="@color/cardview_light_background" />
+        android:layout_toLeftOf="@+id/btn_toAudio"
+        android:layout_toStartOf="@+id/btn_toAudio" />
+
 
     <TextView
         android:id="@+id/tv_attrIntro"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="48dp"
+        android:layout_height="200dp"
         android:text="TextView"
-        android:layout_above="@+id/btn_toAudio"
+        android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="21dp"
-        android:layout_marginStart="21dp" />
+        android:layout_alignParentStart="true" />
+
 
     <Button
         android:id="@+id/btn_upload"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="190dp"
+        android:layout_height="40dp"
+        android:textSize="18sp"
         android:text="@string/uploadAudio"
+        android:background="@drawable/mybutton"
+        android:textColor="@android:color/white"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="120dp"
+        android:layout_height="28dp"
+        android:text=" 景點簡介   "
+        android:textColor="@android:color/white"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:background="@drawable/mybutton"
+        android:layout_below="@+id/iv_attr"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="120dp"
+        android:layout_height="28dp"
+        android:text=" 景點照片   "
+        android:textColor="@android:color/white"
+        android:background="@drawable/mybutton"
+        android:gravity="center"
+        android:textSize="18sp"
         android:layout_below="@+id/tv_attrIntro"
-        android:layout_alignLeft="@+id/tv_attrIntro"
-        android:layout_alignStart="@+id/tv_attrIntro"
-        android:layout_marginLeft="15dp"
-        android:layout_marginStart="15dp" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/iv_attr2"
+        android:layout_alignEnd="@+id/iv_attr2"
+        />
+
+    <ImageView
+        android:id="@+id/iv_attr2"
+        android:layout_width="100dp"
+        android:layout_height="65dp"
+        app:srcCompat="@drawable/bg_clickable"
+        android:scaleType="centerCrop"
+        android:layout_above="@+id/btn_upload"
+        android:layout_alignRight="@+id/textView2"
+        android:layout_alignEnd="@+id/textView2"
+        android:layout_marginBottom="11dp" />
+
+    <ImageView
+        android:id="@+id/iv_attr3"
+        android:layout_width="100dp"
+        android:layout_height="65dp"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/bg_clickable"
+        android:layout_alignTop="@+id/iv_attr4"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:id="@+id/iv_attr4"
+        android:layout_width="100dp"
+        android:layout_height="65dp"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/bg_clickable"
+        android:layout_marginRight="18dp"
+        android:layout_marginEnd="18dp"
+        android:layout_alignTop="@+id/iv_attr2"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
