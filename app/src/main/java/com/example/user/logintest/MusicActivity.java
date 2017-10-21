@@ -185,6 +185,7 @@ public class MusicActivity extends AppCompatActivity{
             HashMap<String , String> hashMap = new HashMap<>();
             hashMap.put("audioName" , AudioName.get(i));
             hashMap.put("guide" , GuideName.get(i));
+            hashMap.put("clicks", "112");
             //把title , text存入HashMap之中
             audiolist.add(hashMap);
             //把HashMap存入list之中
@@ -192,8 +193,8 @@ public class MusicActivity extends AppCompatActivity{
 
         MySimpleAdapter = new SimpleAdapter(this, audiolist,
                 R.layout.list_item_2,
-                new String[] { "audioName", "guide"},
-                new int[] {	R.id.list_audioName,R.id.list_guide});
+                new String[] { "audioName", "guide", "clicks"},
+                new int[] {	R.id.list_audioName,R.id.list_guide, R.id.clicks});
         audioListView.setAdapter(MySimpleAdapter);
 
         audioListView.setOnItemClickListener(new OnItemClickListener() {

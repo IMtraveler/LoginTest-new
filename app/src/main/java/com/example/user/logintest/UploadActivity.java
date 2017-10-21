@@ -156,7 +156,7 @@ public class UploadActivity extends AppCompatActivity {
             progress = new ProgressDialog(UploadActivity.this);
             progress.setTitle("上傳中");
             progress.setMessage(filename);
-            progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             progress.setIndeterminate(false);
             progress.setProgress(100);
 
@@ -184,21 +184,6 @@ public class UploadActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
                         uploadThread.start();
                         progress.show();
-                        new Thread() {
-                            public void run() {
-                                int Countprogress = 0;
-                                try {
-                                    while (Countprogress <= 99) {
-                                        // 由线程来控制进度。
-                                        progress.setProgress(Countprogress++);
-                                        Thread.sleep(50);
-                                    }
-                                } catch (InterruptedException e) {
-                                    progress.cancel();
-                                }
-                            }
-
-                        }.start();
                     }
                 });
                 builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
