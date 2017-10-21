@@ -153,6 +153,14 @@ public class UploadActivity extends AppCompatActivity {
             //new MyAsyncTask().execute(filename, intro.getText().toString(), type.getText().toString());
             String filetype = filename.substring(filename.lastIndexOf('.'), filename.length()).trim();
 
+            progress = new ProgressDialog(UploadActivity.this);
+            progress.setTitle("上傳中");
+            progress.setMessage(filename);
+            progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            progress.setIndeterminate(false);
+            progress.setProgress(100);
+
+
             if (!filetype.equals(".m4a") && !filetype.equals(".mp3")) {
                 AlertDialog.Builder builder;
                 builder = new AlertDialog.Builder(UploadActivity.this);
@@ -168,49 +176,38 @@ public class UploadActivity extends AppCompatActivity {
                 dialog.show();
 
             } else {
-                progress = new ProgressDialog(UploadActivity.this);
-                progress.setTitle("上傳中");
-                progress.setMessage(filename);
-                progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-                progress.setIndeterminate(false);
-                progress.setProgress(100);
-                progress.setCancelable(true);
-                progress.setButton(DialogInterface.BUTTON_NEGATIVE, "取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                progress.setButton(DialogInterface.BUTTON_POSITIVE, "確認", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                AlertDialog.Builder builder;
+                builder = new AlertDialog.Builder(UploadActivity.this);
+                builder.setMessage(filename)
+                        .setTitle("已選擇檔案");
+                builder.setPositiveButton("確認", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
                         uploadThread.start();
-                        dbThread.start();
-                        //Intent intent = new Intent();
-                        //intent.setClass(UploadActivity.this, MapsActivity.class);
-                        //startActivity(intent);
+                        progress.show();
+                        new Thread() {
+                            public void run() {
+                                int Countprogress = 0;
+                                try {
+                                    while (Countprogress <= 99) {
+                                        // 由线程来控制进度。
+                                        progress.setProgress(Countprogress++);
+                                        Thread.sleep(50);
+                                    }
+                                } catch (InterruptedException e) {
+                                    progress.cancel();
+                                }
+                            }
+
+                        }.start();
                     }
                 });
-                progress.show();
-
-                new Thread() {
-                    public void run() {
-                        int Countprogress = 0;
-                        try {
-                            while (Countprogress <= 100) {
-                                // 由线程来控制进度。
-                                progress.setProgress(Countprogress++);
-                                Thread.sleep(10);
-                            }
-                        } catch (InterruptedException e) {
-                            progress.cancel();
-                        }
+                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //dialog.dismiss();
                     }
-
-                }.start();
-
-
-
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
 
 
                 uploadThread = new Thread(new Runnable() {
@@ -252,6 +249,8 @@ public class UploadActivity extends AppCompatActivity {
                                 Looper.loop();
 
                             } else {
+                                dbThread.start();
+                                progress.dismiss();
                                 Log.e("msg", "success ");
                                 Looper.prepare();
                                 AlertDialog.Builder builder_success;
