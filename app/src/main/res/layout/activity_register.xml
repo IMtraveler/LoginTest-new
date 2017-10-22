@@ -8,6 +8,7 @@
     tools:context="com.example.user.logintest.MainActivity"
     android:weightSum="1">
 
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -26,6 +27,35 @@
 
         <EditText
             android:id="@+id/newAccountID"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="textPersonName"
+            tools:layout_editor_absoluteX="149dp"
+            tools:layout_editor_absoluteY="-4dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/t_nickname"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Nickname"
+
+            android:textColor="@android:color/holo_blue_dark"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/newnickname"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
