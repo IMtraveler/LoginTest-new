@@ -26,6 +26,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextView msg3;
     private EditText newaccount;
     private EditText newpassword;
+    private EditText newnickname;
 
 
 
@@ -46,6 +47,8 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                newaccount = (EditText) findViewById(R.id.newAccountID); //輸入的帳號
                newpassword = (EditText) findViewById(R.id.newPassword); //輸入的密碼
+               newnickname = (EditText)findViewById(R.id.newnickname); //輸入的暱稱
+
                checkEmail[0] = isVaildEmailFormat(newaccount);
                 if (checkEmail[0]==true){
                     getRequest = new StringRequest(Request.Method.POST,mUrl,
@@ -73,7 +76,9 @@ public class RegisterActivity extends AppCompatActivity {
                         protected Map<String, String> getParams() throws AuthFailureError {
                             Map<String, String> map = new HashMap();
                             map.put("account", newaccount.getText().toString());
+                            map.put("nickname",newnickname.getText().toString());
                             map.put("password",newpassword.getText().toString());
+
                             return map;
                         }
 
