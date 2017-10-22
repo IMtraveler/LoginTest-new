@@ -226,10 +226,12 @@ public class MainActivity extends AppCompatActivity {
                             public void onResponse(String s) {
                                 //msg.setText(s.trim());
 
-                                String check = "accountID: "+account.getText().toString()+"\npassword: "+password.getText().toString();
+                                String checke = "accountID: "+account.getText().toString();
+                                String checkp = "password: "+password.getText().toString();
+                                String checkn = "nickname: "+account.getText().toString();
 
 
-                                if(check.trim().equals(s.trim())){
+                                if(s.trim().indexOf(checkn) != -1 || s.trim().indexOf(checke) != -1 && s.trim().indexOf(checkp) != -1){
 
 
                                     //intent.setClass(MainActivity.this, MyuploadMusic.class);
@@ -249,7 +251,7 @@ public class MainActivity extends AppCompatActivity {
                                     startActivity(intent);
                                     MainActivity.this.finish();
                                 }else{
-                                    msg.setText("帳號或密碼錯誤");
+                                   // msg.setText("帳號或密碼錯誤");
                                 }
 
 
