@@ -241,6 +241,10 @@ public class MainActivity extends AppCompatActivity {
                                 String checke = "accountID: "+account.getText().toString();
                                 String checkp = "password: "+password.getText().toString();
                                 String checkn = "nickname: "+account.getText().toString();
+                                int begindex = s.indexOf("accountID: ") + 10;
+                                int endindex = s.indexOf("nickname: ")-1;
+                                String email = s.substring(begindex,endindex).trim();
+                                msg.setText(email);
 
 
                                 if(s.trim().indexOf(checkn) != -1 || s.trim().indexOf(checke) != -1 && s.trim().indexOf(checkp) != -1){
@@ -259,11 +263,11 @@ public class MainActivity extends AppCompatActivity {
                                     intent.putExtras(bundle);
                                     //Intent intent2 = new Intent();
                                     //intent2.setClass(MainActivity.this,MainPageActivity.class);
-                                    XclSingleton.getInstance().put("AccountID",account.getText().toString());
+                                    XclSingleton.getInstance().put("AccountID",email);
                                     startActivity(intent);
                                     MainActivity.this.finish();
                                 }else{
-                                   // msg.setText("帳號或密碼錯誤");
+                                    msg.setText("帳號或密碼錯誤");
                                 }
 
 
