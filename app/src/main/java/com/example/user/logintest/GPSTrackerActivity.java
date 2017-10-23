@@ -13,6 +13,8 @@ import android.os.IBinder;
 import android.provider.Settings;
 import android.util.Log;
 
+import static com.example.user.logintest.Downloads.mContext;
+
 public class GPSTrackerActivity extends Service implements LocationListener {
 
     private final Context mContext;
@@ -102,7 +104,34 @@ public class GPSTrackerActivity extends Service implements LocationListener {
 
         return location;
     }
+    public void showSettingsAlert(){
+        android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(mContext);
 
+        // Setting Dialog Title
+        alertDialog.setTitle("GPS is settings");
+
+        // Setting Dialog Message
+        alertDialog.setMessage("GPS未開啟! 是否開啟GPS設定頁面? 開啟後點選定位鈕可獲得目前位置");
+
+        // On pressing Settings button
+        alertDialog.setPositiveButton("前往設定頁面", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog,int which) {
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                mContext.startActivity(intent);
+                // startActivityForResult(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS), 0);
+            }
+        });
+
+        // on pressing cancel button
+        alertDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        // Showing Alert Message
+        alertDialog.show();
+    }
     /**
      * Stop using GPS listener
      * Calling this function will stop using GPS in your app
@@ -149,33 +178,7 @@ public class GPSTrackerActivity extends Service implements LocationListener {
      * Function to show settings alert dialog
      * On pressing Settings button will lauch Settings Options
      * */
-    public void showSettingsAlert(){
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
 
-        // Setting Dialog Title
-        alertDialog.setTitle("GPS is settings");
-
-        // Setting Dialog Message
-        alertDialog.setMessage("GPS is not enabled. Do you want to go to settings menu?");
-
-        // On pressing Settings button
-        alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog,int which) {
-                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                mContext.startActivity(intent);
-            }
-        });
-
-        // on pressing cancel button
-        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-
-        // Showing Alert Message
-        alertDialog.show();
-    }
 
     @Override
     public void onLocationChanged(Location location) {

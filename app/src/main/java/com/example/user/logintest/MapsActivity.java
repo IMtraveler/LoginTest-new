@@ -2,12 +2,14 @@ package com.example.user.logintest;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringDef;
@@ -56,6 +58,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import static com.example.user.logintest.Downloads.mContext;
 import static com.example.user.logintest.MySQLConnection.Post;
 import com.squareup.picasso.Picasso ;
 
@@ -173,6 +176,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -190,7 +194,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             //Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
             mMap.moveCamera( CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude) , 14.0f) );
         }else{
-            Toast.makeText(this,"error",Toast.LENGTH_SHORT).show();
+           //Toast.makeText(this,"error",Toast.LENGTH_SHORT).show();
+           gps.showSettingsAlert();
         }
         /*
         LatLng taipei_1 = new LatLng(25.0327792, 121.5636894);
