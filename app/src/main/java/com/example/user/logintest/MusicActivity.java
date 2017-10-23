@@ -21,7 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ArrayAdapter;
 import android.widget.AdapterView;
-
+import android.content.Context;
+import android.content.SharedPreferences;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -75,8 +76,8 @@ public class MusicActivity extends AppCompatActivity{
         //TextView tv_audioIntro = (TextView)findViewById(R.id.tv_audioIntro) ;
 
         Bundle bundleFromAttr = getIntent().getExtras();
-        String lat = bundleFromAttr.getString("lat") ;
-        String lng = bundleFromAttr.getString("lng") ;
+        final String lat = bundleFromAttr.getString("lat") ;
+        final String lng = bundleFromAttr.getString("lng") ;
         String name = bundleFromAttr.getString("name");
 
         String phpURL = "http://140.112.107.125:47155/html/testAudio.php" ;
@@ -168,10 +169,6 @@ public class MusicActivity extends AppCompatActivity{
 
         audioListView = (ListView)findViewById(R.id.list_audio);
 
-        // array for count click for each id
-        final ArrayList<Integer> count = new ArrayList<Integer>(Collections.nCopies(AudioName.size(), 0));
-
-
 
         List<HashMap<String , String>> audiolist = new ArrayList<>();
         for(int i = 0 ; i < AudioName.size() ; i++){
@@ -184,6 +181,9 @@ public class MusicActivity extends AppCompatActivity{
             //把HashMap存入list之中
         }
 
+
+        final SharedPreferences sharedPref =getSharedPreferences(lat+lng , MODE_PRIVATE);
+
         MySimpleAdapter = new SimpleAdapter(this, audiolist,
                 R.layout.list_item_2,
                 new String[] { "audioName", "guide", "clicks"},
@@ -194,17 +194,17 @@ public class MusicActivity extends AppCompatActivity{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id ){
                 ListView listView = (ListView) parent;
+                int existingClick = sharedPref.getInt(Long.toString(id) , 0);
+                int newClick = existingClick + 1 ;
                 Toast.makeText(
                         MusicActivity.this,
-                        "ID：" + id + listView.getItemAtPosition(position).toString() + "click:" + count.get(position),
+                        "ID：" + id + listView.getItemAtPosition(position).toString() + "click:" + newClick,
                         Toast.LENGTH_LONG).show();
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt(Long.toString(id),newClick);
+                editor.commit();
                 playAudio(id);
                 bt[1].setText("pause");
-                try {
-                    count.add(position, count.get(position) + 1);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
             }
 
         });
