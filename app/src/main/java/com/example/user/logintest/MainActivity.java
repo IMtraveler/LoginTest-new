@@ -1,12 +1,8 @@
 package com.example.user.logintest;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.PasswordTransformationMethod;
@@ -67,14 +63,6 @@ public class MainActivity extends AppCompatActivity {
         //accessToken之後或許還會用到 先存起來
         //accessToken = loginResult.getAccessToken();
         super.onCreate(savedInstanceState);
-        if(!isConnected(MainActivity.this)) {
-            setContentView(R.layout.activity_main);
-            buildDialog(MainActivity.this).show();
-        }
-        else {
-
-            setContentView(R.layout.activity_main);
-        }
         setContentView(R.layout.activity_main);
         //找到button (fb_login)
         loginButton = (Button)findViewById(R.id.fb_login_bn);
@@ -337,39 +325,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    public boolean isConnected(Context context) {
-
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netinfo = cm.getActiveNetworkInfo();
-
-        if (netinfo != null && netinfo.isConnectedOrConnecting()) {
-            android.net.NetworkInfo wifi = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-            android.net.NetworkInfo mobile = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-
-            if((mobile != null && mobile.isConnectedOrConnecting()) || (wifi != null && wifi.isConnectedOrConnecting())) return true;
-            else return false;
-        } else
-            return false;
-    }
-    public AlertDialog.Builder buildDialog(Context c) {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(c);
-        builder.setTitle("無網際網路連線");
-        builder.setMessage("本程式需要網路連線請檢察您的連線狀態");
-
-        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
-
-
-            }
-        });
-
-        return builder;
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
