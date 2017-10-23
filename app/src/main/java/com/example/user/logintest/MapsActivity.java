@@ -507,7 +507,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 break;
             case R.id.條列式:
                 Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                Intent intent5 = new Intent();
+                intent5.setClass(MapsActivity.this,SpotView.class);
+                startActivity(intent5);
                 break;
+
             case R.id.地圖:
                 Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
                 break;
