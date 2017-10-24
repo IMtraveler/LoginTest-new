@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class LocationsDatabase extends SQLiteAssetHelper {
 
-    private static final String DATABASE_NAME = "spots.db";
+    private static final String DATABASE_NAME = "spot.db";
     private static final int DATABASE_VERSION = 2;
     private static final String ID="_id";
     private static final String NAME="name";
