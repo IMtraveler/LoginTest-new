@@ -41,6 +41,7 @@ public class MusicActivity extends AppCompatActivity{
     TextView attrName ;
     TextView audioIntro;
     TextView audioDuration;
+    TextView audioType ;
     private SimpleAdapter MySimpleAdapter ;
 
 
@@ -58,6 +59,7 @@ public class MusicActivity extends AppCompatActivity{
     ArrayList<String> AudioURL = new ArrayList<>();
     ArrayList<String> GuideName = new ArrayList<>();
     ArrayList<String> AudioIntro = new ArrayList<>();
+    ArrayList<String> AudioType = new ArrayList<>();
     int num=0;
 
 
@@ -73,6 +75,7 @@ public class MusicActivity extends AppCompatActivity{
         attrName = (TextView)findViewById(R.id.tv_attrName);
         audioIntro = (TextView)findViewById(R.id.tv_audioIntro);
         audioDuration = (TextView)findViewById(R.id.tv_duration);
+        audioType = (TextView)findViewById(R.id.tv_audiotype);
         //TextView tv_audioIntro = (TextView)findViewById(R.id.tv_audioIntro) ;
 
         Bundle bundleFromAttr = getIntent().getExtras();
@@ -105,7 +108,8 @@ public class MusicActivity extends AppCompatActivity{
                     AudioName.add(audioInfo[i].substring(audioInfo[i].indexOf("audioName:") + 11, audioInfo[i].indexOf("audioURL:")));
                     AudioURL.add(audioInfo[i].substring(audioInfo[i].indexOf("audioURL:") + 10, audioInfo[i].indexOf("intro:")));
                     AudioIntro.add(audioInfo[i].substring(audioInfo[i].indexOf("intro:")+7, audioInfo[i].indexOf("account:")));
-                    GuideName.add(audioInfo[i].substring(audioInfo[i].indexOf("account:")+9, audioInfo[i].length()));
+                    GuideName.add(audioInfo[i].substring(audioInfo[i].indexOf("account:")+9, audioInfo[i].indexOf("type:")));
+                    AudioType.add(audioInfo[i].substring(audioInfo[i].indexOf("type:")+6, audioInfo[i].length()));
                 }catch (Exception e){
                     Log.e("error", e.toString());
                     Log.e("what", audioInfo[i]);
@@ -120,6 +124,7 @@ public class MusicActivity extends AppCompatActivity{
             AudioURL.add("http://140.112.107.125:47155/html/uploaded/noAudio.m4a");
             AudioIntro.add("null");
             GuideName.add("null");
+            AudioType.add("null");
         }
 
 
@@ -204,6 +209,7 @@ public class MusicActivity extends AppCompatActivity{
                 editor.putInt(Long.toString(id),newClick);
                 editor.commit();
                 playAudio(id);
+                audioType.setText(AudioType.get((int)id));
                 bt[1].setText("pause");
             }
 

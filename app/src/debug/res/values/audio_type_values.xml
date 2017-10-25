@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="audio_types">
+        <item>一般概述</item>
+        <item>生物生態</item>
+        <item>地理地質</item>
+        <item>人文歷史</item>
+        <item>建築藝術</item>
+        <item>美食購物</item>
+        <item>其他類別</item>
+    </string-array>
+</resources>

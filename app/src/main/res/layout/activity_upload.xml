@@ -21,10 +21,10 @@
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintTop_creator="1" />
 
-    <EditText
-        android:id="@+id/et_type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <Spinner
+        android:id="@+id/spinner_type"
+        android:layout_width="220dp"
+        android:layout_height="43dp"
         android:ems="10"
         android:inputType="textPersonName"
         tools:layout_constraintTop_creator="1"
@@ -39,15 +39,16 @@
         android:id="@+id/tv_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/type"
-        android:textSize="20sp"
-        tools:layout_constraintTop_creator="1"
+        android:layout_marginLeft="29dp"
         android:layout_marginStart="29dp"
         android:layout_marginTop="65dp"
+        android:text="@string/type"
+        android:textSize="20sp"
+        android:visibility="visible"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_attrName"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="29dp" />
+        tools:layout_constraintTop_creator="1" />
 
     <TextView
         android:id="@+id/tv_attrName"
@@ -73,7 +74,7 @@
         tools:layout_constraintRight_creator="1"
         app:layout_constraintRight_toRightOf="@+id/tv_type"
         android:layout_marginTop="32dp"
-        app:layout_constraintTop_toBottomOf="@+id/et_type"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_type"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toRightOf="@+id/tv_type" />
 
@@ -120,7 +121,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toTopOf="@+id/et_type"
+        app:layout_constraintBottom_toTopOf="@+id/spinner_type"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toRightOf="@+id/tv_audioName" />
 
