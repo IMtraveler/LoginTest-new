@@ -229,10 +229,10 @@ public class MainActivity extends AppCompatActivity {
                                 String checke = "accountID: "+account.getText().toString();
                                 String checkp = "password: "+password.getText().toString();
                                 String checkn = "nickname: "+account.getText().toString();
-                                int begindex = s.indexOf("accountID: ") + 10;
-                                int endindex = s.indexOf("nickname: ")-1;
-                                String email = s.substring(begindex,endindex).trim();
-                                msg.setText(email);
+                                int begindex = s.indexOf("nickname: ") + 10;
+                                int endindex = s.indexOf("password: ")-1;
+                                String nickname = s.substring(begindex,endindex).trim();
+                                msg.setText(nickname);
 
 
                                 if(s.trim().indexOf(checkn) != -1 || s.trim().indexOf(checke) != -1 && s.trim().indexOf(checkp) != -1){
@@ -251,7 +251,7 @@ public class MainActivity extends AppCompatActivity {
                                     intent.putExtras(bundle);
                                     //Intent intent2 = new Intent();
                                     //intent2.setClass(MainActivity.this,MainPageActivity.class);
-                                    XclSingleton.getInstance().put("AccountID",email);
+                                    XclSingleton.getInstance().put("AccountID",nickname);
                                     startActivity(intent);
                                     MainActivity.this.finish();
                                 }else{
