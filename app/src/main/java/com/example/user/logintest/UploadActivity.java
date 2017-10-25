@@ -18,7 +18,9 @@ import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.ArrayAdapter;
 import android.content.DialogInterface;
 import android.widget.Toast;
 import android.util.Log;
@@ -41,12 +43,13 @@ import okhttp3.Response;
 public class UploadActivity extends AppCompatActivity {
 
     private Button uploadbutton;
-    private EditText type ;
+    private Spinner type;
     private EditText intro ;
     private String filename;
     private String lat ;
     private String lng ;
     private String name ;
+    private String account ;
     private EditText audioname ;
     private TextView attrName ;
 
@@ -57,14 +60,18 @@ public class UploadActivity extends AppCompatActivity {
         setContentView(R.layout.activity_upload);
 
         uploadbutton = (Button)findViewById(R.id.btn_file) ;
-        type = (EditText)findViewById(R.id.et_type);
         intro = (EditText)findViewById(R.id.et_intro);
         audioname = (EditText)findViewById(R.id.et_audioName);
         attrName = (TextView)findViewById(R.id.tv_attrName);
+        account = XclSingleton.getInstance().get("AccountID").toString();
+        type = (Spinner)findViewById(R.id.spinner_type) ;
 
-        String str_intro = intro.getText().toString();
-        String str_type = type.getText().toString();
-        String str_audioname = audioname.getText().toString();
+        ArrayAdapter<CharSequence> nAdapter = ArrayAdapter.createFromResource(
+                this, R.array.audio_types, android.R.layout.simple_spinner_item );
+        nAdapter.setDropDownViewResource(
+                android.R.layout.simple_spinner_dropdown_item);
+        type.setAdapter(nAdapter);
+
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             if(ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
@@ -81,12 +88,11 @@ public class UploadActivity extends AppCompatActivity {
 
         audioname.setHint("必填");
         intro.setHint("必填");
-        type.setHint("必填");
 
         uploadbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(checkInput(intro) & checkInput(audioname) & checkInput(type)) {
+                if(checkInput(intro) & checkInput(audioname) ) {
                     new MaterialFilePicker()
                             .withActivity(UploadActivity.this)
                             .withRequestCode(10)
@@ -269,7 +275,8 @@ public class UploadActivity extends AppCompatActivity {
                                         .add("filename", filename)
                                         .add("audioname", audioname.getText().toString())
                                         .add("intro", intro.getText().toString())
-                                        .add("type", type.getText().toString()).build();
+                                        .add("type", type.getSelectedItem().toString())
+                                        .add("account", account).build() ;
 
                                 Request request = new Request.Builder().url("http://140.112.107.125:47155/html/uploadAudio.php")
                                         .post(formBody)
