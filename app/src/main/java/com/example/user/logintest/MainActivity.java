@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
                                 String checke = "accountID: "+account.getText().toString();
                                 String checkp = "password: "+password.getText().toString();
                                 String checkn = "nickname: "+account.getText().toString();
-                                int begindex = s.indexOf("nickname: ") + 11;
+                                int begindex = s.indexOf("nickname: ") + 10;
                                 int endindex = s.indexOf("password: ")-1;
                                 String nickname = s.substring(begindex,endindex).trim();
                                 msg.setText(nickname);
