@@ -55,6 +55,7 @@ public class MusicActivity extends AppCompatActivity{
     ArrayList<Integer> beginNamepos = new ArrayList<>();
     ArrayList<Integer> endURLpos = new ArrayList<>();
     ArrayList<Integer> endNamepos = new ArrayList<>();
+    ArrayList<Integer> AudioID = new ArrayList<>();
     ArrayList<String> AudioName = new ArrayList<>();
     ArrayList<String> AudioURL = new ArrayList<>();
     ArrayList<String> GuideName = new ArrayList<>();
@@ -99,12 +100,13 @@ public class MusicActivity extends AppCompatActivity{
             e.printStackTrace();
         }
 
-
+        /* TO-DO: there will be an space element at the end of post string */
         if(post.length()> 3) {
             audioInfo = post.split(";");
             for (int i = 0 ; i < audioInfo.length ;i++)
             {
                 try {
+                    AudioID.add(Integer.valueOf(audioInfo[i].substring(audioInfo[i].indexOf("audioID:")+9, audioInfo[i].indexOf("audioName:"))));
                     AudioName.add(audioInfo[i].substring(audioInfo[i].indexOf("audioName:") + 11, audioInfo[i].indexOf("audioURL:")));
                     AudioURL.add(audioInfo[i].substring(audioInfo[i].indexOf("audioURL:") + 10, audioInfo[i].indexOf("intro:")));
                     AudioIntro.add(audioInfo[i].substring(audioInfo[i].indexOf("intro:")+7, audioInfo[i].indexOf("account:")));
@@ -113,6 +115,7 @@ public class MusicActivity extends AppCompatActivity{
                 }catch (Exception e){
                     Log.e("error", e.toString());
                     Log.e("what", audioInfo[i]);
+                    Log.e("id", AudioID.get(0).toString());
                 }
 
             }
@@ -120,6 +123,7 @@ public class MusicActivity extends AppCompatActivity{
         }
         else {
             post = "No data";
+            AudioID.add(0);
             AudioName.add("No Audio");
             AudioURL.add("http://140.112.107.125:47155/html/uploaded/noAudio.m4a");
             AudioIntro.add("null");
@@ -165,7 +169,7 @@ public class MusicActivity extends AppCompatActivity{
 
 
 
-        attrName.setText(AudioName.get(0));
+        //attrName.setText(AudioName.get(0));
 
         for(int i=0;i< bt.length;i++){
             bt[i].setOnClickListener(new SampleClickListener());
