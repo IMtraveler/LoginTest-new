@@ -62,7 +62,7 @@ public class MusicActivity extends AppCompatActivity{
     ArrayList<String> AudioIntro = new ArrayList<>();
     ArrayList<String> AudioType = new ArrayList<>();
     int num=0;
-
+    String userId = XclSingleton.getInstance().get("AccountID").toString();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -203,18 +203,25 @@ public class MusicActivity extends AppCompatActivity{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id ){
                 ListView listView = (ListView) parent;
-                int existingClick = sharedPref.getInt(Long.toString(id) , 0);
+                int existingClick = sharedPref.getInt(String.valueOf(AudioID.get((int)id)) , 0);
                 int newClick = existingClick + 1 ;
                 Toast.makeText(
                         MusicActivity.this,
-                        "ID：" + id + listView.getItemAtPosition(position).toString() + "click:" + newClick,
+                        "ID：" + String.valueOf(AudioID.get((int)id)) + "click:" + newClick,
                         Toast.LENGTH_LONG).show();
                 SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt(Long.toString(id),newClick);
+                editor.putInt(String.valueOf(AudioID.get((int)id)),newClick);
                 editor.commit();
                 playAudio(id);
                 audioType.setText(AudioType.get((int)id));
                 bt[1].setText("pause");
+                try {
+                    String c = new ClickAsyncTask().execute(userId,AudioID.get((int)id).toString(), Integer.toString(newClick),"http://140.112.107.125:47155/html/clickCount.php").get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
             }
 
         });
