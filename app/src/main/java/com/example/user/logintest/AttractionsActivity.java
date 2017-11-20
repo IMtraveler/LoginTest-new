@@ -57,7 +57,7 @@ public class AttractionsActivity extends AppCompatActivity {
         bundleUpload.putString("lng",lng);
         bundleUpload.putString("name",name);
         Button btn_toAudio = (Button)findViewById(R.id.btn_toAudio);
-        btn_toAudio.setOnClickListener(new Button.OnClickListener(){
+          btn_toAudio.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
@@ -71,6 +71,17 @@ public class AttractionsActivity extends AppCompatActivity {
         });
 
         Button btn_upload = (Button)findViewById(R.id.btn_upload);
+        Global check = (Global)getApplicationContext();
+        int checkk = check.getWord();
+        if ( checkk == 0 )
+        {
+            //SHOW the button
+            btn_upload.setEnabled(true);
+        }
+        else
+        {
+            btn_upload.setEnabled(false);
+        }
         btn_upload.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -136,14 +147,11 @@ public class AttractionsActivity extends AppCompatActivity {
             case R.id.帳戶:
                 Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.條列式:
+            case R.id.條列式瀏覽:
                 Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.地圖:
-                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.離開:
-                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                Intent intent5 = new Intent();
+                intent5.setClass(AttractionsActivity.this,SpotView.class);
+                startActivity(intent5);
                 break;
             default:
                 break;

@@ -7,7 +7,16 @@
     tools:context="com.example.user.logintest.MainPageActivity"
     tools:layout_editor_absoluteY="81dp"
     tools:layout_editor_absoluteX="0dp">
-
+    <Switch
+        android:id="@+id/onff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="遊客"
+        android:layout_alignTop="@+id/Button04"
+        android:layout_alignRight="@+id/textView"
+        android:layout_alignEnd="@+id/textView"
+        android:layout_marginRight="27dp"
+        android:layout_marginEnd="27dp" />
     <TextView
         android:layout_width="368dp"
         android:layout_height="wrap_content"

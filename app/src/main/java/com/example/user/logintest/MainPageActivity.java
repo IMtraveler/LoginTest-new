@@ -3,6 +3,8 @@ package com.example.user.logintest;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.Toast;
 import android.view.View;
 import android.content.Intent;
@@ -24,6 +26,23 @@ public class MainPageActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_page);
+        Switch sw1 = (Switch)findViewById(R.id.onff);
+        final Global check = (Global)getApplicationContext();
+
+        sw1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if (isChecked == true) {
+                    check.setWord(1);
+
+                }else{
+                    check.setWord(0);
+
+                }
+
+            }
+        });
         findViews();
         setListeners();
         //取的intent中的bundle物件

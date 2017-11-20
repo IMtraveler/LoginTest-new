@@ -45,4 +45,5 @@
     <string name="設為最愛">設為最愛</string>
     <string name="title_activity_favorite">FavoriteActivity</string>
     <string name="audioname">音檔名稱</string>
+    <string name="條列式瀏覽">條列瀏覽</string>
 </resources>
