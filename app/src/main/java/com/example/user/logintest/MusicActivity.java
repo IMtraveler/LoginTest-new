@@ -61,6 +61,7 @@ public class MusicActivity extends AppCompatActivity{
     ArrayList<String> GuideName = new ArrayList<>();
     ArrayList<String> AudioIntro = new ArrayList<>();
     ArrayList<String> AudioType = new ArrayList<>();
+    ArrayList<Integer> AudioClick = new ArrayList<>();
     int num=0;
     String userId = XclSingleton.getInstance().get("AccountID").toString();
 
@@ -111,7 +112,8 @@ public class MusicActivity extends AppCompatActivity{
                     AudioURL.add(audioInfo[i].substring(audioInfo[i].indexOf("audioURL:") + 10, audioInfo[i].indexOf("intro:")));
                     AudioIntro.add(audioInfo[i].substring(audioInfo[i].indexOf("intro:")+7, audioInfo[i].indexOf("account:")));
                     GuideName.add(audioInfo[i].substring(audioInfo[i].indexOf("account:")+9, audioInfo[i].indexOf("type:")));
-                    AudioType.add(audioInfo[i].substring(audioInfo[i].indexOf("type:")+6, audioInfo[i].length()));
+                    AudioType.add(audioInfo[i].substring(audioInfo[i].indexOf("type:")+6, audioInfo[i].indexOf("clickCount")));
+                    AudioClick.add(Integer.valueOf(audioInfo[i].substring(audioInfo[i].indexOf("clickCount:")+12, audioInfo[i].length())));
                 }catch (Exception e){
                     Log.e("error", e.toString());
                     Log.e("what", audioInfo[i]);
@@ -129,6 +131,7 @@ public class MusicActivity extends AppCompatActivity{
             AudioIntro.add("null");
             GuideName.add("null");
             AudioType.add("null");
+            AudioClick.add(0);
         }
 
 
@@ -184,7 +187,7 @@ public class MusicActivity extends AppCompatActivity{
             HashMap<String , String> hashMap = new HashMap<>();
             hashMap.put("audioName" , AudioName.get(i));
             hashMap.put("guide" , GuideName.get(i));
-            hashMap.put("clicks", "112");
+            hashMap.put("clicks", String.valueOf(AudioClick.get(i)));
             //把title , text存入HashMap之中
             audiolist.add(hashMap);
             //把HashMap存入list之中
