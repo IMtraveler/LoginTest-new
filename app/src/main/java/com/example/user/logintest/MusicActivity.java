@@ -16,6 +16,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +44,8 @@ public class MusicActivity extends AppCompatActivity{
     TextView audioDuration;
     TextView audioType ;
     private SimpleAdapter MySimpleAdapter ;
+    RatingBar ratingBar;
+    Button submitRating;
 
 
     MediaPlayer mp = new MediaPlayer() ;
@@ -78,6 +81,8 @@ public class MusicActivity extends AppCompatActivity{
         audioIntro = (TextView)findViewById(R.id.tv_audioIntro);
         audioDuration = (TextView)findViewById(R.id.tv_duration);
         audioType = (TextView)findViewById(R.id.tv_audiotype);
+        ratingBar = (RatingBar)findViewById(R.id.ratingBar);
+        submitRating = (Button) findViewById(R.id.btn_rating);
         //TextView tv_audioIntro = (TextView)findViewById(R.id.tv_audioIntro) ;
 
         Bundle bundleFromAttr = getIntent().getExtras();
@@ -89,8 +94,6 @@ public class MusicActivity extends AppCompatActivity{
 
         mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
-        //FragmentManager fm ;
-        //fm = getSupportFragmentManager() ;
 
 
         try {
@@ -151,6 +154,7 @@ public class MusicActivity extends AppCompatActivity{
         bt[0].setEnabled(false);
         bt[1].setEnabled(false);
         bt[2].setEnabled(false);
+        submitRating.setEnabled(false);
 
 /*
        if( post.trim().length()>8){
@@ -204,14 +208,13 @@ public class MusicActivity extends AppCompatActivity{
 
         audioListView.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id ){
+            public void onItemClick(AdapterView<?> parent, View view, int position, final long id ){
+                final int[] ratings = new int[1];
                 ListView listView = (ListView) parent;
+                ratingBar.setRating(0F);
+                submitRating.setEnabled(true);
                 int existingClick = sharedPref.getInt(String.valueOf(AudioID.get((int)id)) , 0);
-                int newClick = existingClick + 1 ;
-                Toast.makeText(
-                        MusicActivity.this,
-                        "ID：" + String.valueOf(AudioID.get((int)id)) + "click:" + newClick,
-                        Toast.LENGTH_LONG).show();
+                final int newClick = existingClick + 1 ;
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putInt(String.valueOf(AudioID.get((int)id)),newClick);
                 editor.commit();
@@ -219,15 +222,31 @@ public class MusicActivity extends AppCompatActivity{
                 audioType.setText(AudioType.get((int)id));
                 bt[1].setText("pause");
                 try {
-                    String c = new ClickAsyncTask().execute(userId,AudioID.get((int)id).toString(), Integer.toString(newClick),"http://140.112.107.125:47155/html/clickCount.php").get();
+                    String c = new ClickAsyncTask().execute(userId,AudioID.get((int)id).toString(), Integer.toString(newClick),"-1","http://140.112.107.125:47155/html/clickCount.php").get();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 }
+                submitRating.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ratings[0] = (int)ratingBar.getRating();
+                        Toast.makeText(getApplicationContext(), "已為此音檔評分", Toast.LENGTH_LONG).show();
+                        ratingBar.setRating(0F);
+                        try {
+                            String c = new ClickAsyncTask().execute(userId,AudioID.get((int)id).toString(), Integer.toString(newClick),Integer.toString(ratings[0]),"http://140.112.107.125:47155/html/clickCount.php").get();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
 
         });
+
     }
 
 

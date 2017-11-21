@@ -24,13 +24,22 @@ public class ClickAsyncTask  extends AsyncTask<String, Integer, String> {
     @Override
     protected String doInBackground(String... params) {
         Response response = null;
+        RequestBody formBody ;
+        if (params[3]=="-1"){
+            formBody = new FormBody.Builder()
+                    .add("userId", params[0])
+                    .add("audioId", params[1])
+                    .add("clicks", params[2]).build();
+        }else {
+            formBody = new FormBody.Builder()
+                    .add("userId", params[0])
+                    .add("audioId", params[1])
+                    .add("clicks", params[2])
+                    .add("ratings", params[3]).build();
 
-        RequestBody formBody = new FormBody.Builder()
-                .add("userId", params[0])
-                .add("audioId", params[1])
-                .add("clicks", params[2]).build();
+        }
 
-        Request request = new Request.Builder().url(params[3])
+        Request request = new Request.Builder().url(params[4])
                 .post(formBody)
                 .build();
         try {
