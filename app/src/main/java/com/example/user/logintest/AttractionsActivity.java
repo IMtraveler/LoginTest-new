@@ -29,14 +29,20 @@ public class AttractionsActivity extends AppCompatActivity {
         ImageView imageView = (ImageView)findViewById(R.id.iv_attr);
         TextView tv_name = (TextView)findViewById(R.id.tv_attrName);
         TextView tv_intro = (TextView)findViewById(R.id.tv_attrIntro);
+        TextView tv_types = (TextView)findViewById(R.id.tv_attrtype);
+
+
         Bundle bundle = getIntent().getExtras();
 
 
-            String imgURL = bundle.getString("imgURL");
-            final String name = bundle.getString("name");
-            String post = bundle.getString("post");
-            String lat = bundle.getString("lat");
-            String lng = bundle.getString("lng");
+        String imgURL = bundle.getString("imgURL");
+        final String name = bundle.getString("name");
+        String post = bundle.getString("post");
+        String lat = bundle.getString("lat");
+        String lng = bundle.getString("lng");
+        String type = bundle.getString("type");
+        tv_types.setText(type);
+
 
         bundleAudio.putString("lat",lat);
         bundleAudio.putString("lng",lng);
