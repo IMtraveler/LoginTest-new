@@ -1,8 +1,11 @@
 package com.example.user.logintest;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -116,7 +119,69 @@ public class MyuploadMusic extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "你上傳的音檔名稱是:  " + NameList[position], Toast.LENGTH_SHORT).show();
             }
         });*/
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.layout_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu)
+    {
+        Global check = (Global)getApplicationContext();
+        int checkk = check.getWord();
+        MenuItem registrar = menu.findItem(R.id.我上傳的音檔);
+        registrar.setVisible(checkk==0); //if is  guide then is visible
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        //取的intent中的bundle物件
+        Bundle bundleID =this.getIntent().getExtras();
 
+        String UserID = bundleID.getString("AccountID");
+        switch (item.getItemId())
+        {
+            case R.id.我的最愛:
+                //放入點擊後的結果
+                Intent intent = new Intent();
+                intent.setClass(MyuploadMusic.this,FavoriteActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.我上傳的音檔:
+                //跳到上傳音檔頁，顯示上傳的音檔名字
+                // TODO Auto-generated method stub
+                Intent intent2 = new Intent();
+                intent2.setClass(MyuploadMusic.this,MyuploadMusic.class);
+                //儲存帳號
+                Bundle bundle = new Bundle();
+                bundle.putString("AccountID",UserID);
+                //將Bundle物件assign給intent
+                intent2.putExtras(bundle);
+                startActivity(intent2);
+                //顯示按鈕的名字
+                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.音檔種類:
+                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.我的帳戶:
+                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                Intent intent6 = new Intent();
+                intent6.setClass(MyuploadMusic.this,MyAccountActivity.class);
+                startActivity(intent6);
+                break;
+            case R.id.條列式瀏覽:
+                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                Intent intent5 = new Intent();
+                intent5.setClass(MyuploadMusic.this,SpotView.class);
+                startActivity(intent5);
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 
 

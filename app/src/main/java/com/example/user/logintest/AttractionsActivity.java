@@ -77,6 +77,17 @@ public class AttractionsActivity extends AppCompatActivity {
         });
 
         Button btn_upload = (Button)findViewById(R.id.btn_upload);
+        Global check = (Global)getApplicationContext();
+        int checkk = check.getWord();
+        if ( checkk == 0 ) //guide when checkk==0
+        {
+            //SHOW the button
+            btn_upload.setEnabled(true);
+        }
+        else
+        {
+            btn_upload.setEnabled(false);
+        }
         btn_upload.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -106,6 +117,15 @@ public class AttractionsActivity extends AppCompatActivity {
     {
         getMenuInflater().inflate(R.menu.layout_menu,menu);
         return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu)
+    {
+        Global check = (Global)getApplicationContext();
+        int checkk = check.getWord();
+        MenuItem registrar = menu.findItem(R.id.我上傳的音檔);
+        registrar.setVisible(checkk==0); //if is  guide then is visible
+        return true;
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
@@ -139,22 +159,21 @@ public class AttractionsActivity extends AppCompatActivity {
             case R.id.音檔種類:
                 Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.帳戶:
+            case R.id.我的帳戶:
                 Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                Intent intent6 = new Intent();
+                intent6.setClass(AttractionsActivity.this,MyAccountActivity.class);
+                startActivity(intent6);
                 break;
-            case R.id.條列式:
+            case R.id.條列式瀏覽:
                 Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.地圖:
-                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.離開:
-                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                Intent intent5 = new Intent();
+                intent5.setClass(AttractionsActivity.this,SpotView.class);
+                startActivity(intent5);
                 break;
             default:
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
-
 }
