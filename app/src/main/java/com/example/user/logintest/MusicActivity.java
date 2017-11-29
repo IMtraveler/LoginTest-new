@@ -382,6 +382,15 @@ public class MusicActivity extends AppCompatActivity{
         return super.onCreateOptionsMenu(menu);
     }
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu)
+    {
+        Global check = (Global)getApplicationContext();
+        int checkk = check.getWord();
+        MenuItem registrar = menu.findItem(R.id.我上傳的音檔);
+        registrar.setVisible(checkk==0); //if is  guide then is visible
+        return true;
+    }
+    @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
         //取的intent中的bundle物件
@@ -413,17 +422,17 @@ public class MusicActivity extends AppCompatActivity{
             case R.id.音檔種類:
                 Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.帳戶:
+            case R.id.我的帳戶:
                 Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                Intent intent6 = new Intent();
+                intent6.setClass(MusicActivity.this,MyAccountActivity.class);
+                startActivity(intent6);
                 break;
-            case R.id.條列式:
+            case R.id.條列式瀏覽:
                 Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.地圖:
-                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.離開:
-                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                Intent intent5 = new Intent();
+                intent5.setClass(MusicActivity.this,SpotView.class);
+                startActivity(intent5);
                 break;
             default:
                 break;

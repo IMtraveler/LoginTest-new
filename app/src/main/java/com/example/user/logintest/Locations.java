@@ -13,4 +13,12 @@ public class Locations {
 
     public double lng;
 
+    public String type;
+
+    public String ename;
+
+    public String classified;
+
+    public String address;
+
 }

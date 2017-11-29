@@ -16,13 +16,17 @@ import java.util.ArrayList;
 
 public class LocationsDatabase extends SQLiteAssetHelper {
 
-    private static final String DATABASE_NAME = "spot.db";
+    private static final String DATABASE_NAME = "spotsb.db";
     private static final int DATABASE_VERSION = 2;
     private static final String ID="_id";
     private static final String NAME="name";
     private static final String LAT="lat";
     private static final String LNG="lng";
     private static final String LOCATION_TABLE="tpe_intro";
+    private static final String TYPE="type";
+    private static final String ENAME="ename";
+    private static final String CLASSIFIED="classified";
+    private static final String ADDRESS = "address";
 
 
     public LocationsDatabase(Context context) {
@@ -71,7 +75,7 @@ public class LocationsDatabase extends SQLiteAssetHelper {
     public ArrayList<Locations> getLocations(){
 
         SQLiteDatabase db=getReadableDatabase();
-        String[] columns={LocationsDatabase.ID,LocationsDatabase.NAME,LocationsDatabase.LAT,LocationsDatabase.LNG};
+        String[] columns={LocationsDatabase.ID,LocationsDatabase.NAME,LocationsDatabase.LAT,LocationsDatabase.LNG,LocationsDatabase.TYPE,LocationsDatabase.ENAME,LocationsDatabase.CLASSIFIED,LocationsDatabase.ADDRESS};
 //        String[] selectionArgs={categoryId+"",subjectId+"",yearId+""};
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
         qb.setTables(LOCATION_TABLE);
@@ -86,6 +90,10 @@ public class LocationsDatabase extends SQLiteAssetHelper {
             questions.name=cursor.getString(cursor.getColumnIndex(LocationsDatabase.NAME));
             questions.lat=cursor.getDouble(cursor.getColumnIndex(LocationsDatabase.LAT));
             questions.lng=cursor.getDouble(cursor.getColumnIndex(LocationsDatabase.LNG));
+            questions.type=cursor.getString(cursor.getColumnIndex(LocationsDatabase.TYPE));
+            questions.type=cursor.getString(cursor.getColumnIndex(LocationsDatabase.ENAME));
+            questions.type=cursor.getString(cursor.getColumnIndex(LocationsDatabase.CLASSIFIED));
+            questions.type=cursor.getString(cursor.getColumnIndex(LocationsDatabase.ADDRESS));
             questionsArrayList.add(questions);
         }
         db.close();
