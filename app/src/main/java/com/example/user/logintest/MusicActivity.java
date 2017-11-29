@@ -55,13 +55,15 @@ public class MusicActivity extends AppCompatActivity{
     ArrayList<Integer> beginNamepos = new ArrayList<>();
     ArrayList<Integer> endURLpos = new ArrayList<>();
     ArrayList<Integer> endNamepos = new ArrayList<>();
+    ArrayList<Integer> AudioID = new ArrayList<>();
     ArrayList<String> AudioName = new ArrayList<>();
     ArrayList<String> AudioURL = new ArrayList<>();
     ArrayList<String> GuideName = new ArrayList<>();
     ArrayList<String> AudioIntro = new ArrayList<>();
     ArrayList<String> AudioType = new ArrayList<>();
+    ArrayList<Integer> AudioClick = new ArrayList<>();
     int num=0;
-
+    String userId = XclSingleton.getInstance().get("AccountID").toString();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,20 +101,23 @@ public class MusicActivity extends AppCompatActivity{
             e.printStackTrace();
         }
 
-
+        /* TO-DO: there will be an space element at the end of post string */
         if(post.length()> 3) {
             audioInfo = post.split(";");
             for (int i = 0 ; i < audioInfo.length ;i++)
             {
                 try {
+                    AudioID.add(Integer.valueOf(audioInfo[i].substring(audioInfo[i].indexOf("audioID:")+9, audioInfo[i].indexOf("audioName:"))));
                     AudioName.add(audioInfo[i].substring(audioInfo[i].indexOf("audioName:") + 11, audioInfo[i].indexOf("audioURL:")));
                     AudioURL.add(audioInfo[i].substring(audioInfo[i].indexOf("audioURL:") + 10, audioInfo[i].indexOf("intro:")));
                     AudioIntro.add(audioInfo[i].substring(audioInfo[i].indexOf("intro:")+7, audioInfo[i].indexOf("account:")));
                     GuideName.add(audioInfo[i].substring(audioInfo[i].indexOf("account:")+9, audioInfo[i].indexOf("type:")));
-                    AudioType.add(audioInfo[i].substring(audioInfo[i].indexOf("type:")+6, audioInfo[i].length()));
+                    AudioType.add(audioInfo[i].substring(audioInfo[i].indexOf("type:")+6, audioInfo[i].indexOf("clickCount")));
+                    AudioClick.add(Integer.valueOf(audioInfo[i].substring(audioInfo[i].indexOf("clickCount:")+12, audioInfo[i].length())));
                 }catch (Exception e){
                     Log.e("error", e.toString());
                     Log.e("what", audioInfo[i]);
+                    Log.e("id", AudioID.get(0).toString());
                 }
 
             }
@@ -120,11 +125,13 @@ public class MusicActivity extends AppCompatActivity{
         }
         else {
             post = "No data";
+            AudioID.add(0);
             AudioName.add("No Audio");
             AudioURL.add("http://140.112.107.125:47155/html/uploaded/noAudio.m4a");
             AudioIntro.add("null");
             GuideName.add("null");
             AudioType.add("null");
+            AudioClick.add(0);
         }
 
 
@@ -165,7 +172,7 @@ public class MusicActivity extends AppCompatActivity{
 
 
 
-        attrName.setText(AudioName.get(0));
+        //attrName.setText(AudioName.get(0));
 
         for(int i=0;i< bt.length;i++){
             bt[i].setOnClickListener(new SampleClickListener());
@@ -180,7 +187,7 @@ public class MusicActivity extends AppCompatActivity{
             HashMap<String , String> hashMap = new HashMap<>();
             hashMap.put("audioName" , AudioName.get(i));
             hashMap.put("guide" , GuideName.get(i));
-            hashMap.put("clicks", "112");
+            hashMap.put("clicks", String.valueOf(AudioClick.get(i)));
             //把title , text存入HashMap之中
             audiolist.add(hashMap);
             //把HashMap存入list之中
@@ -199,18 +206,25 @@ public class MusicActivity extends AppCompatActivity{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id ){
                 ListView listView = (ListView) parent;
-                int existingClick = sharedPref.getInt(Long.toString(id) , 0);
+                int existingClick = sharedPref.getInt(String.valueOf(AudioID.get((int)id)) , 0);
                 int newClick = existingClick + 1 ;
                 Toast.makeText(
                         MusicActivity.this,
-                        "ID：" + id + listView.getItemAtPosition(position).toString() + "click:" + newClick,
+                        "ID：" + String.valueOf(AudioID.get((int)id)) + "click:" + newClick,
                         Toast.LENGTH_LONG).show();
                 SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putInt(Long.toString(id),newClick);
+                editor.putInt(String.valueOf(AudioID.get((int)id)),newClick);
                 editor.commit();
                 playAudio(id);
                 audioType.setText(AudioType.get((int)id));
                 bt[1].setText("pause");
+                try {
+                    String c = new ClickAsyncTask().execute(userId,AudioID.get((int)id).toString(), Integer.toString(newClick),"http://140.112.107.125:47155/html/clickCount.php").get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
             }
 
         });
