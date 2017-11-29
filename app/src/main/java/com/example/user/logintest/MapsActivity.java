@@ -5,9 +5,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -36,6 +38,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.content.Intent ;
+import android.graphics.Bitmap;
 
 
 import com.google.android.gms.common.ConnectionResult;
@@ -53,7 +56,9 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InvalidObjectException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -94,6 +99,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         myDatabase = new LocationsDatabase(MapsActivity.this);
         locationArrayList=myDatabase.getLocations();
         tf_location = (AutoCompleteTextView) findViewById(R.id.TF_location);
+
 
         //searchArrayList=myDatabase.getsearch("故");
        /* tf_location.addTextChangedListener(new  TextWatcher() {
@@ -141,6 +147,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
     }
+
 
 
     @Override
@@ -242,6 +249,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(lating));
         //mMap.animateCamera(CameraUpdateFactory.zoomBy(20));
 
+
         if (Client != null) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
@@ -303,15 +311,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     tv_intro.setText(name);
                     bundle.putString("name", name);
                     int begImg = post.indexOf("image");
-                    int endIndex = post.length();
+                    int endIndex = post.indexOf("classified")-1;
 
                     if ((begImg + 6) >= endIndex - 5) {
-                        Picasso.with(getBaseContext()).load("http://140.112.107.125:47155/html/uploaded/null.png").into(imageView);
+                        //Picasso.with(getBaseContext()).load("http://140.112.107.125:47155/html/uploaded/null.png").into(imageView);
                         bundle.putString("imgURL", "http://140.112.107.125:47155/html/uploaded/null.png");
                     } else {
-                        String imgURL = "http:" + post.substring(begImg + 6, endIndex);
-                        imgURL = imgURL.replaceAll(" ", "");
-                        Picasso.with(getBaseContext()).load(imgURL).into(imageView);
+                        String imgURL = post.substring(begImg + 6, endIndex);
+                        imgURL = "http:" + imgURL.replaceAll(" ", "");
+                        Picasso.with(MapsActivity.this).load(imgURL).into(imageView);
+                        Log.e("img_url",imgURL);
+                        Log.e("test","test");
                         bundle.putString("imgURL", imgURL);
                     }
                 }
