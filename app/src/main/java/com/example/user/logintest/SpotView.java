@@ -76,6 +76,7 @@ public class SpotView extends AppCompatActivity {
                 View mView = getLayoutInflater().inflate(R.layout.dialog, null);
                 Button mLogin = (Button) mView.findViewById(R.id.buttona);
                 TextView tv_intro = (TextView)mView.findViewById(R.id.tv_name);
+                TextView tv_types = (TextView)mView.findViewById(R.id.tv_type);
                 ImageView imageView = (ImageView)mView.findViewById(R.id.imageView);
                 String phpURL = "http://140.112.107.125:47155/html/test.php" ;
 
@@ -94,6 +95,13 @@ public class SpotView extends AppCompatActivity {
                 if (post.length() > 10) {
                     int begName = post.indexOf("name:");
                     int endName = post.indexOf("altHead_name");
+                    int begType = post.indexOf("class_tag");
+                    int endType = post.indexOf("lat");
+
+                    String type = post.substring(begType + 10, endType - 1);
+                    tv_types.setText(type);
+                    bundle.putString("type", type);
+
                     String name = post.substring(begName + 5, endName - 1);
                     tv_intro.setText(name);
                     bundle.putString("name", name);
