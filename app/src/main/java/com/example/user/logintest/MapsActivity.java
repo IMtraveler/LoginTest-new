@@ -94,6 +94,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         myDatabase = new LocationsDatabase(MapsActivity.this);
         locationArrayList=myDatabase.getLocations();
         tf_location = (AutoCompleteTextView) findViewById(R.id.TF_location);
+
         //searchArrayList=myDatabase.getsearch("故");
        /* tf_location.addTextChangedListener(new  TextWatcher() {
 
@@ -265,6 +266,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Button mLogin = (Button) mView.findViewById(R.id.buttona);
                 //ProgressBar mProgressBar = (ProgressBar) mView.findViewById(R.id.progressBar2);
                 TextView tv_intro = (TextView)mView.findViewById(R.id.tv_name);
+                TextView tv_types = (TextView)mView.findViewById(R.id.tv_type);
+
                 ImageView imageView = (ImageView)mView.findViewById(R.id.imageView);
 
                 final String locating = marker.getPosition().toString() ;
@@ -274,6 +277,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 //final String post = Post(lat, lng);
                 bundle.putString("lat", lat);
                 bundle.putString("lng", lng);
+
 
 
                 String post = "";
@@ -289,6 +293,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 if (post.length() > 10) {
                     int begName = post.indexOf("name:");
                     int endName = post.indexOf("altHead_name");
+                    int begType = post.indexOf("class_tag");
+                    int endType = post.indexOf("lat");
+
+                    String type = post.substring(begType + 10, endType - 1);
+                    tv_types.setText(type);
+                    bundle.putString("type", type);
                     String name = post.substring(begName + 5, endName - 1);
                     tv_intro.setText(name);
                     bundle.putString("name", name);
@@ -464,11 +474,20 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
- @Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
         getMenuInflater().inflate(R.menu.layout_menu,menu);
         return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu)
+    {
+        Global check = (Global)getApplicationContext();
+        int checkk = check.getWord();
+        MenuItem registrar = menu.findItem(R.id.我上傳的音檔);
+        registrar.setVisible(checkk==0); //if is  guide then is visible
+        return true;
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
@@ -490,7 +509,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 // TODO Auto-generated method stub
                 Intent intent2 = new Intent();
                 intent2.setClass(MapsActivity.this,MyuploadMusic.class);
-                 //儲存帳號
+                //儲存帳號
                 Bundle bundle = new Bundle();
                 bundle.putString("AccountID",UserID);
                 //將Bundle物件assign給intent
@@ -502,21 +521,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             case R.id.音檔種類:
                 Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.帳戶:
+            case R.id.我的帳戶:
                 Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                Intent intent6 = new Intent();
+                intent6.setClass(MapsActivity.this,MyAccountActivity.class);
+                startActivity(intent6);
                 break;
-            case R.id.條列式:
+            case R.id.條列式瀏覽:
                 Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
                 Intent intent5 = new Intent();
                 intent5.setClass(MapsActivity.this,SpotView.class);
                 startActivity(intent5);
-                break;
-
-            case R.id.地圖:
-                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.離開:
-                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
                 break;
             default:
                 break;

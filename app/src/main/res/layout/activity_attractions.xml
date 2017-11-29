@@ -55,15 +55,18 @@
 
     <Button
         android:id="@+id/imageView3"
-        android:text="Fv"
         tools:ignore="MissingConstraints,RelativeOverlap"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:scaleType="fitCenter"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/heart"
         tools:layout_editor_absoluteX="148dp"
         tools:layout_editor_absoluteY="12dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignRight="@+id/tv_attrIntro"
+        android:layout_alignEnd="@+id/tv_attrIntro"
+        android:layout_marginTop="13dp" />
+
 
 
     <TextView
@@ -98,7 +101,8 @@
         android:textColor="@android:color/white"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:enabled="false"/>
 
     <TextView
         android:id="@+id/textView2"

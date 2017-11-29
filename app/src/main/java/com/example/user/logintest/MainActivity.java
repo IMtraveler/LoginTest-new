@@ -229,8 +229,11 @@ public class MainActivity extends AppCompatActivity {
                                 String checke = "accountID: "+account.getText().toString();
                                 String checkp = "password: "+password.getText().toString();
                                 String checkn = "nickname: "+account.getText().toString();
+                                int email_begindex = s.indexOf("accountID: ") + 11;
+                                int email_endindex = s.indexOf("nickname: ") -1;
                                 int begindex = s.indexOf("nickname: ") + 10;
                                 int endindex = s.indexOf("password: ")-1;
+                                String emailID = s.substring(email_begindex,email_endindex).trim();
                                 String nickname = s.substring(begindex,endindex).trim();
                                 msg.setText(nickname);
 
@@ -251,6 +254,7 @@ public class MainActivity extends AppCompatActivity {
                                     intent.putExtras(bundle);
                                     //Intent intent2 = new Intent();
                                     //intent2.setClass(MainActivity.this,MainPageActivity.class);
+                                    XclSingleton.getInstance().put("Email",emailID);
                                     XclSingleton.getInstance().put("AccountID",nickname);
                                     startActivity(intent);
                                     MainActivity.this.finish();
