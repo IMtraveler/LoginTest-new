@@ -25,11 +25,15 @@ import java.util.concurrent.ExecutionException;
 
 public class SpotView extends AppCompatActivity {
     LocationsDatabase myDatabase;
-    private ArrayList<Locations> locationArrayList;
-    private String[] locations ;
+    private ArrayList<Locations> locationArrayList=new ArrayList<>();
+
+    //private ArrayList<String>spotlist=new ArrayList<>();
+    private ArrayAdapter<String> listAdapter;
+
+    private ArrayList<String> locations=new ArrayList<>() ;
     ListView listView;
     SearchView searchView;
-    private ArrayAdapter<String> listAdapter;
+
     Bundle bundle = new Bundle();
 
 
@@ -40,13 +44,16 @@ public class SpotView extends AppCompatActivity {
         setContentView(R.layout.activity_spot_view);
         myDatabase = new LocationsDatabase(SpotView.this);
         locationArrayList=myDatabase.getLocations();
-        locations = new String[locationArrayList.size()];
+
+
         for (int i =0;i<locationArrayList.size();i++){
-            locations[i]=locationArrayList.get(i).name;
+            locations.add(locationArrayList.get(i).name);
         }
+
+        //fillData();
         listView = (ListView)findViewById(R.id.spot_list);
         searchView = (SearchView)findViewById(R.id.SearchView);
-        listAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,locations);
+        listAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,locations);
         listView.setAdapter(listAdapter);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -69,9 +76,12 @@ public class SpotView extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //get position
+                Toast.makeText(getApplicationContext(),listAdapter.getItem(position),Toast.LENGTH_SHORT).show();
+                position=locations.indexOf(listAdapter.getItem(position));
                 String lat = String.valueOf(locationArrayList.get(position).lat) ;
                 String lng = String.valueOf(locationArrayList.get(position).lng) ;
-                Toast.makeText(getApplicationContext(),"lat: "+lat+" lng: "+lng,Toast.LENGTH_SHORT).show();
+
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(SpotView.this);
                 View mView = getLayoutInflater().inflate(R.layout.dialog, null);
                 Button mLogin = (Button) mView.findViewById(R.id.buttona);
@@ -142,6 +152,15 @@ public class SpotView extends AppCompatActivity {
         });
 
     }
+    /*
+    private void fillData(){
+        for (int i =0;i<locationArrayList.size();i++){
+            //name, tyoe, lart, lng
+            GetSpot s = new GetSpot(locationArrayList.get(i).name.toString(),locationArrayList.get(i).type.toString(),Double.toString(locationArrayList.get(i).lat),Double.toString(locationArrayList.get(i).lng));
+            spotlist.add(s);
+        }
+
+    }*/
 
 
 
