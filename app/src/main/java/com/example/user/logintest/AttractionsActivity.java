@@ -37,10 +37,11 @@ public class AttractionsActivity extends AppCompatActivity {
 
         String imgURL = bundle.getString("imgURL");
         final String name = bundle.getString("name");
-        String post = bundle.getString("post");
+        final String post = bundle.getString("post");
         String lat = bundle.getString("lat");
         String lng = bundle.getString("lng");
         String type = bundle.getString("type");
+        final int audioNum = bundle.getInt("audioNum");
         tv_types.setText(type);
 
 
@@ -66,12 +67,17 @@ public class AttractionsActivity extends AppCompatActivity {
         btn_toAudio.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Intent intent = new Intent();
-                intent.setClass(AttractionsActivity.this,MusicActivity.class);
-                intent.putExtras(bundleAudio);
-                startActivity(intent);
-                AttractionsActivity.this.finish();
+                if (audioNum == 0 ) {
+                    Log.e("audioNumber", Integer.toString(audioNum));
+                    Toast.makeText(getBaseContext(), "目前仍無音檔，請上傳音檔", Toast.LENGTH_LONG).show();
+                }else {
+                    // TODO Auto-generated method stub
+                    Intent intent = new Intent();
+                    intent.setClass(AttractionsActivity.this, MusicActivity.class);
+                    intent.putExtras(bundleAudio);
+                    startActivity(intent);
+                    AttractionsActivity.this.finish();
+                }
 
             }
         });
