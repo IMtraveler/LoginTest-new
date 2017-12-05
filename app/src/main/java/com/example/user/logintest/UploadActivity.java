@@ -99,7 +99,7 @@ public class UploadActivity extends AppCompatActivity {
                             .start();
                 }
                 else {
-                    Toast.makeText(getApplicationContext(), "填東西ㄚ",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "請填入所有資訊",Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -210,12 +210,13 @@ public class UploadActivity extends AppCompatActivity {
 
                         String file_path = f.getAbsolutePath();
                         OkHttpClient client_file = new OkHttpClient();
-                        RequestBody file_body = RequestBody.create(MediaType.parse(content_type), f);
+                        //RequestBody file_body = RequestBody.create(MediaType.parse(content_type), f);
+                        RequestBody file_body = RequestBody.create(MediaType.parse("audio/*; charset=big5"), f);
 
                         try {
                             RequestBody request_body = new MultipartBody.Builder()
                                     .setType(MultipartBody.FORM)
-                                    .addFormDataPart("type", content_type)
+                                    .addFormDataPart("type", "audio/*; charset=big5")
                                     .addFormDataPart("uploaded_file", file_path.substring(file_path.lastIndexOf("/") + 1), file_body)
                                     .build();
 
@@ -226,7 +227,7 @@ public class UploadActivity extends AppCompatActivity {
 
 
                             Response response = client_file.newCall(request).execute();
-
+                            Log.e("response", response.toString());
 
                             if (!response.isSuccessful()) {
                                 Log.e("msg", "fail ");

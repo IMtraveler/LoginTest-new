@@ -43,8 +43,10 @@ public class AttractionsActivity extends AppCompatActivity {
         String lat = bundle.getString("lat");
         String lng = bundle.getString("lng");
         String type = bundle.getString("type");
+
         String ename = bundle.getString("ename");
         String addr = bundle.getString("addr");
+
         final int audioNum = bundle.getInt("audioNum");
         tv_types.setText(type);
         tv_addr.setText(addr);

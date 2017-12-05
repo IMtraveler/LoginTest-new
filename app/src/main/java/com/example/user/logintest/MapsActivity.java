@@ -36,8 +36,10 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -319,7 +321,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     bundle.putString("ename", ename);
                     String addr = post.substring(endEName + 7, begType - 1);
                     bundle.putString("addr", addr);
-
                     int begImg = post.indexOf("image");
                     int endIndex = post.indexOf("classified")-1;
                     String audioNumStr =post.substring(post.indexOf("audioNum:")+10, post.length());
