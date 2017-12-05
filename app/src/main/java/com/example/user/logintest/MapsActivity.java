@@ -1,26 +1,16 @@
 package com.example.user.logintest;
 
 import android.Manifest;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.pm.PackageManager;
-import android.database.sqlite.SQLiteDatabase;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringDef;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,7 +22,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.content.Intent ;
@@ -47,19 +36,15 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.io.IOException;
-import java.io.InvalidObjectException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import static com.example.user.logintest.Downloads.mContext;
-import static com.example.user.logintest.MySQLConnection.Post;
 import com.squareup.picasso.Picasso ;
 
 
@@ -94,6 +79,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         myDatabase = new LocationsDatabase(MapsActivity.this);
         locationArrayList=myDatabase.getLocations();
         tf_location = (AutoCompleteTextView) findViewById(R.id.TF_location);
+
 
         //searchArrayList=myDatabase.getsearch("故");
        /* tf_location.addTextChangedListener(new  TextWatcher() {
@@ -141,6 +127,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
     }
+
 
 
     @Override
@@ -195,8 +182,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             //Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
             mMap.moveCamera( CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude) , 14.0f) );
         }else{
-           //Toast.makeText(this,"error",Toast.LENGTH_SHORT).show();
-           gps.showSettingsAlert();
+            //Toast.makeText(this,"error",Toast.LENGTH_SHORT).show();
+            gps.showSettingsAlert();
         }
         /*
         LatLng taipei_1 = new LatLng(25.0327792, 121.5636894);
@@ -205,12 +192,35 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
         // add markers
-       myDatabase = new LocationsDatabase(MapsActivity.this);
-       locationArrayList=myDatabase.getLocations();
-       for(int i=0;i<locationArrayList.size();i++) {
-          LatLng test = new LatLng(locationArrayList.get(i).lat, locationArrayList.get(i).lng);
-           Marker perth = mMap.addMarker(new MarkerOptions()
+        myDatabase = new LocationsDatabase(MapsActivity.this);
+        locationArrayList=myDatabase.getLocations();
+        for(int i=0;i<locationArrayList.size();i++) {
+            LatLng test = new LatLng(locationArrayList.get(i).lat, locationArrayList.get(i).lng);
+            Marker perth = mMap.addMarker(new MarkerOptions()
                     .position(test));
+            String check = locationArrayList.get(i).classified;
+            if(check.equals("1"))
+                perth.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.a4));
+            else if(check.equals("2"))
+                perth.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.a4));
+            else if(check.equals("3"))
+                perth.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.a4));
+            else if(check.equals("4"))
+                perth.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.a4));
+            else if(check.equals("5"))
+                perth.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.a4));
+           /*else if(check.equals("6"))
+               perth.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.a4));
+           else if(check.equals("7"))
+               perth.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.a4));
+           else if(check.equals("8"))
+               perth.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.a4));
+           else if(check.equals("9"))
+               perth.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.a4));
+           else if(check.equals("10"))
+               perth.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.a4));
+           else if(check.equals("11"))
+               perth.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.a4));*/
         }
     }
 
@@ -241,6 +251,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         currentLocationMarker = mMap.addMarker(markerOptions);*/
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(lating));
         //mMap.animateCamera(CameraUpdateFactory.zoomBy(20));
+
 
         if (Client != null) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -273,7 +284,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 final String locating = marker.getPosition().toString() ;
                 String lat = String.valueOf(marker.getPosition().latitude) ;
                 String lng = String.valueOf(marker.getPosition().longitude) ;
-                String phpURL = "http://140.112.107.125:47155/html/test.php" ;
+                String phpURL = "http://140.112.107.125:47155/html/getdata.php" ;
                 //final String post = Post(lat, lng);
                 bundle.putString("lat", lat);
                 bundle.putString("lng", lng);
@@ -293,6 +304,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 if (post.length() > 10) {
                     int begName = post.indexOf("name:");
                     int endName = post.indexOf("altHead_name");
+                    int endEName = post.indexOf("address");
                     int begType = post.indexOf("class_tag");
                     int endType = post.indexOf("lat");
 
@@ -302,16 +314,26 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     String name = post.substring(begName + 5, endName - 1);
                     tv_intro.setText(name);
                     bundle.putString("name", name);
-                    int begImg = post.indexOf("image");
-                    int endIndex = post.length();
 
+                    String ename = post.substring(endName + 13, endEName - 1);
+                    bundle.putString("ename", ename);
+                    String addr = post.substring(endEName + 7, begType - 1);
+                    bundle.putString("addr", addr);
+
+                    int begImg = post.indexOf("image");
+                    int endIndex = post.indexOf("classified")-1;
+                    String audioNumStr =post.substring(post.indexOf("audioNum:")+10, post.length());
+                    int audioNum =  Integer.valueOf(audioNumStr.trim().replaceAll("/n ", ""));
+                    bundle.putInt("audioNum", audioNum);
                     if ((begImg + 6) >= endIndex - 5) {
-                        Picasso.with(getBaseContext()).load("http://140.112.107.125:47155/html/uploaded/null.png").into(imageView);
+                        //Picasso.with(getBaseContext()).load("http://140.112.107.125:47155/html/uploaded/null.png").into(imageView);
                         bundle.putString("imgURL", "http://140.112.107.125:47155/html/uploaded/null.png");
                     } else {
-                        String imgURL = "http:" + post.substring(begImg + 6, endIndex);
-                        imgURL = imgURL.replaceAll(" ", "");
-                        Picasso.with(getBaseContext()).load(imgURL).into(imageView);
+                        String imgURL = post.substring(begImg + 6, endIndex);
+                        imgURL = "http:" + imgURL.replaceAll(" ", "");
+                        Picasso.with(MapsActivity.this).load(imgURL).into(imageView);
+                        Log.e("img_url",imgURL);
+                        Log.e("test","test");
                         bundle.putString("imgURL", imgURL);
                     }
                 }

@@ -30,6 +30,8 @@ public class AttractionsActivity extends AppCompatActivity {
         TextView tv_name = (TextView)findViewById(R.id.tv_attrName);
         TextView tv_intro = (TextView)findViewById(R.id.tv_attrIntro);
         TextView tv_types = (TextView)findViewById(R.id.tv_attrtype);
+        TextView tv_addr = (TextView)findViewById(R.id.attr_address);
+        TextView tv_ename = (TextView)findViewById(R.id.tv_attrNameEn);
 
 
         Bundle bundle = getIntent().getExtras();
@@ -37,11 +39,16 @@ public class AttractionsActivity extends AppCompatActivity {
 
         String imgURL = bundle.getString("imgURL");
         final String name = bundle.getString("name");
-        String post = bundle.getString("post");
+        final String post = bundle.getString("post");
         String lat = bundle.getString("lat");
         String lng = bundle.getString("lng");
         String type = bundle.getString("type");
+        String ename = bundle.getString("ename");
+        String addr = bundle.getString("addr");
+        final int audioNum = bundle.getInt("audioNum");
         tv_types.setText(type);
+        tv_addr.setText(addr);
+
 
 
         bundleAudio.putString("lat",lat);
@@ -49,6 +56,7 @@ public class AttractionsActivity extends AppCompatActivity {
         bundleAudio.putString("name",name);
         Picasso.with(getBaseContext()).load(imgURL).into(imageView);
         tv_name.setText(name);
+        tv_ename.setText(ename);
         if(post.length()>10) {
             int begIntro = post.indexOf("intro:");
             int endIntro = post.indexOf("image");
@@ -66,12 +74,17 @@ public class AttractionsActivity extends AppCompatActivity {
         btn_toAudio.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Intent intent = new Intent();
-                intent.setClass(AttractionsActivity.this,MusicActivity.class);
-                intent.putExtras(bundleAudio);
-                startActivity(intent);
-                AttractionsActivity.this.finish();
+                if (audioNum == 0 ) {
+                    Log.e("audioNumber", Integer.toString(audioNum));
+                    Toast.makeText(getBaseContext(), "目前仍無音檔，請上傳音檔", Toast.LENGTH_LONG).show();
+                }else {
+                    // TODO Auto-generated method stub
+                    Intent intent = new Intent();
+                    intent.setClass(AttractionsActivity.this, MusicActivity.class);
+                    intent.putExtras(bundleAudio);
+                    startActivity(intent);
+                    AttractionsActivity.this.finish();
+                }
 
             }
         });
