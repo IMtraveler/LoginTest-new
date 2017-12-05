@@ -37,9 +37,9 @@ public class LocationsDatabase extends SQLiteAssetHelper {
     public ArrayList<Locations> getsearch(String s){
 
         SQLiteDatabase db=getReadableDatabase();
-        String name = LocationsDatabase.NAME;
+        //String classified = LocationsDatabase.CLASSIFIED;
         //欲查詢的欄位
-        String[] columns={LocationsDatabase.ID,name,LocationsDatabase.LAT,LocationsDatabase.LNG};
+        String[] columns={LocationsDatabase.ID, LocationsDatabase.NAME,LocationsDatabase.LAT,LocationsDatabase.LNG};
 
         String selection = "name LIKE ?";
         //SelectionArgs 以相同順序的元素職替換?因為?可能代表多個所以為字串陣列
@@ -63,6 +63,10 @@ public class LocationsDatabase extends SQLiteAssetHelper {
             questions.name=cursor.getString(cursor.getColumnIndex(LocationsDatabase.NAME));
             questions.lat=cursor.getDouble(cursor.getColumnIndex(LocationsDatabase.LAT));
             questions.lng=cursor.getDouble(cursor.getColumnIndex(LocationsDatabase.LNG));
+            questions.type=cursor.getString(cursor.getColumnIndex(LocationsDatabase.TYPE));
+            questions.ename=cursor.getString(cursor.getColumnIndex(LocationsDatabase.ENAME));
+            questions.classified=cursor.getString(cursor.getColumnIndex(LocationsDatabase.CLASSIFIED));
+            questions.address=cursor.getString(cursor.getColumnIndex(LocationsDatabase.ADDRESS));
             questionsArrayList.add(questions);
         }
         db.close();
@@ -91,9 +95,9 @@ public class LocationsDatabase extends SQLiteAssetHelper {
             questions.lat=cursor.getDouble(cursor.getColumnIndex(LocationsDatabase.LAT));
             questions.lng=cursor.getDouble(cursor.getColumnIndex(LocationsDatabase.LNG));
             questions.type=cursor.getString(cursor.getColumnIndex(LocationsDatabase.TYPE));
-            questions.type=cursor.getString(cursor.getColumnIndex(LocationsDatabase.ENAME));
-            questions.type=cursor.getString(cursor.getColumnIndex(LocationsDatabase.CLASSIFIED));
-            questions.type=cursor.getString(cursor.getColumnIndex(LocationsDatabase.ADDRESS));
+            questions.ename=cursor.getString(cursor.getColumnIndex(LocationsDatabase.ENAME));
+            questions.classified=cursor.getString(cursor.getColumnIndex(LocationsDatabase.CLASSIFIED));
+            questions.address=cursor.getString(cursor.getColumnIndex(LocationsDatabase.ADDRESS));
             questionsArrayList.add(questions);
         }
         db.close();

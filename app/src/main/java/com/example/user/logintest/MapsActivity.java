@@ -36,6 +36,10 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -180,8 +184,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             //Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
             mMap.moveCamera( CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude) , 14.0f) );
         }else{
-           //Toast.makeText(this,"error",Toast.LENGTH_SHORT).show();
-           gps.showSettingsAlert();
+            //Toast.makeText(this,"error",Toast.LENGTH_SHORT).show();
+            gps.showSettingsAlert();
         }
         /*
         LatLng taipei_1 = new LatLng(25.0327792, 121.5636894);
@@ -190,12 +194,35 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
         // add markers
-       myDatabase = new LocationsDatabase(MapsActivity.this);
-       locationArrayList=myDatabase.getLocations();
-       for(int i=0;i<locationArrayList.size();i++) {
-          LatLng test = new LatLng(locationArrayList.get(i).lat, locationArrayList.get(i).lng);
-           Marker perth = mMap.addMarker(new MarkerOptions()
+        myDatabase = new LocationsDatabase(MapsActivity.this);
+        locationArrayList=myDatabase.getLocations();
+        for(int i=0;i<locationArrayList.size();i++) {
+            LatLng test = new LatLng(locationArrayList.get(i).lat, locationArrayList.get(i).lng);
+            Marker perth = mMap.addMarker(new MarkerOptions()
                     .position(test));
+            String check = locationArrayList.get(i).classified;
+            if(check.equals("1"))
+                perth.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.a4));
+            else if(check.equals("2"))
+                perth.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.a4));
+            else if(check.equals("3"))
+                perth.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.a4));
+            else if(check.equals("4"))
+                perth.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.a4));
+            else if(check.equals("5"))
+                perth.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.a4));
+           /*else if(check.equals("6"))
+               perth.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.a4));
+           else if(check.equals("7"))
+               perth.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.a4));
+           else if(check.equals("8"))
+               perth.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.a4));
+           else if(check.equals("9"))
+               perth.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.a4));
+           else if(check.equals("10"))
+               perth.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.a4));
+           else if(check.equals("11"))
+               perth.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.a4));*/
         }
     }
 
@@ -279,6 +306,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 if (post.length() > 10) {
                     int begName = post.indexOf("name:");
                     int endName = post.indexOf("altHead_name");
+                    int endEName = post.indexOf("address");
                     int begType = post.indexOf("class_tag");
                     int endType = post.indexOf("lat");
 
@@ -288,6 +316,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     String name = post.substring(begName + 5, endName - 1);
                     tv_intro.setText(name);
                     bundle.putString("name", name);
+
+                    String ename = post.substring(endName + 13, endEName - 1);
+                    bundle.putString("ename", ename);
+                    String addr = post.substring(endEName + 7, begType - 1);
+                    bundle.putString("addr", addr);
                     int begImg = post.indexOf("image");
                     int endIndex = post.indexOf("classified")-1;
                     String audioNumStr =post.substring(post.indexOf("audioNum:")+10, post.length());
