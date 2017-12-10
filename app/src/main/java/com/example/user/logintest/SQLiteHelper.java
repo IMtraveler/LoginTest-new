@@ -39,7 +39,8 @@ public class SQLiteHelper extends SQLiteOpenHelper{
     public Cursor getAllData() {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT  * FROM " + "main.attr";
-        Cursor res = db.rawQuery(query,null);
+        //Cursor res = db.rawQuery(query,null);
+        Cursor res = db.query(true, "main.attr", new String[] { "_id","name"}, null, null,"name", null, null, null);
         return res;
     }
     @Override

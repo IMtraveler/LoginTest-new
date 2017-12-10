@@ -20,7 +20,7 @@ public class CheckpersonActivity  extends AppCompatActivity {
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 Intent intent = new Intent();
-                intent.setClass(CheckpersonActivity.this,MainPageActivity.class);
+                intent.setClass(CheckpersonActivity.this,MapsActivity.class);
                 startActivity(intent);
                 CheckpersonActivity.this.finish();
             }

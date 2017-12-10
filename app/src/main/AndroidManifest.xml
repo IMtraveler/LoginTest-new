@@ -17,7 +17,7 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="Hear there"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:name=".Global"
@@ -36,7 +36,6 @@
             android:value="@string/facebook_app_id" />
 
         <activity android:name=".CheckpersonActivity" />
-        <activity android:name=".MainPageActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -51,7 +50,7 @@
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps" />
+            android:label="Hear there" />
         <activity android:name=".MusicActivity" />
         <activity android:name=".UploadActivity" />
         <activity android:name=".LocationListActivity" />
