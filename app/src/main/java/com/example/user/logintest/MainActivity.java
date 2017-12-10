@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
 
                                 Intent intent = new Intent();
                                 msg.setText(s);
-                                intent.setClass(MainActivity.this,MainPageActivity.class);
+                                intent.setClass(MainActivity.this,MapsActivity.class);
                                 //儲存帳號
                                 Bundle bundle = new Bundle();
                                 bundle.putString("AccountID",UserId );
@@ -246,7 +246,7 @@ public class MainActivity extends AppCompatActivity {
 
                                     // TODO Auto-generated method stub
                                     Intent intent = new Intent();
-                                    intent.setClass(MainActivity.this,MainPageActivity.class);
+                                    intent.setClass(MainActivity.this,MapsActivity.class);
                                     //儲存帳號
                                     Bundle bundle = new Bundle();
                                     bundle.putString("AccountID",account.getText().toString() );

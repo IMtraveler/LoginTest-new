@@ -47,4 +47,16 @@
     <string name="audioname">音檔名稱</string>
     <string name="條列式瀏覽">條列式瀏覽</string>
     <string name="我的帳戶">我的帳戶</string>
+    <string name="景點種類">景點種類</string>
+    <string name="地標與建築物">地標與建築物</string>
+    <string name="自然景觀與公園">自然景觀與公園</string>
+    <string name="購物與市集">購物與市集</string>
+    <string name="宗教聖地">宗教聖地</string>
+    <string name="博物館">博物館</string>
+    <string name="古蹟">古蹟</string>
+    <string name="國家公園">國家公園</string>
+    <string name="碼頭">碼頭</string>
+    <string name="單車專用道">單車專用道</string>
+    <string name="溫泉">溫泉</string>
+    <string name="橋梁">橋梁</string>
 </resources>
