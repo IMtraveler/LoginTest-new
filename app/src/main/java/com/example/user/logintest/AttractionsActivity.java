@@ -12,14 +12,19 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 
 import com.squareup.picasso.Picasso;
+
+import java.util.concurrent.ExecutionException;
 
 
 public class AttractionsActivity extends AppCompatActivity {
 
     Bundle bundleAudio = new Bundle();
     Bundle bundleUpload = new Bundle();
+    Bundle bundleRecommend = new Bundle();
     private SQLiteHelper helper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,25 +98,65 @@ public class AttractionsActivity extends AppCompatActivity {
 
         Button btn_upload = (Button)findViewById(R.id.btn_upload);
         Global check = (Global)getApplicationContext();
-        int checkk = check.getWord();
-        if ( checkk == 0 ) //guide when checkk==0
-        {
-            //SHOW the button
-            btn_upload.setEnabled(true);
+        final int checkk = check.getWord();
+        if (checkk != 0){
+            btn_upload.setText("景點推薦");
         }
-        else
-        {
-            btn_upload.setEnabled(false);
-        }
+
+        GPSTrackerActivity gps;
+        gps = new GPSTrackerActivity(this);
+        final double lat_now = gps.getLatitude();
+        final double lng_now = gps.getLongitude();
+
+        /*
+        try {
+            //String results = new MyAsyncTask().execute("DorisChen", Double.toString(lat_now), Double.toString(lng_now)).get();
+            //Log.e("result", results);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }*/
+
+        bundleRecommend.putString("lat", "25.0310609");
+        bundleRecommend.putString("lng", "121.5355520");
+        String[] value = new String[]{
+                "懷恩堂",
+                "大安森林公園",
+                "自來水公園",
+        };
+
+
+
+        final AlertDialog.Builder alertdialogbuilder = new AlertDialog.Builder(AttractionsActivity.this);
+        alertdialogbuilder.setTitle("推薦附近景點");
+        alertdialogbuilder.setItems(value, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent();
+                intent.setClass(AttractionsActivity.this, RecommendAttractionActivity.class);
+                intent.putExtras(bundleRecommend);
+                startActivity(intent);
+                //Toast.makeText(getApplicationContext(), "推薦測試"+which, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
         btn_upload.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Intent intent = new Intent();
-                intent.setClass(AttractionsActivity.this,UploadActivity.class);
-                intent.putExtras(bundleUpload);
-                startActivity(intent);
-                AttractionsActivity.this.finish();
+                if ( checkk == 0 ) {
+                    // TODO Auto-generated method stub
+                    Intent intent = new Intent();
+                    intent.setClass(AttractionsActivity.this, UploadActivity.class);
+                    intent.putExtras(bundleUpload);
+                    startActivity(intent);
+
+                }else{
+                    alertdialogbuilder.create();
+                    alertdialogbuilder.show();
+
+                }
 
             }
         });

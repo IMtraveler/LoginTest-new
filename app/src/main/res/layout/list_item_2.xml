@@ -3,11 +3,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/star"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="1dp"
+        android:layout_marginStart="1dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp" />
+
     <TextView
         android:id="@+id/list_audioName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginStart="25dp"
         android:padding="@dimen/cardview_default_radius"
         android:textAppearance="?attr/textAppearanceListItem"
         android:textSize="18sp" />
@@ -19,7 +30,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/list_audioName"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
         android:padding="@dimen/cardview_default_radius"
         android:textAppearance="?attr/textAppearanceListItem"
         android:textColor="?attr/colorControlNormal"
@@ -34,8 +46,8 @@
         android:layout_alignBottom="@+id/list_audioName"
         android:layout_alignLeft="@+id/list_guide"
         android:layout_alignStart="@+id/list_guide"
-        android:layout_marginLeft="309dp"
-        android:layout_marginStart="309dp" />
+        android:layout_marginLeft="290dp"
+        android:layout_marginStart="290dp" />
 
 
 </RelativeLayout>
