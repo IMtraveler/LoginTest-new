@@ -65,6 +65,7 @@ public class MusicActivity extends AppCompatActivity{
     ArrayList<String> AudioIntro = new ArrayList<>();
     ArrayList<String> AudioType = new ArrayList<>();
     ArrayList<Integer> AudioClick = new ArrayList<>();
+    ArrayList<Integer> stars =  new ArrayList<>();
     int num=0;
     String userId = XclSingleton.getInstance().get("AccountID").toString();
 
@@ -117,6 +118,12 @@ public class MusicActivity extends AppCompatActivity{
                     GuideName.add(audioInfo[i].substring(audioInfo[i].indexOf("account:")+9, audioInfo[i].indexOf("type:")));
                     AudioType.add(audioInfo[i].substring(audioInfo[i].indexOf("type:")+6, audioInfo[i].indexOf("clickCount")));
                     AudioClick.add(Integer.valueOf(audioInfo[i].substring(audioInfo[i].indexOf("clickCount:")+12, audioInfo[i].length())));
+                    if (i == 1 || i == 3){
+                        stars.add(R.drawable.star);
+                    }
+                    else {
+                        stars.add(0);
+                    }
                 }catch (Exception e){
                     Log.e("error", e.toString());
                     Log.e("what", audioInfo[i]);
@@ -192,6 +199,7 @@ public class MusicActivity extends AppCompatActivity{
             hashMap.put("audioName" , AudioName.get(i));
             hashMap.put("guide" , GuideName.get(i));
             hashMap.put("clicks", String.valueOf(AudioClick.get(i)));
+            hashMap.put("star", Integer.toString(stars.get(i)));
             //把title , text存入HashMap之中
             audiolist.add(hashMap);
             //把HashMap存入list之中
@@ -202,8 +210,8 @@ public class MusicActivity extends AppCompatActivity{
 
         MySimpleAdapter = new SimpleAdapter(this, audiolist,
                 R.layout.list_item_2,
-                new String[] { "audioName", "guide", "clicks"},
-                new int[] {	R.id.list_audioName,R.id.list_guide, R.id.clicks});
+                new String[] { "audioName", "guide", "clicks","star"},
+                new int[] {	R.id.list_audioName,R.id.list_guide, R.id.clicks, R.id.star});
         audioListView.setAdapter(MySimpleAdapter);
 
         audioListView.setOnItemClickListener(new OnItemClickListener() {
