@@ -35,7 +35,6 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".CheckpersonActivity" />
         <activity android:name=".MainPageActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

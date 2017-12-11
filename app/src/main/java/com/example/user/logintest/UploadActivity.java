@@ -26,11 +26,18 @@ import android.widget.Toast;
 import android.util.Log;
 import android.os.Handler;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.nbsp.materialfilepicker.MaterialFilePicker;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.FormBody;
 import okhttp3.MediaType;
@@ -52,6 +59,7 @@ public class UploadActivity extends AppCompatActivity {
     private String account ;
     private EditText audioname ;
     private TextView attrName ;
+    RequestQueue mQueue;
 
 
     @Override
@@ -148,8 +156,10 @@ public class UploadActivity extends AppCompatActivity {
     ProgressDialog progress;
     Thread uploadThread ;
     Thread dbThread ;
+    Thread TextThread;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
+        mQueue = Volley.newRequestQueue(this);
         if(requestCode == 10 && resultCode == RESULT_OK) {
 
 
@@ -167,10 +177,10 @@ public class UploadActivity extends AppCompatActivity {
             progress.setProgress(100);
 
 
-            if (!filetype.equals(".m4a") && !filetype.equals(".mp3")) {
+            if (!filetype.equals(".wav")) {
                 AlertDialog.Builder builder;
                 builder = new AlertDialog.Builder(UploadActivity.this);
-                builder.setMessage("您選擇的檔案格式不符")
+                builder.setMessage("您選擇的檔案格式不符，請上傳wav檔")
                         .setTitle("請重新選擇檔案");
                 builder.setPositiveButton("確認", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -190,6 +200,7 @@ public class UploadActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
                         uploadThread.start();
                         progress.show();
+
                     }
                 });
                 builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -287,6 +298,8 @@ public class UploadActivity extends AppCompatActivity {
                                 //final String resStr = response.body().string();
                                 if (!response2.isSuccessful()) {
                                     throw new IOException("Error : " + response2);
+                                }else{
+                                    TextThread.start();
                                 }
 
                             } catch (IOException e) {
@@ -294,6 +307,37 @@ public class UploadActivity extends AppCompatActivity {
                             }
                         }
                     });
+
+                TextThread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String mUrl="http://140.112.107.125:47155/html/pytest.php";
+                        StringRequest getRequest = new StringRequest(com.android.volley.Request.Method.POST,mUrl,
+                                new com.android.volley.Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String s) {
+                                        Log.e("Message for php",s);
+                                    }
+                                },
+                                new com.android.volley.Response.ErrorListener() {
+
+                                    @Override
+                                    public void onErrorResponse(VolleyError volleyError) {
+                                        Log.e("Error message",volleyError.getMessage());
+                                    }
+                                }){
+                            //攜帶參數
+                            @Override
+                            protected Map<String, String> getParams() throws AuthFailureError {
+                                Map<String, String> map = new HashMap();
+                                map.put("filename", filename);
+                                return map;
+                            }
+
+                        };
+                        mQueue.add(getRequest);
+                    }
+                });
 
 
             }
