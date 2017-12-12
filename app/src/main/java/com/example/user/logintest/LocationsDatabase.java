@@ -63,10 +63,6 @@ public class LocationsDatabase extends SQLiteAssetHelper {
             questions.name=cursor.getString(cursor.getColumnIndex(LocationsDatabase.NAME));
             questions.lat=cursor.getDouble(cursor.getColumnIndex(LocationsDatabase.LAT));
             questions.lng=cursor.getDouble(cursor.getColumnIndex(LocationsDatabase.LNG));
-            questions.type=cursor.getString(cursor.getColumnIndex(LocationsDatabase.TYPE));
-            questions.ename=cursor.getString(cursor.getColumnIndex(LocationsDatabase.ENAME));
-            questions.classified=cursor.getString(cursor.getColumnIndex(LocationsDatabase.CLASSIFIED));
-            questions.address=cursor.getString(cursor.getColumnIndex(LocationsDatabase.ADDRESS));
             questionsArrayList.add(questions);
         }
         db.close();
