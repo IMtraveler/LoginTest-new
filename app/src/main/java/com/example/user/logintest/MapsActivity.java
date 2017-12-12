@@ -386,7 +386,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             if(searchArrayList.size()==1){
                 LatLng s_research = new LatLng(searchArrayList.get(0).lat,searchArrayList.get(0).lng);
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(s_research));
-                mMap.animateCamera(CameraUpdateFactory.zoomBy(10));
+                //mMap.animateCamera(CameraUpdateFactory.zoomBy(10));
+
             }else if(searchArrayList.size()==0) {
                 Toast.makeText(getApplicationContext(),"搜尋不到相關的景點", Toast.LENGTH_SHORT).show();
             }else {
@@ -412,8 +413,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         dialog.cancel();
                         //這裡應該要顯示點下去應該要出現的頁面
                         LatLng s_research = new LatLng(searchArrayList.get(position).lat,searchArrayList.get(position).lng);
+                        Log.e("lat",Double.toString(searchArrayList.get(position).lat));
+                        Log.e("lng",Double.toString(searchArrayList.get(position).lng));
                         mMap.moveCamera(CameraUpdateFactory.newLatLng(s_research));
-                        mMap.animateCamera(CameraUpdateFactory.zoomBy(10));
+                        //mMap.animateCamera(CameraUpdateFactory.zoomBy(10));
+
 
                     }
                 });
