@@ -119,7 +119,7 @@ public class MusicActivity extends AppCompatActivity{
                     AudioType.add(audioInfo[i].substring(audioInfo[i].indexOf("type:")+6, audioInfo[i].indexOf("clickCount")));
                     AudioClick.add(Integer.valueOf(audioInfo[i].substring(audioInfo[i].indexOf("clickCount:")+12, audioInfo[i].length())));
                     if (i == 1 || i == 3){
-                        stars.add(R.drawable.star);
+                        stars.add(R.drawable.crown);
                     }
                     else {
                         stars.add(0);
