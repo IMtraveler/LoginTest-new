@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.user.logintest.MusicActivity">
-
     <AbsoluteLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -107,6 +106,14 @@
             android:layout_y="74dp"
             android:text="--:--" />
 
+        <TextView
+            android:id="@+id/tv_audiotype"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/ratingBar"
+            android:layout_toEndOf="@+id/button4"
+            android:layout_toRightOf="@+id/button4"
+            android:text="@string/type" />
 
         <RatingBar
             android:id="@+id/ratingBar"

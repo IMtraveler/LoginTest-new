@@ -208,7 +208,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     .position(test));
             String check = locationArrayList.get(i).classified;
             if(check.equals("1"))
-                perth.setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("a01", 100, 100)));
+                perth.setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("a01", 100 , 100)));
             else if(check.equals("2"))
                 perth.setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("a02", 100 , 100)));
             else if(check.equals("3"))
