@@ -47,6 +47,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import com.squareup.picasso.Picasso ;
@@ -138,6 +139,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         return resizedBitmap;
     }
 
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch(requestCode)
@@ -172,6 +174,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
+    List<Marker> classified1 = new ArrayList<>();
+    List<Marker> classified2 = new ArrayList<>();
+    List<Marker> classified3 = new ArrayList<>();
+    List<Marker> classified4 = new ArrayList<>();
+    List<Marker> classified5 = new ArrayList<>();
+    List<Marker> classified6 = new ArrayList<>();
+    List<Marker> classified7 = new ArrayList<>();
+    List<Marker> classified8 = new ArrayList<>();
+    List<Marker> classified9 = new ArrayList<>();
+    List<Marker> classified10 = new ArrayList<>();
+    List<Marker> classified11 = new ArrayList<>();
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -204,32 +217,67 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         locationArrayList=myDatabase.getLocations();
         for(int i=0;i<locationArrayList.size();i++) {
             LatLng test = new LatLng(locationArrayList.get(i).lat, locationArrayList.get(i).lng);
-            Marker perth = mMap.addMarker(new MarkerOptions()
-                    .position(test));
-            String check = locationArrayList.get(i).classified;
-            if(check.equals("1"))
-                perth.setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("a01", 100 , 100)));
-            else if(check.equals("2"))
-                perth.setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("a02", 100 , 100)));
-            else if(check.equals("3"))
-                perth.setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("a03", 100 , 100)));
-            else if(check.equals("4"))
-                perth.setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("a04", 100 , 100)));
-            else if(check.equals("5"))
-                perth.setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("a05", 100 , 100)));
-            else if(check.equals("6"))
-                perth.setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("a06", 100 , 100)));
-            else if(check.equals("7"))
-                perth.setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("a07", 100 , 100)));
-            else if(check.equals("8"))
-                perth.setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("a08", 100 , 100)));
-            else if(check.equals("9"))
-                perth.setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("a09", 100 , 100)));
-            else if(check.equals("10"))
-                perth.setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("a10", 100 , 100)));
-            else if(check.equals("11"))
-                perth.setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("a11", 100 , 100)));
+
+           // Marker perth = mMap.addMarker(new MarkerOptions().position(test));
+            String classified = locationArrayList.get(i).classified;
+            if(classified.equals("1")){
+                Marker perk = mMap.addMarker(new MarkerOptions().position(test));
+                perk.setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("a01", 100 , 100)));
+                classified1.add(perk);
+            }
+            else if(classified.equals("2")){
+                Marker perk = mMap.addMarker(new MarkerOptions().position(test));
+                perk.setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("a02", 100 , 100)));
+                classified2.add(perk);
+            }
+            else if(classified.equals("3")){
+              Marker perk = mMap.addMarker(new MarkerOptions().position(test));
+              perk.setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("a03", 100 , 100)));
+              classified3.add(perk);
+            }
+            else if(classified.equals("4")){
+               Marker perk = mMap.addMarker(new MarkerOptions().position(test));
+               perk.setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("a04", 100 , 100)));
+               classified4.add(perk);
+            }
+            else if(classified.equals("5")){
+                Marker perk = mMap.addMarker(new MarkerOptions().position(test));
+                perk.setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("a05", 100 , 100)));
+                classified5.add(perk);
+            }
+            else if(classified.equals("6")){
+                Marker perk = mMap.addMarker(new MarkerOptions().position(test));
+                perk.setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("a06", 100 , 100)));
+                classified6.add(perk);
+            }
+            else if(classified.equals("7")){
+                Marker perk = mMap.addMarker(new MarkerOptions().position(test));
+                perk.setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("a07", 100 , 100)));
+                classified7.add(perk);
+            }
+            else if(classified.equals("8")){
+                Marker perk = mMap.addMarker(new MarkerOptions().position(test));
+                perk.setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("a08", 100 , 100)));
+                classified8.add(perk);
+            }
+            else if(classified.equals("9")){
+                Marker perk = mMap.addMarker(new MarkerOptions().position(test));
+                perk.setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("a09", 100 , 100)));
+                classified9.add(perk);
+            }
+            else if(classified.equals("10")){
+                Marker perk = mMap.addMarker(new MarkerOptions().position(test));
+                perk.setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("a10", 100 , 100)));
+                classified10.add(perk);
+            }
+            else if(classified.equals("11")){
+                Marker perk = mMap.addMarker(new MarkerOptions().position(test));
+                perk.setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("a11", 100 , 100)));
+                classified11.add(perk);
+            }
+
         }
+
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -510,7 +558,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        getMenuInflater().inflate(R.menu.layout_menu,menu);
+        getMenuInflater().inflate(R.menu.layout_menu2,menu);
         return super.onCreateOptionsMenu(menu);
     }
     @Override
@@ -518,16 +566,57 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     {
         Global check = (Global)getApplicationContext();
         int checkk = check.getWord();
+        int checkall = check.getall();
         MenuItem registrar = menu.findItem(R.id.我上傳的音檔);
         registrar.setVisible(checkk==0); //if is  guide then is visible
+        MenuItem itemcheck1 = menu.findItem(R.id.checkable_item_1);
+        MenuItem itemcheck2 = menu.findItem(R.id.checkable_item_2);
+        MenuItem itemcheck3 = menu.findItem(R.id.checkable_item_3);
+        MenuItem itemcheck4 = menu.findItem(R.id.checkable_item_4);
+        MenuItem itemcheck5 = menu.findItem(R.id.checkable_item_5);
+        MenuItem itemcheck6 = menu.findItem(R.id.checkable_item_6);
+        MenuItem itemcheck7 = menu.findItem(R.id.checkable_item_7);
+        MenuItem itemcheck8 = menu.findItem(R.id.checkable_item_8);
+        MenuItem itemcheck9 = menu.findItem(R.id.checkable_item_9);
+        MenuItem itemcheck10 = menu.findItem(R.id.checkable_item_10);
+        MenuItem itemcheck11 = menu.findItem(R.id.checkable_item_11);
+        if(checkall==0){
+            itemcheck1.setCheckable(false);
+            itemcheck2.setCheckable(false);
+            itemcheck3.setCheckable(false);
+            itemcheck4.setCheckable(false);
+            itemcheck5.setCheckable(false);
+            itemcheck6.setCheckable(false);
+            itemcheck7.setCheckable(false);
+            itemcheck8.setCheckable(false);
+            itemcheck9.setCheckable(false);
+            itemcheck10.setCheckable(false);
+            itemcheck11.setCheckable(false);
+            check.setall(2);
+        }
+        else if(checkall==1){
+            itemcheck1.setCheckable(true);
+            itemcheck2.setCheckable(true);
+            itemcheck3.setCheckable(true);
+            itemcheck4.setCheckable(true);
+            itemcheck5.setCheckable(true);
+            itemcheck6.setCheckable(true);
+            itemcheck7.setCheckable(true);
+            itemcheck8.setCheckable(true);
+            itemcheck9.setCheckable(true);
+            itemcheck10.setCheckable(true);
+            itemcheck11.setCheckable(true);
+            check.setall(2);
+        }
         return true;
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
         //取的intent中的bundle物件
+        Global check = (Global)getApplicationContext();
         Bundle bundleID =this.getIntent().getExtras();
-
+        int checkall = check.getall();
         String UserID = bundleID.getString("AccountID");
         switch (item.getItemId())
         {
@@ -551,8 +640,248 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 //顯示按鈕的名字
                 Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.景點種類:
+            case R.id.setall:
+                check.setall(0);
+                if(item.isCheckable()==true) {
+                    item.setCheckable(false);
+                    for (Marker m : classified1) {
+                        m.setVisible(false);
+                    }
+                    for (Marker m : classified2) {
+                        m.setVisible(false);
+                    }
+                    for (Marker m : classified3) {
+                        m.setVisible(false);
+                    }
+                    for (Marker m : classified4) {
+                        m.setVisible(false);
+                    }
+                    for (Marker m : classified5) {
+                        m.setVisible(false);
+                    }
+                    for (Marker m : classified6) {
+                        m.setVisible(false);
+                    }
+                    for (Marker m : classified7) {
+                        m.setVisible(false);
+                    }
+                    for (Marker m : classified8) {
+                        m.setVisible(false);
+                    }
+                    for (Marker m : classified9) {
+                        m.setVisible(false);
+                    }
+                    for (Marker m : classified10) {
+                        m.setVisible(false);
+                    }
+                    for (Marker m : classified11) {
+                        m.setVisible(false);
+                    }
+                }
+                else {
+                    check.setall(1);
+                    item.setCheckable(true);
+                    for (Marker m : classified1) {
+                        m.setVisible(true);
+                    }
+                    for (Marker m : classified2) {
+                        m.setVisible(true);
+                    }
+                    for (Marker m : classified3) {
+                        m.setVisible(true);
+                    }
+                    for (Marker m : classified4) {
+                        m.setVisible(true);
+                    }
+                    for (Marker m : classified5) {
+                        m.setVisible(true);
+                    }
+                    for (Marker m : classified6) {
+                        m.setVisible(true);
+                    }
+                    for (Marker m : classified7) {
+                        m.setVisible(true);
+                    }
+                    for (Marker m : classified8) {
+                        m.setVisible(true);
+                    }
+                    for (Marker m : classified9) {
+                        m.setVisible(true);
+                    }
+                    for (Marker m : classified10) {
+                        m.setVisible(true);
+                    }
+                    for (Marker m : classified11) {
+                        m.setVisible(true);
+                    }
+                }
+                break;
+            case R.id.checkable_item_1:
                 Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+
+                if(item.isCheckable()==true) {
+                    item.setCheckable(false);
+                    for (Marker m : classified1) {
+                        m.setVisible(false);
+                    }
+                }
+                else {
+                    item.setCheckable(true);
+                    for (Marker m : classified1) {
+                        m.setVisible(true);
+                    }
+                }
+
+                break;
+            case R.id.checkable_item_2:
+                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                if(item.isCheckable()==true) {
+                    item.setCheckable(false);
+                    for (Marker m : classified2) {
+                        m.setVisible(false);
+                    }
+                }
+                else {
+                    item.setCheckable(true);
+                    for (Marker m : classified2) {
+                        m.setVisible(true);
+                    }
+                }
+                break;
+            case R.id.checkable_item_3:
+                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                if(item.isCheckable()==true) {
+                    item.setCheckable(false);
+                    for (Marker m : classified3) {
+                        m.setVisible(false);
+                    }
+                }
+                else {
+                    item.setCheckable(true);
+                    for (Marker m : classified3) {
+                        m.setVisible(true);
+                    }
+                }
+                break;
+            case R.id.checkable_item_4:
+                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                if(item.isCheckable()==true) {
+                    item.setCheckable(false);
+                    for (Marker m : classified4) {
+                        m.setVisible(false);
+                    }
+                }
+                else {
+                    item.setCheckable(true);
+                    for (Marker m : classified4) {
+                        m.setVisible(true);
+                    }
+                }
+                break;
+            case R.id.checkable_item_5:
+                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                if(item.isCheckable()==true) {
+                    item.setCheckable(false);
+                    for (Marker m : classified5) {
+                        m.setVisible(false);
+                    }
+                }
+                else {
+                    item.setCheckable(true);
+                    for (Marker m : classified5) {
+                        m.setVisible(true);
+                    }
+                }
+                break;
+            case R.id.checkable_item_6:
+                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                if(item.isCheckable()==true) {
+                    item.setCheckable(false);
+                    for (Marker m : classified6) {
+                        m.setVisible(false);
+                    }
+                }
+                else {
+                    item.setCheckable(true);
+                    for (Marker m : classified6) {
+                        m.setVisible(true);
+                    }
+                }
+                break;
+            case R.id.checkable_item_7:
+                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                if(item.isCheckable()==true) {
+                    item.setCheckable(false);
+                    for (Marker m : classified7) {
+                        m.setVisible(false);
+                    }
+                }
+                else {
+                    item.setCheckable(true);
+                    for (Marker m : classified7) {
+                        m.setVisible(true);
+                    }
+                }
+                break;
+            case R.id.checkable_item_8:
+                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                if(item.isCheckable()==true) {
+                    item.setCheckable(false);
+                    for (Marker m : classified8) {
+                        m.setVisible(false);
+                    }
+                }
+                else {
+                    item.setCheckable(true);
+                    for (Marker m : classified8) {
+                        m.setVisible(true);
+                    }
+                }
+                break;
+            case R.id.checkable_item_9:
+                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                if(item.isCheckable()==true) {
+                    item.setCheckable(false);
+                    for (Marker m : classified9) {
+                        m.setVisible(false);
+                    }
+                }
+                else {
+                    item.setCheckable(true);
+                    for (Marker m : classified9) {
+                        m.setVisible(true);
+                    }
+                }
+                break;
+            case R.id.checkable_item_10:
+                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                if(item.isCheckable()==true) {
+                    item.setCheckable(false);
+                    for (Marker m : classified10) {
+                        m.setVisible(false);
+                    }
+                }
+                else {
+                    item.setCheckable(true);
+                    for (Marker m : classified10) {
+                        m.setVisible(true);
+                    }
+                }
+                break;
+            case R.id.checkable_item_11:
+                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                if(item.isCheckable()==true) {
+                    item.setCheckable(false);
+                    for (Marker m : classified11) {
+                        m.setVisible(false);
+                    }
+                }
+                else {
+                    item.setCheckable(true);
+                    for (Marker m : classified11) {
+                        m.setVisible(true);
+                    }
+                }
                 break;
             case R.id.我的帳戶:
                 Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();

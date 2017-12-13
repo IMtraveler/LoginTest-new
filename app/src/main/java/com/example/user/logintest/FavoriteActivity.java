@@ -106,7 +106,7 @@ public class FavoriteActivity extends AppCompatActivity {
                 TextView tv_intro = (TextView)mView.findViewById(R.id.tv_name);
                 TextView tv_types = (TextView)mView.findViewById(R.id.tv_type);
                 ImageView imageView = (ImageView)mView.findViewById(R.id.imageView);
-                String phpURL = "http://140.112.107.125:47155/html/test.php" ;
+                String phpURL = "http://140.112.107.125:47155/html/getdata.php" ;
 
                 bundle.putString("lat", lat);
                 bundle.putString("lng", lng);
@@ -123,26 +123,35 @@ public class FavoriteActivity extends AppCompatActivity {
                 if (post.length() > 10) {
                     int begName = post.indexOf("name:");
                     int endName = post.indexOf("altHead_name");
+                    int endEName = post.indexOf("address");
                     int begType = post.indexOf("class_tag");
                     int endType = post.indexOf("lat");
 
                     String type = post.substring(begType + 10, endType - 1);
                     tv_types.setText(type);
                     bundle.putString("type", type);
-
                     String name = post.substring(begName + 5, endName - 1);
                     tv_intro.setText(name);
                     bundle.putString("name", name);
-                    int begImg = post.indexOf("image");
-                    int endIndex = post.length();
 
+                    String ename = post.substring(endName + 13, endEName - 1);
+                    bundle.putString("ename", ename);
+                    String addr = post.substring(endEName + 7, begType - 1);
+                    bundle.putString("addr", addr);
+                    int begImg = post.indexOf("image");
+                    int endIndex = post.indexOf("classified")-1;
+                    String audioNumStr =post.substring(post.indexOf("audioNum:")+10, post.length());
+                    int audioNum =  Integer.valueOf(audioNumStr.trim().replaceAll("/n ", ""));
+                    bundle.putInt("audioNum", audioNum);
                     if ((begImg + 6) >= endIndex - 5) {
-                        Picasso.with(getBaseContext()).load("http://140.112.107.125:47155/html/uploaded/null.png").into(imageView);
+                        //Picasso.with(getBaseContext()).load("http://140.112.107.125:47155/html/uploaded/null.png").into(imageView);
                         bundle.putString("imgURL", "http://140.112.107.125:47155/html/uploaded/null.png");
                     } else {
-                        String imgURL = "http:" + post.substring(begImg + 6, endIndex);
-                        imgURL = imgURL.replaceAll(" ", "");
-                        Picasso.with(getBaseContext()).load(imgURL).into(imageView);
+                        String imgURL = post.substring(begImg + 6, endIndex);
+                        imgURL = "http:" + imgURL.replaceAll(" ", "");
+                        Picasso.with(FavoriteActivity.this).load(imgURL).into(imageView);
+                      //  Log.e("img_url",imgURL);
+                       // Log.e("test","test");
                         bundle.putString("imgURL", imgURL);
                     }
                 }
@@ -211,9 +220,6 @@ public class FavoriteActivity extends AppCompatActivity {
                 intent2.putExtras(bundle);
                 startActivity(intent2);
                 //顯示按鈕的名字
-                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.景點種類:
                 Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
                 break;
             case R.id.我的帳戶:
