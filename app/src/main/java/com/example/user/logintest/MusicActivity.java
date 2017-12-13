@@ -69,6 +69,7 @@ public class MusicActivity extends AppCompatActivity{
     int num=0;
     String userId = XclSingleton.getInstance().get("AccountID").toString();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -154,9 +155,9 @@ public class MusicActivity extends AppCompatActivity{
         */
 
 
-        bt[0].setText("start");
+        /*bt[0].setText("start");
         bt[1].setText("pause");
-        bt[2].setText("stop");
+        bt[2].setText("stop");*/
 
         bt[0].setEnabled(false);
         bt[1].setEnabled(false);
@@ -228,7 +229,7 @@ public class MusicActivity extends AppCompatActivity{
                 editor.commit();
                 playAudio(id);
                 audioType.setText(AudioType.get((int)id));
-                bt[1].setText("pause");
+                /*bt[1].setText("pause");*/
                 try {
                     String c = new ClickAsyncTask().execute(userId,AudioID.get((int)id).toString(), Integer.toString(newClick),"-1","http://140.112.107.125:47155/html/clickCount.php").get();
                 } catch (InterruptedException e) {
@@ -380,13 +381,13 @@ public class MusicActivity extends AppCompatActivity{
                     bt[1].setEnabled(true);
                     bt[2].setEnabled(true);
                     mp.pause();
-                    bt[1].setText("continue");
+                    //bt[1].setText("continue");
                 }else{
                     bt[0].setEnabled(false);
                     bt[1].setEnabled(true);
                     bt[2].setEnabled(true);
                     mp.start();
-                    bt[1].setText("pause");
+                    //bt[1].setText("pause");
                 }
             }else if(v == bt[2])
             {
@@ -395,7 +396,7 @@ public class MusicActivity extends AppCompatActivity{
                 bt[2].setEnabled(false);
                 mp.pause();
                 mp.seekTo(0);
-                bt[0].setText("start");
+                //bt[0].setText("start");
 
             }
         }

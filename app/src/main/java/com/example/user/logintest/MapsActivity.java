@@ -132,6 +132,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
     }
+
     public Bitmap resizeMapIcons(String iconName, int width, int height){
         Bitmap imageBitmap = BitmapFactory.decodeResource(getResources(), getResources().getIdentifier(iconName, "drawable", getPackageName()));
         Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
@@ -216,6 +217,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         locationArrayList=myDatabase.getLocations();
         for(int i=0;i<locationArrayList.size();i++) {
             LatLng test = new LatLng(locationArrayList.get(i).lat, locationArrayList.get(i).lng);
+
            // Marker perth = mMap.addMarker(new MarkerOptions().position(test));
             String classified = locationArrayList.get(i).classified;
             if(classified.equals("1")){
@@ -273,6 +275,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 perk.setIcon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("a11", 100 , 100)));
                 classified11.add(perk);
             }
+
         }
 
     }
@@ -360,6 +363,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     int endEName = post.indexOf("address");
                     int begType = post.indexOf("class_tag");
                     int endType = post.indexOf("lat");
+                    int begClass = post.indexOf("classified");
+                    int endClass = post.indexOf("audioNum");
+
+                    String classi = post.substring(begClass + 11, endClass-1);
+                    int classifi =  Integer.valueOf(classi.trim().replaceAll(" ", ""));
+                    bundle.putInt("classifi", classifi);
 
                     String type = post.substring(begType + 10, endType - 1);
                     tv_types.setText(type);
@@ -437,8 +446,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             if(searchArrayList.size()==1){
                 LatLng s_research = new LatLng(searchArrayList.get(0).lat,searchArrayList.get(0).lng);
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(s_research,20));
-                //mMap.animateCamera(CameraUpdateFactory.zoomBy(10));
-
             }else if(searchArrayList.size()==0) {
                 Toast.makeText(getApplicationContext(),"搜尋不到相關的景點", Toast.LENGTH_SHORT).show();
             }else {
@@ -464,11 +471,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         dialog.cancel();
                         //這裡應該要顯示點下去應該要出現的頁面
                         LatLng s_research = new LatLng(searchArrayList.get(position).lat,searchArrayList.get(position).lng);
-                        Log.e("lat",Double.toString(searchArrayList.get(position).lat));
-                        Log.e("lng",Double.toString(searchArrayList.get(position).lng));
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(s_research,20));
-                        //mMap.animateCamera(CameraUpdateFactory.zoomBy(10));
-
 
                     }
                 });

@@ -37,9 +37,34 @@ public class AttractionsActivity extends AppCompatActivity {
         TextView tv_types = (TextView)findViewById(R.id.tv_attrtype);
         TextView tv_addr = (TextView)findViewById(R.id.attr_address);
         TextView tv_ename = (TextView)findViewById(R.id.tv_attrNameEn);
-
+        ImageView iv_type = (ImageView)findViewById(R.id.imageView2);
 
         Bundle bundle = getIntent().getExtras();
+
+        Integer classi = bundle.getInt("classifi");
+        if(classi==1)
+            iv_type.setImageResource(R.drawable.a01);
+        else if(classi==2)
+            iv_type.setImageResource(R.drawable.a02);
+        else if(classi==3)
+            iv_type.setImageResource(R.drawable.a03);
+        else if(classi==4)
+            iv_type.setImageResource(R.drawable.a04);
+        else if(classi==5)
+            iv_type.setImageResource(R.drawable.a05);
+        else if(classi==6)
+            iv_type.setImageResource(R.drawable.a06);
+        else if(classi==7)
+            iv_type.setImageResource(R.drawable.a07);
+        else if(classi==8)
+            iv_type.setImageResource(R.drawable.a08);
+        else if(classi==9)
+            iv_type.setImageResource(R.drawable.a09);
+        else if(classi==10)
+            iv_type.setImageResource(R.drawable.a10);
+        else if(classi==11)
+            iv_type.setImageResource(R.drawable.a11);
+
 
 
         String imgURL = bundle.getString("imgURL");
@@ -99,24 +124,25 @@ public class AttractionsActivity extends AppCompatActivity {
         Button btn_upload = (Button)findViewById(R.id.btn_upload);
         Global check = (Global)getApplicationContext();
         final int checkk = check.getWord();
-        if (checkk != 0){
+        if ( checkk != 0 ) //guide when checkk==0
+        {
+            //SHOW the button
             btn_upload.setText("景點推薦");
         }
-
         GPSTrackerActivity gps;
         gps = new GPSTrackerActivity(this);
         final double lat_now = gps.getLatitude();
         final double lng_now = gps.getLongitude();
 
-        /*
-        try {
-            //String results = new MyAsyncTask().execute("DorisChen", Double.toString(lat_now), Double.toString(lng_now)).get();
-            //Log.e("result", results);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }*/
+                        /*
+ -        try {
+ -            //String results = new MyAsyncTask().execute("DorisChen", Double.toString(lat_now), Double.toString(lng_now)).get();
+ -            //Log.e("result", results);
+ -        } catch (InterruptedException e) {
+ -            e.printStackTrace();
+ -        } catch (ExecutionException e) {
+ -            e.printStackTrace();
+ -        }*/
 
         bundleRecommend.putString("lat", "25.0310609");
         bundleRecommend.putString("lng", "121.5355520");
@@ -141,22 +167,22 @@ public class AttractionsActivity extends AppCompatActivity {
             }
         });
 
-
         btn_upload.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
-                if ( checkk == 0 ) {
+                if(checkk == 0){
                     // TODO Auto-generated method stub
                     Intent intent = new Intent();
-                    intent.setClass(AttractionsActivity.this, UploadActivity.class);
+                    intent.setClass(AttractionsActivity.this,UploadActivity.class);
                     intent.putExtras(bundleUpload);
                     startActivity(intent);
-
-                }else{
+                    AttractionsActivity.this.finish();
+                }
+                else{
                     alertdialogbuilder.create();
                     alertdialogbuilder.show();
-
                 }
+
 
             }
         });

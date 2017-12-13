@@ -5,111 +5,183 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.user.logintest.MusicActivity">
-
-    <Button
-        android:id="@+id/button2"
-        style="@style/Widget.AppCompat.Button.Small"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints,RelativeOverlap"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="12dp"
-        android:layout_alignBaseline="@+id/btn_pause"
-        android:layout_alignBottom="@+id/btn_pause"
-        android:layout_toLeftOf="@+id/btn_pause"
-        android:layout_toStartOf="@+id/btn_pause" />
-
-    <Button
-        android:id="@+id/btn_pause"
-        style="@style/Widget.AppCompat.Button.Small"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints,RelativeOverlap"
-        tools:layout_editor_absoluteX="148dp"
-        tools:layout_editor_absoluteY="12dp"
-        android:layout_below="@+id/tv_attrName"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:id="@+id/button4"
-        style="@style/Widget.AppCompat.Button.Small"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:ignore="HardcodedText,MissingConstraints"
-        tools:layout_editor_absoluteX="277dp"
-        tools:layout_editor_absoluteY="12dp"
-        android:layout_below="@+id/tv_attrName"
-        android:layout_toRightOf="@+id/btn_pause"
-        android:layout_toEndOf="@+id/btn_pause" />
-
-    <TextView
-        android:id="@+id/tv_attrName"
+    <AbsoluteLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
+        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="25dp"
-        android:layout_toLeftOf="@+id/btn_pause"
-        android:layout_toStartOf="@+id/btn_pause"
-        android:textSize="20sp" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:id="@+id/tv_audioIntro"
+            android:layout_width="317dp"
+            android:layout_height="137dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="91dp"
+            android:layout_x="38dp"
+            android:layout_y="123dp" />
+
+        <TextView
+            android:id="@+id/tv_attrName"
+            android:layout_width="105dp"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/darker_gray"
+            android:layout_x="96dp"
+            android:layout_y="6dp"
+            android:text="音檔名稱"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textview10"
+            android:layout_width="83dp"
+            android:textColor="@android:color/darker_gray"
+            android:layout_height="wrap_content"
+            android:layout_x="11dp"
+            android:layout_y="6dp"
+            android:text="現在播放"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/button2"
+            style="@style/Widget.AppCompat.Button.Small"
+            android:layout_width="88dp"
+            android:layout_height="80dp"
+            android:layout_alignTop="@+id/button4"
+            android:layout_centerHorizontal="true"
+            android:layout_x="145dp"
+            android:layout_y="35dp"
+            android:background="@drawable/p9"
+            android:scaleType="fitCenter"
+            tools:ignore="MissingConstraints,RelativeOverlap"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="12dp" />
+
+        <Button
+            android:id="@+id/button4"
+            style="@style/Widget.AppCompat.Button.Small"
+            android:layout_width="57dp"
+            android:layout_height="50dp"
+            android:layout_below="@+id/tv_attrName"
+            android:layout_marginLeft="17dp"
+            android:layout_marginStart="17dp"
+            android:layout_marginTop="63dp"
+            android:layout_toEndOf="@+id/button2"
+            android:layout_toRightOf="@+id/button2"
+            android:layout_x="252dp"
+            android:layout_y="51dp"
+            android:background="@drawable/p10"
+            tools:ignore="HardcodedText,MissingConstraints"
+            tools:layout_editor_absoluteX="277dp"
+            tools:layout_editor_absoluteY="12dp" />
+
+        <Button
+            android:id="@+id/btn_pause"
+            style="@style/Widget.AppCompat.Button.Small"
+            android:layout_width="56dp"
+            android:layout_height="50dp"
+            android:layout_alignTop="@+id/button2"
+            android:layout_marginEnd="14dp"
+            android:layout_marginRight="14dp"
+            android:layout_toLeftOf="@+id/button2"
+            android:layout_toStartOf="@+id/button2"
+            android:layout_x="70dp"
+            android:layout_y="50dp"
+            android:background="@drawable/p11"
+            android:scaleType="fitCenter"
+            tools:ignore="MissingConstraints,RelativeOverlap"
+            tools:layout_editor_absoluteX="148dp"
+            tools:layout_editor_absoluteY="12dp" />
+
+        <TextView
+            android:id="@+id/tv_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv_audioIntro"
+            android:layout_alignBottom="@+id/tv_audioIntro"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="61dp"
+            android:layout_marginRight="61dp"
+            android:layout_x="330dp"
+            android:layout_y="74dp"
+            android:text="--:--" />
+
+        <TextView
+            android:id="@+id/tv_audiotype"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/ratingBar"
+            android:layout_toEndOf="@+id/button4"
+            android:layout_toRightOf="@+id/button4"
+            android:text="@string/type" />
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_alignEnd="@+id/tv_audiotype"
+            android:layout_alignRight="@+id/tv_audiotype"
+            android:layout_below="@+id/tv_duration"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_x="154dp"
+            android:layout_y="272dp"
+            android:numStars="5"
+            android:scaleX="0.5"
+            android:scaleY="0.5"
+            android:stepSize="1"
+            android:transformPivotX="0dp"
+            android:transformPivotY="0dp" />
+
+        <Button
+            android:id="@+id/btn_rating"
+            style="@style/Widget.AppCompat.Button.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_below="@+id/tv_audiotype"
+            android:layout_toEndOf="@+id/tv_audiotype"
+            android:layout_toRightOf="@+id/tv_audiotype"
+            android:layout_x="306dp"
+            android:layout_y="270dp"
+            android:background="@color/com_facebook_button_login_silver_background_color"
+            android:text="送出評分"
+            tools:ignore="MissingConstraints,RelativeOverlap" />
+
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="29dp"
+            android:layout_height="120dp"
+            android:layout_x="0dp"
+            android:layout_y="328dp"
+            android:background="#8fbc8f"
+            android:gravity="center"
+            android:text="其他音檔"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="29dp"
+            android:layout_height="120dp"
+            android:layout_x="0dp"
+            android:layout_y="124dp"
+            android:background="#FFB266"
+            android:gravity="center"
+            android:text="音檔介紹"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+
+    </AbsoluteLayout>
 
 
     <ListView
         android:id="@+id/list_audio"
         android:layout_width="match_parent"
+
         android:layout_height="match_parent"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="330dp"
+        android:layout_marginLeft="33dp"
         android:layout_alignParentBottom="true" />
-
-    <TextView
-        android:id="@+id/tv_audioIntro"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/tv_duration"
-        android:layout_marginTop="58dp" />
-
-    <TextView
-        android:id="@+id/tv_duration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="27dp"
-        android:text="--:--"
-        android:layout_below="@+id/button2"
-        android:layout_alignLeft="@+id/button2"
-        android:layout_alignStart="@+id/button2" />
-
-    <TextView
-        android:id="@+id/tv_audiotype"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/ratingBar"
-        android:layout_toEndOf="@+id/button4"
-        android:layout_toRightOf="@+id/button4"
-        android:text="@string/type" />
-
-    <RatingBar
-        android:id="@+id/ratingBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/tv_audiotype"
-        android:layout_alignRight="@+id/tv_audiotype"
-        android:layout_below="@+id/tv_duration"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:numStars="5"
-        android:stepSize="1" />
-
-    <Button
-        android:id="@+id/btn_rating"
-        style="@style/Widget.AppCompat.Button.Small"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_audiotype"
-        android:layout_toEndOf="@+id/tv_audiotype"
-        android:layout_toRightOf="@+id/tv_audiotype"
-        android:text="送出" />
 
 </RelativeLayout>
