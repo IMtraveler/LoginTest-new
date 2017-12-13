@@ -111,9 +111,6 @@ public class MyAccountActivity extends AppCompatActivity implements CompoundButt
                 //顯示按鈕的名字
                 Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.景點種類:
-                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
-                break;
             case R.id.我的帳戶:
                 Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
                 Intent intent6 = new Intent();
