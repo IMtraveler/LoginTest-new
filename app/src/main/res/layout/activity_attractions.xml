@@ -8,28 +8,28 @@
 
     <Button
         android:id="@+id/btn_toAudio"
-        android:layout_width="190dp"
+        android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:text="探索音檔"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:textSize="18sp"
+        android:layout_alignParentRight="true"
+        android:layout_toEndOf="@+id/textView10"
+        android:layout_toRightOf="@+id/textView10"
         android:background="@drawable/mybutton3"
+        android:text="探索音檔"
         android:textColor="@android:color/white"
-        android:layout_toRightOf="@+id/btn_upload"
-        android:layout_toEndOf="@+id/btn_upload" />
+        android:textSize="18sp" />
 
     <ImageView
         android:id="@+id/iv_attr"
         android:layout_width="fill_parent"
-        android:layout_height="160dp"
-        app:srcCompat="@drawable/common_full_open_on_phone"
-        android:scaleType="centerCrop"
-        android:adjustViewBounds="true"
-        android:layout_alignParentTop="true"
+        android:layout_height="170dp"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/common_full_open_on_phone" />
 
     <TextView
         android:id="@+id/blackblock2"
@@ -65,100 +65,119 @@
 
     <Button
         android:id="@+id/imageView3"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/heart"
         android:text=""
         tools:ignore="MissingConstraints,RelativeOverlap"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
         tools:layout_editor_absoluteX="148dp"
-        tools:layout_editor_absoluteY="12dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        tools:layout_editor_absoluteY="12dp" />
 
 
     <TextView
         android:id="@+id/tv_attrtype"
         android:layout_width="150dp"
         android:layout_height="30dp"
+        android:layout_alignEnd="@+id/tv_attrNameEn"
+        android:layout_alignRight="@+id/tv_attrNameEn"
         android:layout_below="@+id/iv_attr"
-        android:layout_marginLeft="30dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="13dp"
-        android:layout_toEndOf="@+id/imageView2"
-        android:layout_toRightOf="@+id/imageView2"
-        android:gravity="center_vertical"
+        android:layout_marginTop="11dp"
         android:text="景點類別"
-        android:textSize="18sp" />
+        android:textSize="20sp" />
 
 
     <TextView
         android:id="@+id/tv_attrIntro"
         android:layout_width="350dp"
-        android:layout_height="190dp"
+        android:layout_height="180dp"
         android:layout_below="@+id/textView2"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="12dp"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textSize="17sp"/>
 
 
     <Button
         android:id="@+id/btn_upload"
-        android:layout_width="190dp"
+        android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:textSize="18sp"
-        android:text="@string/uploadAudio"
-        android:background="@drawable/mybutton2"
-        android:textColor="@android:color/white"
+
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/textView10"
+        android:layout_toStartOf="@+id/textView10"
+        android:background="@drawable/mybutton2"
+        android:text="@string/uploadAudio"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="120dp"
         android:layout_height="28dp"
-        android:text=" 景點簡介   "
-        android:textColor="@android:color/white"
-        android:gravity="center"
-        android:textSize="18sp"
-        android:background="#9ACFD7"
-
-        android:layout_below="@+id/iv_attr"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="54dp" />
+        android:layout_below="@+id/tv_attrtype"
+        android:layout_marginTop="12dp"
+        android:background="#BFD3E1"
+
+        android:gravity="center"
+        android:text=" 景點簡介   "
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/attr_address"
+        android:layout_alignBottom="@+id/attr_address"
         android:layout_alignLeft="@+id/tv_attrIntro"
         android:layout_alignStart="@+id/tv_attrIntro"
-        android:layout_below="@+id/tv_attrIntro"
-        android:layout_marginLeft="17dp"
-        android:layout_marginStart="17dp"
         android:text="地址"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/attr_address"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_attrIntro"
+        android:layout_above="@+id/textView7"
         android:layout_toEndOf="@+id/textView3"
         android:layout_toRightOf="@+id/textView3"
         android:gravity="center_vertical"
         android:text="TextView"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        app:srcCompat="@drawable/com_facebook_button_send_background"
-        android:layout_alignBottom="@+id/tv_attrtype"
-        android:layout_alignRight="@+id/textView2"
-        android:layout_alignEnd="@+id/textView2" />
+        android:layout_alignLeft="@+id/tv_attrNameEn"
+        android:layout_alignStart="@+id/tv_attrNameEn"
+        android:layout_alignTop="@+id/tv_attrtype"
+        app:srcCompat="@drawable/com_facebook_button_send_background" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"
+        android:layout_above="@+id/btn_toAudio"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="2dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btn_toAudio"
+        android:layout_alignBottom="@+id/btn_toAudio"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>
