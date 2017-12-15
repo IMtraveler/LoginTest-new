@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.user.logintest.AttractionsActivity">
 
+
     <Button
         android:id="@+id/btn_toAudio"
         android:layout_width="wrap_content"
@@ -23,7 +24,7 @@
     <ImageView
         android:id="@+id/iv_attr"
         android:layout_width="fill_parent"
-        android:layout_height="170dp"
+        android:layout_height="190dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
@@ -35,14 +36,14 @@
         android:id="@+id/blackblock2"
         android:layout_width="fill_parent"
         android:layout_height="75dp"
-        android:layout_above="@+id/tv_attrtype"
+        android:layout_alignBottom="@+id/iv_attr"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:background="#80000000" />
 
     <TextView
         android:id="@+id/tv_attrName"
-        android:layout_width="190dp"
+        android:layout_width="350dp"
         android:layout_height="29dp"
         android:layout_alignLeft="@+id/textView3"
         android:layout_alignStart="@+id/textView3"
@@ -54,7 +55,7 @@
 
     <TextView
         android:id="@+id/tv_attrNameEn"
-        android:layout_width="190dp"
+        android:layout_width="350dp"
         android:layout_height="25dp"
         android:text="English name"
         android:textColor="@android:color/white"
@@ -63,41 +64,28 @@
         android:layout_alignLeft="@+id/tv_attrName"
         android:layout_alignStart="@+id/tv_attrName" />
 
-    <Button
-        android:id="@+id/imageView3"
-        android:layout_width="37dp"
-        android:layout_height="37dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/heart"
-        android:text=""
-        tools:ignore="MissingConstraints,RelativeOverlap"
-        tools:layout_editor_absoluteX="148dp"
-        tools:layout_editor_absoluteY="12dp" />
-
 
     <TextView
         android:id="@+id/tv_attrtype"
         android:layout_width="150dp"
-        android:layout_height="30dp"
-        android:layout_alignEnd="@+id/tv_attrNameEn"
-        android:layout_alignRight="@+id/tv_attrNameEn"
-        android:layout_below="@+id/iv_attr"
-        android:layout_marginTop="11dp"
+        android:layout_height="45dp"
+        android:layout_below="@+id/textView16"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_toEndOf="@+id/textView3"
+        android:layout_toRightOf="@+id/textView3"
         android:text="景點類別"
         android:textSize="20sp" />
 
 
     <TextView
         android:id="@+id/tv_attrIntro"
-        android:layout_width="350dp"
-        android:layout_height="180dp"
-        android:layout_below="@+id/textView2"
+        android:layout_width="330dp"
+        android:layout_height="150dp"
+        android:layout_below="@+id/textView18"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="12dp"
         android:text="TextView"
-        android:textSize="17sp"/>
+        android:textSize="17sp" />
 
 
     <Button
@@ -119,12 +107,11 @@
         android:id="@+id/textView2"
         android:layout_width="120dp"
         android:layout_height="28dp"
+
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/tv_attrtype"
-        android:layout_marginTop="12dp"
         android:background="#BFD3E1"
-
         android:gravity="center"
         android:text=" 景點簡介   "
         android:textColor="@android:color/white"
@@ -138,7 +125,7 @@
         android:layout_alignBottom="@+id/attr_address"
         android:layout_alignLeft="@+id/tv_attrIntro"
         android:layout_alignStart="@+id/tv_attrIntro"
-        android:text="地址"
+        android:text="地址 "
         android:textSize="16sp" />
 
     <TextView
@@ -178,6 +165,64 @@
         android:layout_alignBaseline="@+id/btn_toAudio"
         android:layout_alignBottom="@+id/btn_toAudio"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btn_upload"
+        android:layout_toLeftOf="@+id/tv_attrIntro"
+        android:layout_toStartOf="@+id/tv_attrIntro" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tv_attrIntro"
+        android:layout_toLeftOf="@+id/tv_attrIntro"
+        android:layout_toStartOf="@+id/tv_attrIntro" />
+
+    <Button
+        android:id="@+id/imageView3"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="16dp"
+        android:layout_toLeftOf="@+id/textView15"
+        android:layout_toStartOf="@+id/textView15"
+        android:background="@drawable/heart1"
+        android:text=""
+        tools:layout_editor_absoluteX="148dp"
+        tools:layout_editor_absoluteY="12dp" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="15dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/imageView3"
+        />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/iv_attr" />
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"
+        android:layout_below="@+id/textView2"
+        android:layout_marginLeft="13dp"
+        android:layout_marginStart="13dp"
+        android:layout_toEndOf="@+id/textView12"
+        android:layout_toRightOf="@+id/textView12" />
 
 
 </RelativeLayout>
