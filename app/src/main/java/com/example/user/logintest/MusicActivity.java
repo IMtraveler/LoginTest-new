@@ -198,6 +198,7 @@ public class MusicActivity extends AppCompatActivity{
         for(int i = 0 ; i < AudioName.size() ; i++){
             HashMap<String , String> hashMap = new HashMap<>();
             hashMap.put("audioName" , AudioName.get(i));
+            hashMap.put("audioType" , AudioType.get(i));
             hashMap.put("guide" , GuideName.get(i));
             hashMap.put("clicks", String.valueOf(AudioClick.get(i)));
             hashMap.put("star", Integer.toString(stars.get(i)));
@@ -211,8 +212,8 @@ public class MusicActivity extends AppCompatActivity{
 
         MySimpleAdapter = new SimpleAdapter(this, audiolist,
                 R.layout.list_item_2,
-                new String[] { "audioName", "guide", "clicks","star"},
-                new int[] {	R.id.list_audioName,R.id.list_guide, R.id.clicks, R.id.star});
+                new String[] { "audioName", "guide","audioType" , "clicks","star"},
+                new int[] {	R.id.list_audioName,R.id.list_guide, R.id.list_audtype, R.id.clicks, R.id.star});
         audioListView.setAdapter(MySimpleAdapter);
 
         audioListView.setOnItemClickListener(new OnItemClickListener() {
