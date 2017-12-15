@@ -18,8 +18,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/star"
-        android:layout_marginLeft="13dp"
-        android:layout_marginStart="13dp"
         android:layout_toEndOf="@+id/star"
         android:layout_toRightOf="@+id/star"
         android:padding="@dimen/cardview_default_radius"

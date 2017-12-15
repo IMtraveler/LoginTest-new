@@ -24,12 +24,12 @@
 
         <TextView
             android:id="@+id/tv_attrName"
-            android:layout_width="105dp"
+            android:layout_width="162dp"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/darker_gray"
             android:layout_x="96dp"
             android:layout_y="6dp"
             android:text="音檔名稱"
+            android:textColor="@android:color/darker_gray"
             android:textSize="18sp" />
 
         <TextView
@@ -110,15 +110,15 @@
 
         <TextView
             android:id="@+id/tv_audiotype"
-            android:layout_width="wrap_content"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_above="@+id/ratingBar"
             android:layout_toEndOf="@+id/button4"
             android:layout_toRightOf="@+id/button4"
-            android:layout_x="289dp"
-            android:layout_y="10dp"
-            android:textColor="@android:color/darker_gray"
-            android:text="@string/type" />
+            android:layout_x="288dp"
+            android:layout_y="8dp"
+            android:text="@string/type"
+            android:textColor="@android:color/darker_gray" />
 
         <RatingBar
             android:id="@+id/ratingBar"
@@ -156,11 +156,11 @@
         <TextView
             android:id="@+id/textView8"
             android:layout_width="29dp"
-            android:layout_height="120dp"
+            android:layout_height="285dp"
             android:layout_x="0dp"
             android:layout_y="328dp"
             android:background="#8fbc8f"
-            android:gravity="center"
+            android:gravity="top|center"
             android:text="其他音檔"
             android:textColor="@android:color/white"
             android:textSize="18sp" />

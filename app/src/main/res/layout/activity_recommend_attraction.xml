@@ -20,29 +20,30 @@
     <ImageView
         android:id="@+id/iv_attr_recom"
         android:layout_width="fill_parent"
-        android:layout_height="160dp"
-        app:srcCompat="@drawable/common_full_open_on_phone"
-        android:scaleType="centerCrop"
-        android:adjustViewBounds="true"
-        android:layout_alignParentTop="true"
+        android:layout_height="190dp"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/common_full_open_on_phone" />
 
     <TextView
         android:id="@+id/blackblock2_recom"
         android:layout_width="fill_parent"
         android:layout_height="75dp"
-        android:layout_above="@+id/tv_attrtype"
+        android:layout_alignBottom="@+id/iv_attr_recom"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:background="#80000000" />
 
+
     <TextView
         android:id="@+id/tv_attrName_recom"
-        android:layout_width="190dp"
+        android:layout_width="350dp"
         android:layout_height="29dp"
-        android:layout_alignLeft="@+id/textView3"
-        android:layout_alignStart="@+id/textView3"
+        android:layout_alignLeft="@+id/textView3_recom"
+        android:layout_alignStart="@+id/textView3_recom"
         android:layout_alignTop="@+id/blackblock2_recom"
         android:layout_marginTop="11dp"
         android:text="Chinese name"
@@ -51,7 +52,7 @@
 
     <TextView
         android:id="@+id/tv_attrNameEn_recom"
-        android:layout_width="190dp"
+        android:layout_width="350dp"
         android:layout_height="25dp"
         android:text="English name"
         android:textColor="@android:color/white"
@@ -66,6 +67,7 @@
         tools:ignore="MissingConstraints,RelativeOverlap"
         android:layout_width="45dp"
         android:layout_height="45dp"
+        android:background="@drawable/heart1"
         tools:layout_editor_absoluteX="148dp"
         tools:layout_editor_absoluteY="12dp"
         android:layout_alignParentTop="true"
@@ -76,25 +78,27 @@
     <TextView
         android:id="@+id/tv_attrtype_recom"
         android:layout_width="150dp"
-        android:layout_height="30dp"
+        android:layout_height="45dp"
         android:layout_below="@+id/iv_attr_recom"
-        android:layout_marginLeft="30dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="13dp"
-        android:layout_toEndOf="@+id/imageView2"
-        android:layout_toRightOf="@+id/imageView2"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="9dp"
+        android:layout_toEndOf="@+id/textView3_recom"
+        android:layout_toRightOf="@+id/textView3_recom"
         android:gravity="center_vertical"
         android:text="景點類別"
-        android:textSize="18sp" />
+        android:textSize="20sp" />
 
 
     <TextView
         android:id="@+id/tv_attrIntro_recom"
-        android:layout_width="350dp"
-        android:layout_height="190dp"
+        android:layout_width="330dp"
+        android:layout_height="150dp"
         android:layout_below="@+id/textView2_recom"
         android:layout_centerHorizontal="true"
-        android:text="TextView" />
+        android:layout_marginTop="16dp"
+        android:text="TextView"
+        android:textSize="17sp" />
 
 
 
@@ -119,33 +123,31 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/attr_address_recom"
         android:layout_alignBottom="@+id/attr_address_recom"
-        android:layout_marginEnd="11dp"
-        android:layout_marginRight="11dp"
-        android:layout_toLeftOf="@+id/attr_address_recom"
-        android:layout_toStartOf="@+id/attr_address_recom"
-        android:text="地址"
-        android:textSize="18sp" />
+        android:layout_alignLeft="@+id/tv_attrIntro_recom"
+        android:layout_alignStart="@+id/tv_attrIntro_recom"
+        android:text="地址 "
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/attr_address_recom"
-        android:layout_width="280dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_above="@+id/btn_RecomtoAudio"
-        android:layout_alignEnd="@+id/tv_attrIntro_recom"
-        android:layout_alignRight="@+id/tv_attrIntro_recom"
-        android:layout_marginBottom="23dp"
+        android:layout_marginBottom="9dp"
+        android:layout_toEndOf="@+id/textView3_recom"
+        android:layout_toRightOf="@+id/textView3_recom"
         android:gravity="center_vertical"
         android:text="TextView"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/iv_type_recom"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        app:srcCompat="@drawable/com_facebook_button_send_background"
-        android:layout_alignBottom="@+id/tv_attrtype_recom"
-        android:layout_alignRight="@+id/textView2_recom"
-        android:layout_alignEnd="@+id/textView2_recom" />
+        android:layout_alignLeft="@+id/tv_attrNameEn_recom"
+        android:layout_alignStart="@+id/tv_attrNameEn_recom"
+        android:layout_alignTop="@+id/tv_attrtype_recom"
+        app:srcCompat="@drawable/com_facebook_button_send_background" />
 
 
 </RelativeLayout>

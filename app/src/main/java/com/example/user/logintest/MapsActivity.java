@@ -638,7 +638,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 intent2.putExtras(bundle);
                 startActivity(intent2);
                 //顯示按鈕的名字
-                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
                 break;
             case R.id.setall:
                 check.setall(0);
