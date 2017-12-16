@@ -38,6 +38,7 @@ public class RecommendAttractionActivity extends AppCompatActivity {
         TextView tv_types = (TextView)findViewById(R.id.tv_attrtype_recom);
         TextView tv_addr = (TextView)findViewById(R.id.attr_address_recom);
         TextView tv_ename = (TextView)findViewById(R.id.tv_attrNameEn_recom);
+        ImageView iv_type = (ImageView) findViewById(R.id.iv_type_recom);
         Bundle bundle = getIntent().getExtras();
         String lat = bundle.getString("lat");
         String lng = bundle.getString("lng");
@@ -80,6 +81,12 @@ public class RecommendAttractionActivity extends AppCompatActivity {
             bundle.putString("imgURL", imgURL);
         }
 
+        int begClass = post.indexOf("classified");
+        int endClass = post.indexOf("audioNum");
+
+        String classi_str = post.substring(begClass + 11, endClass-1);
+        int classi =  Integer.valueOf(classi_str.trim().replaceAll(" ", ""));
+
         tv_intro.setText(intro);
         tv_name.setText(name);
         tv_types.setText(type);
@@ -103,6 +110,31 @@ public class RecommendAttractionActivity extends AppCompatActivity {
 
             }
         });
+
+
+
+        if(classi==1)
+            iv_type.setImageResource(R.drawable.a01);
+        else if(classi==2)
+            iv_type.setImageResource(R.drawable.a02);
+        else if(classi==3)
+            iv_type.setImageResource(R.drawable.a03);
+        else if(classi==4)
+            iv_type.setImageResource(R.drawable.a04);
+        else if(classi==5)
+            iv_type.setImageResource(R.drawable.a05);
+        else if(classi==6)
+            iv_type.setImageResource(R.drawable.a06);
+        else if(classi==7)
+            iv_type.setImageResource(R.drawable.a07);
+        else if(classi==8)
+            iv_type.setImageResource(R.drawable.a08);
+        else if(classi==9)
+            iv_type.setImageResource(R.drawable.a09);
+        else if(classi==10)
+            iv_type.setImageResource(R.drawable.a10);
+        else if(classi==11)
+            iv_type.setImageResource(R.drawable.a11);
 
 
 
@@ -162,19 +194,19 @@ public class RecommendAttractionActivity extends AppCompatActivity {
                 intent2.putExtras(bundle);
                 startActivity(intent2);
                 //顯示按鈕的名字
-                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
                 break;
             case R.id.景點種類:
-                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
                 break;
             case R.id.我的帳戶:
-                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
                 Intent intent6 = new Intent();
                 intent6.setClass(RecommendAttractionActivity.this,MyAccountActivity.class);
                 startActivity(intent6);
                 break;
             case R.id.條列式瀏覽:
-                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
                 Intent intent5 = new Intent();
                 intent5.setClass(RecommendAttractionActivity.this,SpotView.class);
                 startActivity(intent5);

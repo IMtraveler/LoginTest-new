@@ -80,7 +80,7 @@ public class SpotView extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //get position
-                Toast.makeText(getApplicationContext(),listAdapter.getItem(position),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),listAdapter.getItem(position),Toast.LENGTH_SHORT).show();
                 position=locations.indexOf(listAdapter.getItem(position));
                 String lat = String.valueOf(locationArrayList.get(position).lat) ;
                 String lng = String.valueOf(locationArrayList.get(position).lng) ;
@@ -111,6 +111,10 @@ public class SpotView extends AppCompatActivity {
                     int endEName = post.indexOf("address");
                     int begType = post.indexOf("class_tag");
                     int endType = post.indexOf("lat");
+                    int begClass = post.indexOf("classified");
+                    int endClass = post.indexOf("audioNum");
+                    String classi_str = post.substring(begClass + 11, endClass-1);
+                    int classi =  Integer.valueOf(classi_str.trim().replaceAll(" ", ""));
 
                     String type = post.substring(begType + 10, endType - 1);
                     tv_types.setText(type);
@@ -128,6 +132,7 @@ public class SpotView extends AppCompatActivity {
                     String audioNumStr =post.substring(post.indexOf("audioNum:")+10, post.length());
                     int audioNum =  Integer.valueOf(audioNumStr.trim().replaceAll("/n ", ""));
                     bundle.putInt("audioNum", audioNum);
+                    bundle.putInt("classifi", classi);
                     if ((begImg + 6) >= endIndex - 5) {
                        // Picasso.with(getBaseContext()).load("http://140.112.107.125:47155/html/uploaded/null.png").into(imageView);
                         bundle.putString("imgURL", "http://140.112.107.125:47155/html/uploaded/null.png");

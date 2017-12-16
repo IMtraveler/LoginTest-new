@@ -144,12 +144,11 @@ public class AttractionsActivity extends AppCompatActivity {
  -            e.printStackTrace();
  -        }*/
 
-        bundleRecommend.putString("lat", "25.0310609");
-        bundleRecommend.putString("lng", "121.5355520");
+
         String[] value = new String[]{
                 "懷恩堂",
                 "大安森林公園",
-                "自來水公園",
+                "自來水博物館",
         };
 
 
@@ -159,10 +158,32 @@ public class AttractionsActivity extends AppCompatActivity {
         alertdialogbuilder.setItems(value, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent();
-                intent.setClass(AttractionsActivity.this, RecommendAttractionActivity.class);
-                intent.putExtras(bundleRecommend);
-                startActivity(intent);
+                if (which == 0 ) {
+                    Intent intent = new Intent();
+                    intent.setClass(AttractionsActivity.this, RecommendAttractionActivity.class);
+                    bundleRecommend.putString("lat", "25.0177880");
+                    bundleRecommend.putString("lng", "121.5331710");
+                    intent.putExtras(bundleRecommend);
+                    startActivity(intent);
+                }
+                else if (which == 1)
+                {
+                    Intent intent = new Intent();
+                    intent.setClass(AttractionsActivity.this, RecommendAttractionActivity.class);
+                    bundleRecommend.putString("lat", "25.0310609");
+                    bundleRecommend.putString("lng", "121.5355520");
+                    intent.putExtras(bundleRecommend);
+                    startActivity(intent);
+                }
+                else if (which == 2)
+                {
+                    Intent intent = new Intent();
+                    intent.setClass(AttractionsActivity.this, RecommendAttractionActivity.class);
+                    bundleRecommend.putString("lat", "25.0125415");
+                    bundleRecommend.putString("lng", "121.5300049");
+                    intent.putExtras(bundleRecommend);
+                    startActivity(intent);
+                }
                 //Toast.makeText(getApplicationContext(), "推薦測試"+which, Toast.LENGTH_SHORT).show();
             }
         });

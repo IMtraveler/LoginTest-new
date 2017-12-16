@@ -446,16 +446,16 @@ public class MusicActivity extends AppCompatActivity{
                 intent2.putExtras(bundle);
                 startActivity(intent2);
                 //顯示按鈕的名字
-                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
                 break;
             case R.id.我的帳戶:
-                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
                 Intent intent6 = new Intent();
                 intent6.setClass(MusicActivity.this,MyAccountActivity.class);
                 startActivity(intent6);
                 break;
             case R.id.條列式瀏覽:
-                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
                 Intent intent5 = new Intent();
                 intent5.setClass(MusicActivity.this,SpotView.class);
                 startActivity(intent5);

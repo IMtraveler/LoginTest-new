@@ -88,7 +88,7 @@ public class FavoriteActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //get position
-                Toast.makeText(getApplicationContext(),adapter.getItem(position),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),adapter.getItem(position),Toast.LENGTH_SHORT).show();
                 Log.e("fav_locations_name",adapter.getItem(position).trim());
                 //Toast.makeText(getApplicationContext(),listAdapter.getItem(position),Toast.LENGTH_SHORT).show();
 
@@ -126,6 +126,11 @@ public class FavoriteActivity extends AppCompatActivity {
                     int endEName = post.indexOf("address");
                     int begType = post.indexOf("class_tag");
                     int endType = post.indexOf("lat");
+                    int begClass = post.indexOf("classified");
+                    int endClass = post.indexOf("audioNum");
+                    String classi_str = post.substring(begClass + 11, endClass-1);
+                    int classi =  Integer.valueOf(classi_str.trim().replaceAll(" ", ""));
+
 
                     String type = post.substring(begType + 10, endType - 1);
                     tv_types.setText(type);
@@ -143,6 +148,7 @@ public class FavoriteActivity extends AppCompatActivity {
                     String audioNumStr =post.substring(post.indexOf("audioNum:")+10, post.length());
                     int audioNum =  Integer.valueOf(audioNumStr.trim().replaceAll("/n ", ""));
                     bundle.putInt("audioNum", audioNum);
+                    bundle.putInt("classifi", classi);
                     if ((begImg + 6) >= endIndex - 5) {
                         //Picasso.with(getBaseContext()).load("http://140.112.107.125:47155/html/uploaded/null.png").into(imageView);
                         bundle.putString("imgURL", "http://140.112.107.125:47155/html/uploaded/null.png");
@@ -177,6 +183,7 @@ public class FavoriteActivity extends AppCompatActivity {
 
             }
         });
+
 
     }
     public boolean onCreateOptionsMenu(Menu menu)
@@ -220,16 +227,16 @@ public class FavoriteActivity extends AppCompatActivity {
                 intent2.putExtras(bundle);
                 startActivity(intent2);
                 //顯示按鈕的名字
-                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
                 break;
             case R.id.我的帳戶:
-                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
                 Intent intent6 = new Intent();
                 intent6.setClass(FavoriteActivity.this,MyAccountActivity.class);
                 startActivity(intent6);
                 break;
             case R.id.條列式瀏覽:
-                Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), item.getTitle(),Toast.LENGTH_SHORT).show();
                 Intent intent5 = new Intent();
                 intent5.setClass(FavoriteActivity.this,SpotView.class);
                 startActivity(intent5);
