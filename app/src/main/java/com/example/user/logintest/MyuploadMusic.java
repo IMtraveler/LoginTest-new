@@ -14,28 +14,41 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.user.logintest.Adapter.NormalExpandableListAdapter;
 import com.example.user.logintest.Constant;
 import com.example.user.logintest.R;
 import com.example.user.logintest.Adapter.onGroupExpandedListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 public class MyuploadMusic extends AppCompatActivity {
     String post="";
     private ListView listView;
     private ArrayAdapter<String> listAdapter;
+    private StringRequest getRequest;
+    private RequestQueue mQueue; //初始化 取得volley的request物件, 建議將mQueue設為單一物件全域使用,避免浪費資源
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myupload_music);
 
-        String account = XclSingleton.getInstance().get("AccountID").toString();
+        final String account = XclSingleton.getInstance().get("AccountID").toString();
         //ID:帳號
         //連接php，將相關的音檔載下來
-        String phpURL = "http://140.112.107.125:47155/html/myMusic.php" ;
+        final String phpURL = "http://140.112.107.125:47155/html/myMusic.php" ;
+        //連接php，將相關的音檔刪除
+        final String delURL="http://140.112.107.125:47155/html/delmusic.php";
 
         try {
             post = new MyMusicAsyncTask().execute(account, phpURL).get();
@@ -52,20 +65,23 @@ public class MyuploadMusic extends AppCompatActivity {
         final String[] introList = new String[AudioList.length-1];
         final String[] typeList = new String[AudioList.length-1];
         final String[] CTR = new String[AudioList.length-1];
-        final String[][] content = new String[AudioList.length-1][3];
+        final String[][] content = new String[AudioList.length-1][4];
+        String[] delete =  new String[AudioList.length-1];
 
         for(int i=0;i<AudioList.length-1;i++){
             int index1 = AudioList[i].indexOf("audioName:");
             int index2 = AudioList[i].indexOf("intro:");
             int index3 = AudioList[i].indexOf("type:");
             int index4 = AudioList[i].indexOf("CTR:");
-            NameList[i]=AudioList[i].substring(index1+10,index2);
+            NameList[i]=AudioList[i].substring(index1+10,index2).trim();
             introList[i]="簡介:\n"+AudioList[i].substring(index2+6,index3);
             typeList[i]="類別:    "+AudioList[i].substring(index3+5,index4);
             CTR[i]="瀏覽次數:   "+AudioList[i].substring(index4+4);
+            delete[i]="-----------刪除音檔-----------";
             content[i][0]=introList[i];
             content[i][1]=typeList[i];
             content[i][2]=CTR[i];
+            content[i][3]=delete[i];
         }
 
         final ExpandableListView listView = (ExpandableListView) findViewById(R.id.expandable_list);
@@ -88,12 +104,48 @@ public class MyuploadMusic extends AppCompatActivity {
                 return false;
             }
         });
-
+        mQueue = Volley.newRequestQueue(this);
         //  设置子选项点击监听事件
         listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                //Toast.makeText(MyuploadMusic.this, content[groupPosition][childPosition], Toast.LENGTH_SHORT).show();
+            public boolean onChildClick(ExpandableListView parent, View v, final int groupPosition, int childPosition, long id) {
+                Toast.makeText(MyuploadMusic.this, content[groupPosition][childPosition], Toast.LENGTH_SHORT).show();
+                if(childPosition==3){
+                    getRequest = new StringRequest(Request.Method.POST,delURL,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String s) {
+                                    Log.e("msg",s);
+                                }
+                            },
+                            new Response.ErrorListener() {
+
+                                @Override
+                                public void onErrorResponse(VolleyError volleyError) {
+                                    Log.e("error",volleyError.getMessage());
+                                }
+                            }){
+                        //攜帶參數
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> map = new HashMap();
+                            map.put("nickname",account);
+                            Log.e("nickname",account);
+                            map.put("mname",NameList[groupPosition]);
+                            Log.e("mname:",NameList[groupPosition]);
+                            return map;
+                        }
+
+                    };
+                    mQueue.add(getRequest);
+                    MyuploadMusic.this.finish();
+                    // / TODO Auto-generated method stub
+                    Intent intent = new Intent();
+                    intent.setClass(MyuploadMusic.this,MyuploadMusic.class);
+                    startActivity(intent);
+                }
+
+
                 return true;
             }
         });
